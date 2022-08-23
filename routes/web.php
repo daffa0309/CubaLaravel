@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Session;
 
 Route::get('/', [App\Http\Controllers\TableauController::class, "index"], function () {
     return redirect()->route('index');
-})->name("/")->middleware('auth');
+})->name("/");
 
 //post Login
 Route::post('/authentication/login',[App\Http\Controllers\LoginController::class,'authenticate']);
