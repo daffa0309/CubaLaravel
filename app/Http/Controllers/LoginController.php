@@ -1,10 +1,10 @@
 <?php
- 
+
 namespace App\Http\Controllers;
- 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
- 
+
 class LoginController extends Controller
 {
     /**
@@ -15,20 +15,19 @@ class LoginController extends Controller
      */
     public function authenticate(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
+        $http = new \GuzzleHttp\Client;
+        $email = $request->email;
+        $password = $request->password;
+        $response = $http->post('http://127.0.0.1:8080/api/login', [
+            'headers' => [
+                'Authorization' => 'Bearer' . session()->get('token.access_token')
+            ],
+            'query' => [
+                'email' => $email,
+                'password' => $password
+            ]
         ]);
-        
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
- 
-            return redirect()->intended('/');
-        }
- 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+        $result = json_decode((string)$response->getBody(), true);
+        // return redirect()->intended('/');
     }
 }
-
