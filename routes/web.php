@@ -5,14 +5,24 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Session;
 
-Route::get('/', [App\Http\Controllers\TableauController::class, "index"], function () {
+Route::get('/', function () {
     return redirect()->route('index');
-})->name("/")->middleware('auth:api');
+})->name('/')->middleware('auth');
+// ->middleware('auth:api');
 
 //post Login
-Route::post('/authentication/login',[App\Http\Controllers\LoginController::class,'authenticate']);
+Route::post('/authentication/login', [App\Http\Controllers\LoginController::class, 'authenticate']);
 
 
+Route::middleware(['auth'])->group(function () {
+    Route::view('index', 'dashboard.index')->name('index');
+    Route::view('dashboard-02', 'dashboard.dashboard-02')->name('dashboard-02');
+});
+Route::POST('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
+
+Route::get('/token', function () {
+    return csrf_token();
+});
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
     if (!in_array($locale, ['en', 'de', 'es', 'fr', 'pt', 'cn', 'ae'])) {
@@ -24,10 +34,11 @@ Route::get('lang/{locale}', function ($locale) {
 })->name('lang');
 
 
-Route::prefix('dashboard')->group(function () {
-    Route::view('index', 'dashboard.index')->name('index');
-    Route::view('dashboard-02', 'dashboard.dashboard-02')->name('dashboard-02');
-});
+// Route::prefix('dashboard')->group(function () {
+//     Route::view('index', 'dashboard.index')->name('index');
+
+//     Route::view('dashboard-02', 'dashboard.dashboard-02')->name('dashboard-02');
+// });
 
 Route::prefix('widgets')->group(function () {
     Route::view('general-widget', 'widgets.general-widget')->name('general-widget');
@@ -326,23 +337,23 @@ Route::view('knowledgebase', 'apps.knowledgebase')->name('knowledgebase');
 Route::view('support-ticket', 'apps.support-ticket')->name('support-ticket');
 Route::view('landing-page', 'pages.landing-page')->name('landing-page');
 
-// Route::prefix('layouts')->group(function () {
-//     Route::view('compact-sidebar', 'admin_unique_layouts.compact-sidebar'); //default //Dubai
-//     Route::view('box-layout', 'admin_unique_layouts.box-layout');    //default //New York //
-//     Route::view('dark-sidebar', 'admin_unique_layouts.dark-sidebar');
+Route::prefix('layouts')->group(function () {
+    Route::view('compact-sidebar', 'admin_unique_layouts.compact-sidebar'); //default //Dubai
+    Route::view('box-layout', 'admin_unique_layouts.box-layout');    //default //New York //
+    Route::view('dark-sidebar', 'admin_unique_layouts.dark-sidebar');
 
-//     Route::view('default-body', 'admin_unique_layouts.default-body');
-//     Route::view('compact-wrap', 'admin_unique_layouts.compact-wrap');
-//     Route::view('enterprice-type', 'admin_unique_layouts.enterprice-type');
+    Route::view('default-body', 'admin_unique_layouts.default-body');
+    Route::view('compact-wrap', 'admin_unique_layouts.compact-wrap');
+    Route::view('enterprice-type', 'admin_unique_layouts.enterprice-type');
 
-//     Route::view('compact-small', 'admin_unique_layouts.compact-small');
-//     Route::view('advance-type', 'admin_unique_layouts.advance-type');
-//     Route::view('material-layout', 'admin_unique_layouts.material-layout');
+    Route::view('compact-small', 'admin_unique_layouts.compact-small');
+    Route::view('advance-type', 'admin_unique_layouts.advance-type');
+    Route::view('material-layout', 'admin_unique_layouts.material-layout');
 
-//     Route::view('color-sidebar', 'admin_unique_layouts.color-sidebar');
-//     Route::view('material-icon', 'admin_unique_layouts.material-icon');
-//     Route::view('modern-layout', 'admin_unique_layouts.modern-layout');
-// });
+    Route::view('color-sidebar', 'admin_unique_layouts.color-sidebar');
+    Route::view('material-icon', 'admin_unique_layouts.material-icon');
+    Route::view('modern-layout', 'admin_unique_layouts.modern-layout');
+});
 
 Route::get('layout-{light}', function ($light) {
     session()->put('layout', $light);

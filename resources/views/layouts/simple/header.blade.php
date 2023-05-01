@@ -16,7 +16,7 @@
       <div class="logo-wrapper"><a href="{{route('/')}}"><img class="img-fluid" src="{{asset('assets/images/logo/logo.png')}}" alt=""></a></div>
       <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="align-center"></i></div>
     </div>
-    <div class="left-header col horizontal-wrapper ps-0">
+    {{-- <div class="left-header col horizontal-wrapper ps-0">
       <ul class="horizontal-menu">
         <li class="mega-menu outside">
           <a class="nav-link" href="#!"><i data-feather="layers"></i><span>Bonus Ui</span></a>
@@ -141,10 +141,10 @@
           </ul>
         </li>
       </ul>
-    </div>
+    </div> --}}
     <div class="nav-right col-8 pull-right right-header p-0">
-      <ul class="nav-menus">
-        <li class="language-nav">
+      <ul style="margin-left: 650px; width:675px" class="nav-menus">
+        {{-- <li class="language-nav">
           <div class="translate_wrapper">
             <div class="current_lang">
               <div class="lang"><i class="flag-icon flag-icon-{{ (App::getLocale() == 'en') ? 'us' : App::getLocale() }}"></i><span class="lang-txt">{{ App::getLocale() }} </span></div>
@@ -336,8 +336,8 @@
             <li class="text-center"> <a class="btn btn-primary" href="#">View All     </a></li>
           </ul>
         </li>
-        <li class="maximize"><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()"><i data-feather="maximize"></i></a></li>
-        <li class="profile-nav onhover-dropdown p-0 me-0">
+        <li class="maximize"><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()"><i data-feather="maximize"></i></a></li> --}}
+        <li class="profile-nav onhover-dropdown p-0 me-0 ">
           <div class="media profile-media">
             <img class="b-r-10" src="{{asset('assets/images/dashboard/profile.jpg')}}" alt="">
             <div class="media-body">
@@ -350,7 +350,19 @@
             <li><a href="#"><i data-feather="mail"></i><span>Inbox</span></a></li>
             <li><a href="#"><i data-feather="file-text"></i><span>Taskboard</span></a></li>
             <li><a href="#"><i data-feather="settings"></i><span>Settings</span></a></li>
-            <li><a href="{{route('login')}}"><i data-feather="log-in"> </i><span>Log in</span></a></li>
+            <form id="logout_form" action="{{ route('logout') }}" method="POST">
+              @csrf
+              <li>
+                  <a href="#" onclick="onlogoutclicked()">
+                      <span>Logout</span>
+                  </a>
+              </li>
+          </form>
+          <script>
+            function onlogoutclicked() {
+                $('#logout_form').submit()
+            }
+        </script>
           </ul>
         </li>
       </ul>

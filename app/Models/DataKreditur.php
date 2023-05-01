@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class DataKreditur extends Model
 {
     use HasFactory, Notifiable;
 
@@ -17,28 +16,29 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        'nik',
         'name',
-        'username',
-        'level',
-        'password',
+        'jeniskelamin',
+        'telepon',
+        'tanggalLahir',
+        'tempatLahir',
+        'pendidikanterakhir',
+        'alasan',
+        'idKendaraan'
+
     ];
+    protected $primaryKey = 'idKreditur';
+
+
 
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
 
     /**
      * The attributes that should be cast to native types.
      *
      * @var array
-     */
-//     protected $casts = [
-//         'email_verified_at' => 'datetime',
-//     ];
-}
+     */}
