@@ -1,31 +1,31 @@
-@extends('layouts.simple.master')
-@section('title', 'Base Inputs')
 
-@section('css')
-@endsection
+<?php $__env->startSection('title', 'Base Inputs'); ?>
 
-@section('style')
-@endsection
+<?php $__env->startSection('css'); ?>
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb-title')
+<?php $__env->startSection('style'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('breadcrumb-title'); ?>
     <h3>Base Inputs</h3>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb-items')
+<?php $__env->startSection('breadcrumb-items'); ?>
     <li class="breadcrumb-item">Form Controls</li>
     <li class="breadcrumb-item active">Base Inputs</li>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
-    @if (Session::has('message'))
+<?php $__env->startSection('content'); ?>
+    <?php if(Session::has('message')): ?>
         <script>
-            toastr.success("{{ Session::get('message') }}");
+            toastr.success("<?php echo e(Session::get('message')); ?>");
             toastr.options = {
                 "progressBar": true,
                 "closeButton": true
             }
         </script>
-    @endif
+    <?php endif; ?>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -34,7 +34,7 @@
                         <h5>Basic form control</h5>
                     </div>
                     <form action="/insert/data-kreditur"method="post" class="theme-form">
-                        @csrf
+                        <?php echo csrf_field(); ?>
 
                         <div class="card-body">
                             <div class="row">
@@ -131,11 +131,13 @@
             </div>
         </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('script')
+<?php $__env->startSection('script'); ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
         integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.simple.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\daffa\CubaLaravel\resources\views/forms/base-input.blade.php ENDPATH**/ ?>

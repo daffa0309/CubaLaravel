@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('title', 'Validation Forms'); ?>
 
 <?php $__env->startSection('css'); ?>
@@ -232,4 +233,4 @@
 <?php $__env->startSection('script'); ?>
 <script src="<?php echo e(asset('assets/js/form-validation-custom.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.simple.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\daffa\Cuba\resources\views/forms/form-validation.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.simple.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\daffa\CubaLaravel\resources\views/forms/form-validation.blade.php ENDPATH**/ ?>

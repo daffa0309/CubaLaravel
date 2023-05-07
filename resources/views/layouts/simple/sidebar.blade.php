@@ -14,20 +14,9 @@
 						<a href="{{route('/')}}"><img class="img-fluid" src="{{asset('assets/images/logo/logo-icon.png')}}" alt=""></a>
 						<div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
 					</li>
-					<li class="sidebar-main-title">
-						<div>
-							<h6 class="lan-1">{{ trans('lang.General') }} </h6>
-                     		<p class="lan-2">{{ trans('lang.Dashboards,widgets & layout.') }}</p>
-						</div>
-					</li>
 					<li class="sidebar-list">
-						<label class="badge badge-success">2</label><a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/dashboard' ? 'active' : '' }}" href="#"><i data-feather="home"></i><span class="lan-3">{{ trans('lang.Dashboards') }}</span>
-							<div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/dashboard' ? 'down' : 'right' }}"></i></div>
-						</a>
-						<ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/dashboard' ? 'block;' : 'none;' }}">
-							{{-- <li><a class="lan-4 {{ Route::currentRouteName()=='index' ? 'active' : '' }}" href="{{route('index')}}">{{ trans('lang.Default') }}</a></li> --}}
-                     		{{-- <li><a class="lan-5 {{ Route::currentRouteName()=='dashboard-02' ? 'active' : '' }}" href="{{route('dashboard-02')}}">{{ trans('lang.Ecommerce') }}</a></li> --}}
-						</ul>
+	
+							<li><a class="lan-4 {{ Route::currentRouteName()=='index' ? 'active' : '' }}" href="{{route('index')}}">{{ trans('lang.Dashboard') }}</a></li>
 					</li>
 					{{-- <li class="sidebar-list">
 							<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/widgets' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.Widgets') }}</span>
@@ -241,7 +230,7 @@
 							<li><a href="{{route('jsgrid-table')}}" class="{{ Route::currentRouteName()=='jsgrid-table' ? 'active' : '' }}">Js Grid Table </a></li>
 						</ul>
 					</li>
-					<li class="sidebar-main-title">
+					{{-- <li class="sidebar-main-title">
 						<div>
 							<h6>{{ trans('lang.Components') }}</h6>
                      		<p>{{ trans('lang.UI Components & Elements') }}</p>
@@ -543,8 +532,8 @@
 					</li>
 					<li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName() == 'knowledgebase' ? 'active' : ''}}" href="{{ route('knowledgebase') }}"><i data-feather="sunrise"> </i><span>{{ trans('lang.Knowledgebase') }}</span></a></li>
 					<li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='support-ticket' ? 'active' : '' }}" href="{{route('support-ticket')}}"><i data-feather="users"> </i><span>{{ trans('lang.Support Ticket') }}</span></a></li>
-				</ul>
-			</div> --}}
+				</ul> --}}
+			</div> 
 			<div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
 		</nav>
 	</div>
