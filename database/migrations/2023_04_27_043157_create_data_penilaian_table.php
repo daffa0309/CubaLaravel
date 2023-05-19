@@ -21,6 +21,7 @@ class CreateDataPenilaianTable extends Migration
             $table->string('C4');
             $table->string('C5');
             $table->string('C6');
+            $table->string('C7');
             $table->integer('idKreditur');
         });
     }

@@ -8,6 +8,10 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
+<?php if(Session::has('message')): ?>
+   <div class="alert alert-info"><?php echo e(Session::get('message')); ?></div>
+<?php endif; ?>
+
     <div class="container-fluid p-0">
         <div class="row m-0">
             <div class="col-12 p-0">
@@ -18,15 +22,15 @@
                                     class="img-fluid for-dark" src="<?php echo e(asset('assets/images/logo/logo_dark.png')); ?>"
                                     alt="looginpage"></a></div>
                         <div class="login-main">
-                            <form action="/authentication/login"method="post" class="theme-form">
+                            <form action="/authentication/login" novalidate="" method="post" class="theme-form">
                                 <?php echo csrf_field(); ?>
 
                                 <h4>Sign in to account</h4>
-                                <p>Enter your username & password to login</p>
+                                <p>Enter your Email & password to login</p>
                                 <div class="form-group">
-                                    <label class="col-form-label">Username</label>
-                                    <input class="form-control" name="username"
-                                      placeholder="Input Username"  type="text" required="" >
+                                    <label class="col-form-label">Email</label>
+                                    <input class="form-control" name="email"
+                                      placeholder="Input email"  type="email" required="" >
                                  
                                 </div>
                                 <div class="form-group">
@@ -38,7 +42,9 @@
                                     
                                     <button class="btn btn-primary btn-block" type="submit">Sign in</button>
                                 </div>
-                                
+                              
+                                <p class="mt-4 mb-0">Don't have account?<a class="ms-2"
+                                        href="<?php echo e(route('sign-up')); ?>">Create Account</a></p> 
                             </form>
                         </div>
                     </div>

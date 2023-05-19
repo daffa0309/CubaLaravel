@@ -18,14 +18,14 @@ class DataKreditur extends Model
     protected $fillable = [
         'nik',
         'name',
+        'ktpImage',
+        'bpkbImage',
         'jeniskelamin',
         'telepon',
         'tanggalLahir',
         'tempatLahir',
         'pendidikanterakhir',
         'alasan',
-        'idKendaraan'
-
     ];
     protected $primaryKey = 'idKreditur';
 

@@ -13,7 +13,33 @@ Route::get('/', function () {
 
 //post Login
 Route::post('/authentication/login', [App\Http\Controllers\LoginController::class, 'authenticate']);
+Route::post('/authentication/signup', [App\Http\Controllers\UserController::class, 'signUp']);
 
+Route::prefix('bonus-ui')->group(function () {
+    Route::view('scrollable', 'bonus-ui.scrollable')->name('scrollable');
+    Route::view('tree', 'bonus-ui.tree')->name('tree');
+    Route::view('bootstrap-notify', 'bonus-ui.bootstrap-notify')->name('bootstrap-notify');
+    Route::view('rating', 'bonus-ui.rating')->name('rating');
+    Route::view('dropzone', 'bonus-ui.dropzone')->name('dropzone');
+    Route::view('tour', 'bonus-ui.tour')->name('tour');
+    Route::view('sweet-alert2', 'bonus-ui.sweet-alert2')->name('sweet-alert2');
+    Route::view('modal-animated', 'bonus-ui.modal-animated')->name('modal-animated');
+    Route::view('owl-carousel', 'bonus-ui.owl-carousel')->name('owl-carousel');
+    Route::view('ribbons', 'bonus-ui.ribbons')->name('ribbons');
+    Route::view('pagination', 'bonus-ui.pagination')->name('pagination');
+    Route::view('breadcrumb', 'bonus-ui.breadcrumb')->name('breadcrumb');
+    Route::view('range-slider', 'bonus-ui.range-slider')->name('range-slider');
+    Route::view('image-cropper', 'bonus-ui.image-cropper')->name('image-cropper');
+    Route::view('sticky', 'bonus-ui.sticky')->name('sticky');
+    Route::view('basic-card', 'bonus-ui.basic-card')->name('basic-card');
+    Route::view('creative-card', 'bonus-ui.creative-card')->name('creative-card');
+    Route::view('tabbed-card', 'bonus-ui.tabbed-card')->name('tabbed-card');
+    Route::view('dragable-card', 'bonus-ui.dragable-card')->name('dragable-card');
+    Route::view('timeline-v-1', 'bonus-ui.timeline-v-1')->name('timeline-v-1');
+    Route::view('timeline-v-2', 'bonus-ui.timeline-v-2')->name('timeline-v-2');
+    Route::view('timeline-small', 'bonus-ui.timeline-small')->name('timeline-small');
+});
+Route::view('sign-up', 'authentication.sign-up')->name('sign-up');
 
 Route::middleware(['auth'])->group(function () {
     Route::view('index', 'dashboard.index')->name('index');

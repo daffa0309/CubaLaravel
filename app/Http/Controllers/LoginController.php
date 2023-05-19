@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Session;
 class LoginController extends Controller
 {
     /**
@@ -36,14 +37,17 @@ class LoginController extends Controller
         //     return redirect()->route('login');
         // }
 
-            if(Auth::attempt(['username' => $request->username, 'password' => $request->password])){
+            if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
                 DB::beginTransaction();
                 DB::commit();
-                if(Auth::user()->level == 'admin'){
-                    return redirect('/');
+                if(Auth::user()->level != ''){
+                    Session::flash('message', "Berhasil Login");
+
+                    return redirect('index');
                 }
             }else{
-                return redirect()->route('login');
+                $message = "Email atau Password Salah !";
+                return redirect('authentication/login')->with('message',$message);
             }
 
     }

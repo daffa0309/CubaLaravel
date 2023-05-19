@@ -1,27 +1,27 @@
-@extends('layouts.authentication.master')
-@section('title', 'Sign-up')
 
-@section('css')
-@endsection
+<?php $__env->startSection('title', 'Sign-up'); ?>
 
-@section('style')
-@endsection
+<?php $__env->startSection('css'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('style'); ?>
+<?php $__env->stopSection(); ?>
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="container-fluid p-0">
         <div class="row m-0">
             <div class="col-12 p-0">
                 <div class="login-card">
 
                     <div>
-                        <div><a class="logo" href="{{ route('index') }}"><img class="img-fluid for-light"
-                                    src="{{ asset('assets/images/logo/login.png') }}" alt="looginpage"><img
-                                    class="img-fluid for-dark" src="{{ asset('assets/images/logo/logo_dark.png') }}"
+                        <div><a class="logo" href="<?php echo e(route('index')); ?>"><img class="img-fluid for-light"
+                                    src="<?php echo e(asset('assets/images/logo/login.png')); ?>" alt="looginpage"><img
+                                    class="img-fluid for-dark" src="<?php echo e(asset('assets/images/logo/logo_dark.png')); ?>"
                                     alt="looginpage"></a></div>
                         <div class="login-main">
                             <form action="/authentication/signup"method="post" novalidate="" class="theme-form">
-                                @csrf
+                                <?php echo csrf_field(); ?>
 
                                 <h4>Create your account</h4>
                                 <p>Enter your personal details to create account</p>
@@ -68,7 +68,7 @@
                                     <button class="btn btn-primary btn-block" type="submit">Create Account</button>
                                 </div>
                                 <p class="mt-4 mb-0">Already have an account?<a class="ms-2"
-                                        href="{{ route('login') }}">Sign in</a></p>
+                                        href="<?php echo e(route('login')); ?>">Sign in</a></p>
                             </form>
                         </div>
                     </div>
@@ -76,11 +76,13 @@
             </div>
         </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('script')
-    <script src="{{ asset('assets/js/notify/index.js') }}"></script>
-    <script src="{{ asset('assets/js/notify/bootstrap-notify.min.js') }}"></script>
-    <script src="{{ asset('assets/js/form-validation-custom.js') }}"></script>
+<?php $__env->startSection('script'); ?>
+    <script src="<?php echo e(asset('assets/js/notify/index.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/js/notify/bootstrap-notify.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/js/form-validation-custom.js')); ?>"></script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.authentication.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\daffa\CubaLaravel\resources\views/authentication/sign-up.blade.php ENDPATH**/ ?>

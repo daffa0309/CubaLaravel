@@ -1,24 +1,40 @@
 <div class="sidebar-wrapper">
-	<div>
-		<div class="logo-wrapper">
-			<a href="{{route('/')}}"><img class="img-fluid for-light" src="{{asset('assets/images/logo/logo.png')}}" alt=""><img class="img-fluid for-dark" src="{{asset('assets/images/logo/logo_dark.png')}}" alt=""></a>
-			<div class="back-btn"><i class="fa fa-angle-left"></i></div>
-			<div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid"> </i></div>
-		</div>
-		<div class="logo-icon-wrapper"><a href="{{route('/')}}"><img class="img-fluid" src="{{asset('assets/images/logo/logo-icon.png')}}" alt=""></a></div>
-		<nav class="sidebar-main">
-			<div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
-			<div id="sidebar-menu">
-				<ul class="sidebar-links" id="simple-bar">
-					<li class="back-btn">
-						<a href="{{route('/')}}"><img class="img-fluid" src="{{asset('assets/images/logo/logo-icon.png')}}" alt=""></a>
-						<div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
-					</li>
-					<li class="sidebar-list">
-	
-							<li><a class="lan-4 {{ Route::currentRouteName()=='index' ? 'active' : '' }}" href="{{route('index')}}">{{ trans('lang.Dashboard') }}</a></li>
-					</li>
-					{{-- <li class="sidebar-list">
+    <div>
+        <div class="logo-wrapper">
+            <a href="{{ route('/') }}"><img class="img-fluid for-light" src="{{ asset('assets/images/logo/logo.png') }}"
+                    alt=""><img class="img-fluid for-dark" src="{{ asset('assets/images/logo/logo_dark.png') }}"
+                    alt=""></a>
+            <div class="back-btn"><i class="fa fa-angle-left"></i></div>
+            <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid"> </i></div>
+        </div>
+        <div class="logo-icon-wrapper"><a href="{{ route('/') }}"><img class="img-fluid"
+                    src="{{ asset('assets/images/logo/logo-icon.png') }}" alt=""></a></div>
+        <nav class="sidebar-main">
+            <div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
+            <div id="sidebar-menu">
+                <ul class="sidebar-links" id="simple-bar">
+                    <li class="back-btn">
+                        <a href="{{ route('/') }}"><img class="img-fluid"
+                                src="{{ asset('assets/images/logo/logo-icon.png') }}" alt=""></a>
+                        <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2"
+                                aria-hidden="true"></i></div>
+                    </li>
+                    @if (Auth::user()->level == 'admin')
+                        <li class="sidebar-list">
+
+                            <a class="sidebar-link sidebar-title {{ request()->route()->getPrefix() == '/forms'? 'active': '' }}"
+                                href="#">
+                        <li><a class="lan-4 {{ Route::currentRouteName() == 'index' ? 'active' : '' }}"
+                                href="{{ route('index') }}">{{ trans('lang.Dashboard') }}</a></li>
+                        </a>
+                        </li>
+                    @else
+                        <li class="sidebar-list">
+
+
+                        </li>
+                    @endif
+                    {{-- <li class="sidebar-list">
 							<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/widgets' ? 'active' : '' }}" href="#"><i data-feather="airplay"></i><span class="lan-6">{{ trans('lang.Widgets') }}</span>
 								<div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/widgets' ? 'down' : 'right' }}"></i></div>
 							</a>
@@ -126,111 +142,224 @@
 					<li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='to-do' ? 'active' : '' }}" href="{{route('to-do')}}"><i data-feather="clock"> </i><span>{{ trans('lang.To-Do') }}</span></a></li>
 					<li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName() == 'search' ? 'active' : '' }}" href="{{ route('search') }}"><i data-feather="search"> </i><span>{{ trans('lang.Search Result') }}</span></a></li>
 				{{--  --}}
-					<li class="sidebar-main-title">
+                    {{-- <li class="sidebar-main-title">
 						<div>
 							<h6>{{ trans('lang.Forms & Table') }}</h6>
                  			<p>{{ trans('lang.Ready to use froms & tables') }}</p>
 						</div>
-					</li>
-					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/forms' ? 'active' : '' }}" href="#">
-							<i data-feather="file-text"></i><span>{{ trans('lang.Forms') }}</span>
-							<div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/forms' ? 'down' : 'right' }}"></i></div>
-						</a>
-						<ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/forms' ? 'block;' : 'none;' }}">
-							<li>
-								<a class="submenu-title {{ in_array(Route::currentRouteName(), ['form-validation', 'base-input', 'radio-checkbox-control', 'input-group', 'megaoptions']) ? 'active' : '' }}" href="#">Form Controls
+					</li> --}}
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title {{ request()->route()->getPrefix() == '/forms'? 'active': '' }}"
+                            href="#">
+                            <i data-feather="file-text"></i><span>{{ trans('lang.Forms') }}</span>
+                            <div class="according-menu"><i
+                                    class="fa fa-angle-{{ request()->route()->getPrefix() == '/forms'? 'down': 'right' }}"></i>
+                            </div>
+                        </a>
+                        <ul class="sidebar-submenu"
+                            style="display: {{ request()->route()->getPrefix() == '/forms'? 'block;': 'none;' }}">
+                            <li>
+                                {{-- <a class="submenu-title {{ in_array(Route::currentRouteName(), ['form-validation', 'base-input', 'radio-checkbox-control', 'input-group', 'megaoptions']) ? 'active' : '' }}" href="#">Form Controls
 									<div class="according-menu"><i class="fa fa-angle-{{ in_array(Route::currentRouteName(), ['form-validation', 'base-input', 'radio-checkbox-control', 'input-group', 'megaoptions']) ? 'down' : 'right' }}"></i></div>
-								</a>
-								<ul class="nav-sub-childmenu submenu-content" style="display: {{ in_array(Route::currentRouteName(), ['form-validation', 'base-input', 'radio-checkbox-control', 'input-group', 'megaoptions']) ? 'block' : 'none;' }};">
+								</a> --}}
+                                {{-- <ul class="nav-sub-childmenu submenu-content" style="display: {{ in_array(Route::currentRouteName(), ['form-validation', 'base-input', 'radio-checkbox-control', 'input-group', 'megaoptions']) ? 'block' : 'none;' }};">
 									<li><a href="{{route('form-validation')}}" class="{{ Route::currentRouteName()=='form-validation' ? 'active' : '' }}">Form Validation</a></li>
 		                            <li><a href="{{route('base-input')}}" class="{{ Route::currentRouteName()=='base-input' ? 'active' : '' }}">Base Inputs</a></li>
 		                            <li><a href="{{route('radio-checkbox-control')}}" class="{{ Route::currentRouteName()=='radio-checkbox-control' ? 'active' : '' }}">Checkbox & Radio</a></li>
 		                            <li><a href="{{route('input-group')}}" class="{{ Route::currentRouteName()=='input-group' ? 'active' : '' }}">Input Groups</a></li>
 		                            <li><a href="{{route('megaoptions')}}" class="{{ Route::currentRouteName()=='megaoptions' ? 'active' : '' }}">Mega Options</a></li>
-								</ul>
-							</li>
-							<li>
-								<a class="submenu-title {{ in_array(Route::currentRouteName(), ['datepicker', 'time-picker', 'datetimepicker','daterangepicker' ,'touchspin', 'select2', 'switch', 'typeahead', 'clipboard']) ? 'active' : '' }}" href="#">Form Widgets
-									<div class="according-menu"><i class="fa fa-angle-{{ in_array(Route::currentRouteName(), ['datepicker', 'time-picker', 'datetimepicker','daterangepicker' ,'touchspin', 'select2', 'switch', 'typeahead', 'clipboard']) ? 'down' : 'right' }}"></i></div>
-								</a>
-								<ul class="nav-sub-childmenu submenu-content" style="display: {{ in_array(Route::currentRouteName(), ['datepicker', 'time-picker', 'datetimepicker','daterangepicker' ,'touchspin', 'select2', 'switch', 'typeahead', 'clipboard']) ? 'block' : 'none;' }};">
-										<li><a href="{{route('datepicker')}}" class="{{ Route::currentRouteName()=='datepicker' ? 'active' : '' }}">Datepicker</a></li>
-		                              	<li><a href="{{route('time-picker')}}" class="{{ Route::currentRouteName()=='time-picker' ? 'active' : '' }}">Timepicker</a></li>
-		                              	<li><a href="{{route('datetimepicker')}}" class="{{ Route::currentRouteName()=='datetimepicker' ? 'active' : '' }}">Datetimepicker</a></li>
-		                              	<li><a href="{{route('daterangepicker')}}" class="{{ Route::currentRouteName()=='daterangepicker' ? 'active' : '' }}">Daterangepicker</a></li>
-		                              	<li><a href="{{route('touchspin')}}" class="{{ Route::currentRouteName()=='touchspin' ? 'active' : '' }}">Touchspin</a></li>
-		                              	<li><a href="{{route('select2')}}" class="{{ Route::currentRouteName()=='select2' ? 'active' : '' }}">Select2</a></li>
-		                              	<li><a href="{{route('switch')}}" class="{{ Route::currentRouteName()=='switch' ? 'active' : '' }}">Switch</a></li>
-		                              	<li><a href="{{route('typeahead')}}" class="{{ Route::currentRouteName()=='typeahead' ? 'active' : '' }}">Typeahead</a></li>
-		                              	<li><a href="{{route('clipboard')}}" class="{{ Route::currentRouteName()=='clipboard' ? 'active' : '' }}">Clipboard</a></li>
-								</ul>
-							</li>
-							<li>
-								<a class="submenu-title {{ in_array(Route::currentRouteName(), ['default-form', 'form-wizard', 'form-wizard-two', 'form-wizard-three']) ? 'active' : '' }}" href="#">Form Layout
-									<div class="according-menu"><i class="fa fa-angle-{{ in_array(Route::currentRouteName(), ['default-form', 'form-wizard', 'form-wizard-two', 'form-wizard-three']) ? 'down' : 'right' }}"></i></div>
-								</a>
-								<ul class="nav-sub-childmenu submenu-content" style="display: {{ in_array(Route::currentRouteName(), ['default-form', 'form-wizard', 'form-wizard-two', 'form-wizard-three']) ? 'block' : 'none;' }};">
-	                              	<li><a href="{{route('default-form')}}" class="{{ Route::currentRouteName()=='default-form' ? 'active' : '' }}">Default Forms</a></li>
-	                              	<li><a href="{{route('form-wizard')}}" class="{{ Route::currentRouteName()=='form-wizard' ? 'active' : '' }}">Form Wizard 1</a></li>
-	                              	<li><a href="{{route('form-wizard-two')}}" class="{{ Route::currentRouteName()=='form-wizard-two' ? 'active' : '' }}">Form Wizard 2</a></li>
-	                              	<li><a href="{{route('form-wizard-three')}}" class="{{ Route::currentRouteName()=='form-wizard-three' ? 'active' : '' }}">Form Wizard 3</a></li>
-	                        	</ul>
-							</li>
-						</ul>
-					</li>
-					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/tables' ? 'active' : '' }}" href="#"><i data-feather="server"></i><span>{{ trans('lang.Tables') }}</span>
-							<div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/tables' ? 'down' : 'right' }}"></i></div>
-						</a>
-						<ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/tables' ? 'block;' : 'none;' }}">
-							<li>
-								<a class="submenu-title  {{ in_array(Route::currentRouteName(), ['bootstrap-basic-table', 'bootstrap-sizing-table', 'bootstrap-sizing-table', 'bootstrap-border-table', 'bootstrap-styling-table', 'table-components']) ? 'active' : '' }}"  href="#">Bootstrap Tables
-									<div class="according-menu"><i class="fa fa-angle-{{ in_array(Route::currentRouteName(), ['bootstrap-basic-table', 'bootstrap-sizing-table', 'bootstrap-sizing-table', 'bootstrap-border-table', 'bootstrap-styling-table', 'table-components']) ? 'down' : 'right' }}"></i></div>
-								</a>
-								<ul class="nav-sub-childmenu submenu-content" style="display: {{ in_array(Route::currentRouteName(), ['bootstrap-basic-table', 'bootstrap-sizing-table', 'bootstrap-sizing-table', 'bootstrap-border-table', 'bootstrap-styling-table', 'table-components']) ? 'block' : 'none;' }};">
-	                              	<li><a href="{{route('bootstrap-basic-table')}}" class="{{ Route::currentRouteName()=='bootstrap-basic-table' ? 'active' : '' }}">Basic Tables</a></li>
-	                                <li><a href="{{route('bootstrap-sizing-table')}}" class="{{ Route::currentRouteName()=='bootstrap-sizing-table' ? 'active' : '' }}">Sizing Tables</a></li>
-	                              	<li><a href="{{route('bootstrap-border-table')}}" class="{{ Route::currentRouteName()=='bootstrap-border-table' ? 'active' : '' }}">Border Tables</a></li>
-	                              	<li><a href="{{route('bootstrap-styling-table')}}" class="{{ Route::currentRouteName()=='bootstrap-styling-table' ? 'active' : '' }}">Styling Tables</a></li>
-	                              	<li><a href="{{route('table-components')}}" class="{{ Route::currentRouteName()=='table-components' ? 'active' : '' }}">Table components</a></li>
-                       			</ul>
-							</li>
-							<li>
-								<a class="submenu-title  {{ in_array(Route::currentRouteName(), ['datatable-basic-init', 'datatable-advance', 'datatable-styling', 'datatable-ajax', 'datatable-server-side', 'datatable-plugin', 'datatable-api']) ? 'active' : '' }}" href="#">Data Tables
-									<div class="according-menu"><i class="fa fa-angle-{{ in_array(Route::currentRouteName(), ['datatable-basic-init', 'datatable-advance', 'datatable-styling', 'datatable-ajax', 'datatable-server-side', 'datatable-plugin', 'datatable-api', 'datatable-data-source']) ? 'down' : 'right' }}"></i></div>
-								</a>
-								<ul class="nav-sub-childmenu submenu-content" style="display: {{ in_array(Route::currentRouteName(), ['datatable-basic-init', 'datatable-advance', 'datatable-styling', 'datatable-ajax', 'datatable-server-side', 'datatable-plugin', 'datatable-api', 'datatable-data-source']) ? 'block' : 'none;' }};">
-		                              	<li><a href="{{route('datatable-basic-init')}}" class="{{ Route::currentRouteName()=='datatable-basic-init' ? 'active' : '' }}">Basic Init</a></li>
-		                              	<li><a href="{{route('datatable-advance')}}" class="{{ Route::currentRouteName()=='datatable-advance' ? 'active' : '' }}">Advance Init</a></li>
-		                              	<li><a href="{{route('datatable-styling')}}" class="{{ Route::currentRouteName()=='datatable-styling' ? 'active' : '' }}">Styling</a></li>
-		                              	<li><a href="{{route('datatable-ajax')}}" class="{{ Route::currentRouteName()=='datatable-ajax' ? 'active' : '' }}">AJAX</a></li>
-		                              	<li><a href="{{route('datatable-server-side')}}" class="{{ Route::currentRouteName()=='datatable-server-side' ? 'active' : '' }}">Server Side</a></li>
-		                              	<li><a href="{{route('datatable-plugin')}}" class="{{ Route::currentRouteName()=='datatable-plugin' ? 'active' : '' }}">Plug-in</a></li>
-		                              	<li><a href="{{route('datatable-api')}}" class="{{ Route::currentRouteName()=='datatable-api' ? 'active' : '' }}">API</a></li>
-		                              	<li><a href="{{route('datatable-data-source')}}" class="{{ Route::currentRouteName()=='datatable-data-source' ? 'active' : '' }}">Data Sources</a></li>
-		                        </ul>
-							</li>
-							<li>
-								<a class="submenu-title {{ in_array(Route::currentRouteName(), ['datatable-ext-autofill', 'datatable-ext-basic-button', 'datatable-ext-col-reorder', 'datatable-ext-fixed-header', 'datatable-ext-html-5-data-export', 'datatable-ext-responsive', 'datatable-ext-row-reorder', 'datatable-ext-scroller']) ? 'active' : '' }}" href="#">Ex. Data Tables
-									<div class="according-menu"><i class="fa fa-angle-{{ in_array(Route::currentRouteName(), ['datatable-ext-autofill', 'datatable-ext-basic-button', 'datatable-ext-col-reorder', 'datatable-ext-fixed-header', 'datatable-ext-html-5-data-export', 'datatable-ext-key-table', 'datatable-ext-responsive', 'datatable-ext-row-reorder', 'datatable-ext-scroller']) ? 'down' : 'right' }}"></i></div>
-								</a>
-								<ul class="nav-sub-childmenu submenu-content" style="display: {{ in_array(Route::currentRouteName(), ['datatable-ext-autofill', 'datatable-ext-basic-button', 'datatable-ext-col-reorder', 'datatable-ext-fixed-header', 'datatable-ext-html-5-data-export', 'datatable-ext-key-table', 'datatable-ext-responsive', 'datatable-ext-row-reorder', 'datatable-ext-scroller']) ? 'block' : 'none;' }};">
-									<li><a href="{{route('datatable-ext-autofill')}}" class="{{ Route::currentRouteName()=='datatable-ext-autofill' ? 'active' : '' }}">Auto Fill</a></li>
-									<li><a href="{{route('datatable-ext-basic-button')}}" class="{{ Route::currentRouteName()=='datatable-ext-basic-button' ? 'active' : '' }}">Basic Button</a></li>
-									<li><a href="{{route('datatable-ext-col-reorder')}}" class="{{ Route::currentRouteName()=='datatable-ext-col-reorder' ? 'active' : '' }}">Column Reorder</a></li>
-									<li><a href="{{route('datatable-ext-fixed-header')}}" class="{{ Route::currentRouteName()=='datatable-ext-fixed-header' ? 'active' : '' }}">Fixed Header</a></li>
-									<li><a href="{{route('datatable-ext-html-5-data-export')}}" class="{{ Route::currentRouteName()=='datatable-ext-html-5-data-export' ? 'active' : '' }}">HTML 5 Export</a></li>
-									<li><a href="{{route('datatable-ext-key-table')}}" class="{{ Route::currentRouteName()=='datatable-ext-key-table' ? 'active' : '' }}">Key Table</a></li>
-									<li><a href="{{route('datatable-ext-responsive')}}" class="{{ Route::currentRouteName()=='datatable-ext-responsive' ? 'active' : '' }}">Responsive</a></li>
-									<li><a href="{{route('datatable-ext-row-reorder')}}" class="{{ Route::currentRouteName()=='datatable-ext-row-reorder' ? 'active' : '' }}">Row Reorder</a></li>
-									<li><a href="{{route('datatable-ext-scroller')}}" class="{{ Route::currentRouteName()=='datatable-ext-scroller' ? 'active' : '' }}">Scroller</a></li>
-								</ul>
-							</li>
-							<li><a href="{{route('jsgrid-table')}}" class="{{ Route::currentRouteName()=='jsgrid-table' ? 'active' : '' }}">Js Grid Table </a></li>
-						</ul>
-					</li>
-					{{-- <li class="sidebar-main-title">
+								</ul> --}}
+                            <li><a href="{{ route('form-validation') }}"
+                                    class="{{ Route::currentRouteName() == 'form-validation' ? 'active' : '' }}">Form
+                                    Validation</a></li>
+                            <li><a href="{{ route('base-input') }}"
+                                    class="{{ Route::currentRouteName() == 'base-input' ? 'active' : '' }}">Base
+                                    Inputs</a></li>
+                            <li><a href="{{ route('radio-checkbox-control') }}"
+                                    class="{{ Route::currentRouteName() == 'radio-checkbox-control' ? 'active' : '' }}">Checkbox
+                                    & Radio</a></li>
+                            <li><a href="{{ route('input-group') }}"
+                                    class="{{ Route::currentRouteName() == 'input-group' ? 'active' : '' }}">Input
+                                    Groups</a></li>
+                            <li><a href="{{ route('megaoptions') }}"
+                                    class="{{ Route::currentRouteName() == 'megaoptions' ? 'active' : '' }}">Mega
+                                    Options</a></li>
+                    </li>
+                    <li>
+                        <a class="submenu-title {{ in_array(Route::currentRouteName(), ['datepicker', 'time-picker', 'datetimepicker', 'daterangepicker', 'touchspin', 'select2', 'switch', 'typeahead', 'clipboard']) ? 'active' : '' }}"
+                            href="#">Form Widgets
+                            <div class="according-menu"><i
+                                    class="fa fa-angle-{{ in_array(Route::currentRouteName(), ['datepicker', 'time-picker', 'datetimepicker', 'daterangepicker', 'touchspin', 'select2', 'switch', 'typeahead', 'clipboard']) ? 'down' : 'right' }}"></i>
+                            </div>
+                        </a>
+                        <ul class="nav-sub-childmenu submenu-content"
+                            style="display: {{ in_array(Route::currentRouteName(), ['datepicker', 'time-picker', 'datetimepicker', 'daterangepicker', 'touchspin', 'select2', 'switch', 'typeahead', 'clipboard']) ? 'block' : 'none;' }};">
+                            <li><a href="{{ route('datepicker') }}"
+                                    class="{{ Route::currentRouteName() == 'datepicker' ? 'active' : '' }}">Datepicker</a>
+                            </li>
+                            <li><a href="{{ route('time-picker') }}"
+                                    class="{{ Route::currentRouteName() == 'time-picker' ? 'active' : '' }}">Timepicker</a>
+                            </li>
+                            <li><a href="{{ route('datetimepicker') }}"
+                                    class="{{ Route::currentRouteName() == 'datetimepicker' ? 'active' : '' }}">Datetimepicker</a>
+                            </li>
+                            <li><a href="{{ route('daterangepicker') }}"
+                                    class="{{ Route::currentRouteName() == 'daterangepicker' ? 'active' : '' }}">Daterangepicker</a>
+                            </li>
+                            <li><a href="{{ route('touchspin') }}"
+                                    class="{{ Route::currentRouteName() == 'touchspin' ? 'active' : '' }}">Touchspin</a>
+                            </li>
+                            <li><a href="{{ route('select2') }}"
+                                    class="{{ Route::currentRouteName() == 'select2' ? 'active' : '' }}">Select2</a></li>
+                            <li><a href="{{ route('switch') }}"
+                                    class="{{ Route::currentRouteName() == 'switch' ? 'active' : '' }}">Switch</a></li>
+                            <li><a href="{{ route('typeahead') }}"
+                                    class="{{ Route::currentRouteName() == 'typeahead' ? 'active' : '' }}">Typeahead</a>
+                            </li>
+                            <li><a href="{{ route('clipboard') }}"
+                                    class="{{ Route::currentRouteName() == 'clipboard' ? 'active' : '' }}">Clipboard</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="submenu-title {{ in_array(Route::currentRouteName(), ['default-form', 'form-wizard', 'form-wizard-two', 'form-wizard-three']) ? 'active' : '' }}"
+                            href="#">Form Layout
+                            <div class="according-menu"><i
+                                    class="fa fa-angle-{{ in_array(Route::currentRouteName(), ['default-form', 'form-wizard', 'form-wizard-two', 'form-wizard-three']) ? 'down' : 'right' }}"></i>
+                            </div>
+                        </a>
+                        <ul class="nav-sub-childmenu submenu-content"
+                            style="display: {{ in_array(Route::currentRouteName(), ['default-form', 'form-wizard', 'form-wizard-two', 'form-wizard-three']) ? 'block' : 'none;' }};">
+                            <li><a href="{{ route('default-form') }}"
+                                    class="{{ Route::currentRouteName() == 'default-form' ? 'active' : '' }}">Default
+                                    Forms</a></li>
+                            <li><a href="{{ route('form-wizard') }}"
+                                    class="{{ Route::currentRouteName() == 'form-wizard' ? 'active' : '' }}">Form Wizard
+                                    1</a></li>
+                            <li><a href="{{ route('form-wizard-two') }}"
+                                    class="{{ Route::currentRouteName() == 'form-wizard-two' ? 'active' : '' }}">Form
+                                    Wizard 2</a></li>
+                            <li><a href="{{ route('form-wizard-three') }}"
+                                    class="{{ Route::currentRouteName() == 'form-wizard-three' ? 'active' : '' }}">Form
+                                    Wizard 3</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                </li>
+                <li class="sidebar-list">
+                    <a class="sidebar-link sidebar-title {{ request()->route()->getPrefix() == '/tables'? 'active': '' }}"
+                        href="#"><i data-feather="server"></i><span>{{ trans('lang.Tables') }}</span>
+                        <div class="according-menu"><i
+                                class="fa fa-angle-{{ request()->route()->getPrefix() == '/tables'? 'down': 'right' }}"></i>
+                        </div>
+                    </a>
+                    <ul class="sidebar-submenu"
+                        style="display: {{ request()->route()->getPrefix() == '/tables'? 'block;': 'none;' }}">
+                        <li>
+                            <a class="submenu-title  {{ in_array(Route::currentRouteName(), ['bootstrap-basic-table', 'bootstrap-sizing-table', 'bootstrap-sizing-table', 'bootstrap-border-table', 'bootstrap-styling-table', 'table-components']) ? 'active' : '' }}"
+                                href="#">Bootstrap Tables
+                                <div class="according-menu"><i
+                                        class="fa fa-angle-{{ in_array(Route::currentRouteName(), ['bootstrap-basic-table', 'bootstrap-sizing-table', 'bootstrap-sizing-table', 'bootstrap-border-table', 'bootstrap-styling-table', 'table-components']) ? 'down' : 'right' }}"></i>
+                                </div>
+                            </a>
+                            <ul class="nav-sub-childmenu submenu-content"
+                                style="display: {{ in_array(Route::currentRouteName(), ['bootstrap-basic-table', 'bootstrap-sizing-table', 'bootstrap-sizing-table', 'bootstrap-border-table', 'bootstrap-styling-table', 'table-components']) ? 'block' : 'none;' }};">
+                                <li><a href="{{ route('bootstrap-basic-table') }}"
+                                        class="{{ Route::currentRouteName() == 'bootstrap-basic-table' ? 'active' : '' }}">Basic
+                                        Tables</a></li>
+                                <li><a href="{{ route('bootstrap-sizing-table') }}"
+                                        class="{{ Route::currentRouteName() == 'bootstrap-sizing-table' ? 'active' : '' }}">Sizing
+                                        Tables</a></li>
+                                <li><a href="{{ route('bootstrap-border-table') }}"
+                                        class="{{ Route::currentRouteName() == 'bootstrap-border-table' ? 'active' : '' }}">Border
+                                        Tables</a></li>
+                                <li><a href="{{ route('bootstrap-styling-table') }}"
+                                        class="{{ Route::currentRouteName() == 'bootstrap-styling-table' ? 'active' : '' }}">Styling
+                                        Tables</a></li>
+                                <li><a href="{{ route('table-components') }}"
+                                        class="{{ Route::currentRouteName() == 'table-components' ? 'active' : '' }}">Table
+                                        components</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="submenu-title  {{ in_array(Route::currentRouteName(), ['datatable-basic-init', 'datatable-advance', 'datatable-styling', 'datatable-ajax', 'datatable-server-side', 'datatable-plugin', 'datatable-api']) ? 'active' : '' }}"
+                                href="#">Data Tables
+                                <div class="according-menu"><i
+                                        class="fa fa-angle-{{ in_array(Route::currentRouteName(), ['datatable-basic-init', 'datatable-advance', 'datatable-styling', 'datatable-ajax', 'datatable-server-side', 'datatable-plugin', 'datatable-api', 'datatable-data-source']) ? 'down' : 'right' }}"></i>
+                                </div>
+                            </a>
+                            <ul class="nav-sub-childmenu submenu-content"
+                                style="display: {{ in_array(Route::currentRouteName(), ['datatable-basic-init', 'datatable-advance', 'datatable-styling', 'datatable-ajax', 'datatable-server-side', 'datatable-plugin', 'datatable-api', 'datatable-data-source']) ? 'block' : 'none;' }};">
+                                <li><a href="{{ route('datatable-basic-init') }}"
+                                        class="{{ Route::currentRouteName() == 'datatable-basic-init' ? 'active' : '' }}">Basic
+                                        Init</a></li>
+                                <li><a href="{{ route('datatable-advance') }}"
+                                        class="{{ Route::currentRouteName() == 'datatable-advance' ? 'active' : '' }}">Advance
+                                        Init</a></li>
+                                <li><a href="{{ route('datatable-styling') }}"
+                                        class="{{ Route::currentRouteName() == 'datatable-styling' ? 'active' : '' }}">Styling</a>
+                                </li>
+                                <li><a href="{{ route('datatable-ajax') }}"
+                                        class="{{ Route::currentRouteName() == 'datatable-ajax' ? 'active' : '' }}">AJAX</a>
+                                </li>
+                                <li><a href="{{ route('datatable-server-side') }}"
+                                        class="{{ Route::currentRouteName() == 'datatable-server-side' ? 'active' : '' }}">Server
+                                        Side</a></li>
+                                <li><a href="{{ route('datatable-plugin') }}"
+                                        class="{{ Route::currentRouteName() == 'datatable-plugin' ? 'active' : '' }}">Plug-in</a>
+                                </li>
+                                <li><a href="{{ route('datatable-api') }}"
+                                        class="{{ Route::currentRouteName() == 'datatable-api' ? 'active' : '' }}">API</a>
+                                </li>
+                                <li><a href="{{ route('datatable-data-source') }}"
+                                        class="{{ Route::currentRouteName() == 'datatable-data-source' ? 'active' : '' }}">Data
+                                        Sources</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="submenu-title {{ in_array(Route::currentRouteName(), ['datatable-ext-autofill', 'datatable-ext-basic-button', 'datatable-ext-col-reorder', 'datatable-ext-fixed-header', 'datatable-ext-html-5-data-export', 'datatable-ext-responsive', 'datatable-ext-row-reorder', 'datatable-ext-scroller']) ? 'active' : '' }}"
+                                href="#">Ex. Data Tables
+                                <div class="according-menu"><i
+                                        class="fa fa-angle-{{ in_array(Route::currentRouteName(), ['datatable-ext-autofill', 'datatable-ext-basic-button', 'datatable-ext-col-reorder', 'datatable-ext-fixed-header', 'datatable-ext-html-5-data-export', 'datatable-ext-key-table', 'datatable-ext-responsive', 'datatable-ext-row-reorder', 'datatable-ext-scroller']) ? 'down' : 'right' }}"></i>
+                                </div>
+                            </a>
+                            <ul class="nav-sub-childmenu submenu-content"
+                                style="display: {{ in_array(Route::currentRouteName(), ['datatable-ext-autofill', 'datatable-ext-basic-button', 'datatable-ext-col-reorder', 'datatable-ext-fixed-header', 'datatable-ext-html-5-data-export', 'datatable-ext-key-table', 'datatable-ext-responsive', 'datatable-ext-row-reorder', 'datatable-ext-scroller']) ? 'block' : 'none;' }};">
+                                <li><a href="{{ route('datatable-ext-autofill') }}"
+                                        class="{{ Route::currentRouteName() == 'datatable-ext-autofill' ? 'active' : '' }}">Auto
+                                        Fill</a></li>
+                                <li><a href="{{ route('datatable-ext-basic-button') }}"
+                                        class="{{ Route::currentRouteName() == 'datatable-ext-basic-button' ? 'active' : '' }}">Basic
+                                        Button</a></li>
+                                <li><a href="{{ route('datatable-ext-col-reorder') }}"
+                                        class="{{ Route::currentRouteName() == 'datatable-ext-col-reorder' ? 'active' : '' }}">Column
+                                        Reorder</a></li>
+                                <li><a href="{{ route('datatable-ext-fixed-header') }}"
+                                        class="{{ Route::currentRouteName() == 'datatable-ext-fixed-header' ? 'active' : '' }}">Fixed
+                                        Header</a></li>
+                                <li><a href="{{ route('datatable-ext-html-5-data-export') }}"
+                                        class="{{ Route::currentRouteName() == 'datatable-ext-html-5-data-export' ? 'active' : '' }}">HTML
+                                        5 Export</a></li>
+                                <li><a href="{{ route('datatable-ext-key-table') }}"
+                                        class="{{ Route::currentRouteName() == 'datatable-ext-key-table' ? 'active' : '' }}">Key
+                                        Table</a></li>
+                                <li><a href="{{ route('datatable-ext-responsive') }}"
+                                        class="{{ Route::currentRouteName() == 'datatable-ext-responsive' ? 'active' : '' }}">Responsive</a>
+                                </li>
+                                <li><a href="{{ route('datatable-ext-row-reorder') }}"
+                                        class="{{ Route::currentRouteName() == 'datatable-ext-row-reorder' ? 'active' : '' }}">Row
+                                        Reorder</a></li>
+                                <li><a href="{{ route('datatable-ext-scroller') }}"
+                                        class="{{ Route::currentRouteName() == 'datatable-ext-scroller' ? 'active' : '' }}">Scroller</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="{{ route('jsgrid-table') }}"
+                                class="{{ Route::currentRouteName() == 'jsgrid-table' ? 'active' : '' }}">Js Grid Table
+                            </a></li>
+                    </ul>
+                </li>
+                 <li class="sidebar-main-title">
 						<div>
 							<h6>{{ trans('lang.Components') }}</h6>
                      		<p>{{ trans('lang.UI Components & Elements') }}</p>
@@ -240,7 +369,7 @@
 						<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/ui-kits' ? 'active' : '' }}" href="#"><i data-feather="box"></i><span>{{ trans('lang.Ui Kits') }}</span>
 							<div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/ui-kits' ? 'down' : 'right' }}"></i></div>
 						</a>
-						<ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/ui-kits' ? 'block;' : 'none;' }}">
+						{{-- <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/ui-kits' ? 'block;' : 'none;' }}">
 							<li><a href="{{route('state-color')}}" class="{{ Route::currentRouteName()=='state-color' ? 'active' : '' }}">State color</a></li>
 							<li><a href="{{route('typography')}}" class="{{ Route::currentRouteName()=='typography' ? 'active' : '' }}">Typography</a></li>
 							<li><a href="{{route('avatars')}}" class="{{ Route::currentRouteName()=='avatars' ? 'active' : '' }}">Avatars</a></li>
@@ -266,7 +395,7 @@
 							</li>
 							<li><a href="{{route('box-shadow')}}" class="{{ Route::currentRouteName()=='box-shadow' ? 'active' : '' }}">Shadow</a></li>
                      		<li><a href="{{route('list')}}" class="{{ Route::currentRouteName()=='list' ? 'active' : '' }}">Lists</a></li>
-						</ul>
+						</ul> --}}
 					</li>
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/bonus-ui' ? 'active' : '' }}" href="#"><i data-feather="folder-plus"></i><span>{{ trans('lang.Bonus Ui') }}</span>
@@ -314,7 +443,7 @@
 	                        <li><a href="{{route('button-builder')}}" class="{{ Route::currentRouteName()=='button-builder' ? 'active' : '' }}">Button Builder</a></li>
 						</ul>
 					</li>
-					<li class="sidebar-list">
+					{{-- <li class="sidebar-list">
 						<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/animation' ? 'active' : '' }}" href="#"><i data-feather="cloud-drizzle"></i><span>{{ trans('lang.Animation') }}</span></a>
 						<ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/animation' ? 'block;' : 'none;' }}">
 							<li><a href="{{route('animate')}}" class="{{ Route::currentRouteName()=='animate' ? 'active' : '' }}">Animate</a></li>
@@ -323,8 +452,8 @@
 	                        <li><a href="{{route('tilt')}}" class="{{ Route::currentRouteName()=='tilt' ? 'active' : '' }}">Tilt Animation</a></li>
 	                        <li><a href="{{route('wow')}}" class="{{ Route::currentRouteName()=='wow' ? 'active' : '' }}">Wow Animation</a></li>
 						</ul>
-					</li>
-					<li class="sidebar-list">
+					</li> --}}
+					{{-- <li class="sidebar-list">
 						<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/icons' ? 'active' : '' }}" href="#"><i data-feather="command"></i><span>{{ trans('lang.Icons') }}</span>
 							<div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/icons' ? 'down' : 'right' }}"></i></div>
 						</a>
@@ -531,10 +660,10 @@
 						</ul>
 					</li>
 					<li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName() == 'knowledgebase' ? 'active' : ''}}" href="{{ route('knowledgebase') }}"><i data-feather="sunrise"> </i><span>{{ trans('lang.Knowledgebase') }}</span></a></li>
-					<li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='support-ticket' ? 'active' : '' }}" href="{{route('support-ticket')}}"><i data-feather="users"> </i><span>{{ trans('lang.Support Ticket') }}</span></a></li>
-				</ul> --}}
-			</div> 
-			<div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
-		</nav>
-	</div>
+					{{-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='support-ticket' ? 'active' : '' }}" href="{{route('support-ticket')}}"><i data-feather="users"> </i><span>{{ trans('lang.Support Ticket') }}</span></a></li> --}}
+				</ul>  
+            </div>
+            <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
+        </nav>
+    </div>
 </div>

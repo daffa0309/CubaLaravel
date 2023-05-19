@@ -15,7 +15,8 @@ class CreateDataKendaraanTable extends Migration
     {
         Schema::create('data_kendaraan', function (Blueprint $table) {
             $table->id('idKendaraan')->unique();
-            $table->string('name');
+            $table->string('tipeKendaraan');
+            $table->string('modelKendaraan');
             $table->integer('idKreditur');
 
         });

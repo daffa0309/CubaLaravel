@@ -16,7 +16,8 @@ class DataKendaraan extends Model
      * @var array
      */
     protected $fillable = [
-        'nama',
+        'tipeKendaraan',
+        'modelKendaraan',
         'idKreditur'
     ];
     protected $primaryKey = 'idKendaraan';

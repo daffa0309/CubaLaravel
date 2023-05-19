@@ -21,9 +21,11 @@ class CreateDataKrediturTable extends Migration
             $table->string('telepon');
             $table->string('tanggalLahir');
             $table->string('tempatLahir');
+            $table->string('ktpImage');
+            $table->string('bpkbImage');
             $table->string('pendidikanterakhir');
             $table->string('alasan');
-            $table->integer('idKendaraan')->unique();
+
         });
     }
 
