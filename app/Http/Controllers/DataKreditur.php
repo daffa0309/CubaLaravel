@@ -34,13 +34,13 @@ class DataKreditur extends Controller
             $bpkb = $image_name;
         }
         $data = array('name' => $namaKreditur, "nik" => $nik, "jeniskelamin" => $jenisKelamin, "telepon" => $nomorTelp, "tanggalLahir" => $tanggalLahir, "tempatLahir" => $tempatLahir,  "alasan" => $alasan, "pendidikanTerakhir" => $pendidikanTerakhir, "ktpImage" => $ktp, "bpkbImage" => $bpkb);
-        $id = DB::table('data_kreditur')->insertGetId($data);
+        $id = DB::table('data_krediturs')->insertGetId($data);
 
         //Data Kendaraan
         $tipeKendaraan = $request->input('tipeKendaraan');
         $modelKendaraan = $request->input('modelKendaraan');
         $dataKendaraan = array('tipeKendaraan' => $tipeKendaraan, "modelKendaraan" => $modelKendaraan, "idKreditur"=> $id);
-        DB::table('data_kendaraan')->insert($dataKendaraan);
+        DB::table('data_kendaraans')->insert($dataKendaraan);
 
         //Data Penilaian
         $umurKreditur = $request->input('umurKreditur');
@@ -50,8 +50,8 @@ class DataKreditur extends Controller
         $tanggungan = $request->input('tanggungan');
         $namaPemilikKendaraan = $request->input('namaPemilikKendaraan');
         $statusTempatTinggal = $request->input('statusTempatTinggal');
-        $dataPenilaian = array('C1' => $umurKreditur, "C2" => $umurKendaraan, "C3" => $pekerjaan, "C4" => $penghasilan, "C5" => $tanggungan, "C6" => $namaPemilikKendaraan, "C7" => $statusTempatTinggal, "idKreditur"=> $id);
-        DB::table('data_penilaian')->insert($dataPenilaian);
+        $dataPenilaian = array('C1' => $statusTempatTinggal, "C2" => $penghasilan, "C3" => $pekerjaan, "C4" => $namaPemilikKendaraan, "C5" => $umurKendaraan, "C6" => $umurKreditur, "C7" => $tanggungan, "idKreditur"=> $id);
+        DB::table('data_penilaians')->insert($dataPenilaian);
         return redirect()->route('index');
     }
 }

@@ -152,12 +152,12 @@
                                             <select required class="form-select digits" name="umurKreditur"
                                                 id="umurKreditur">
                                                 <option selected="" disabled="" value="">Pilih Umur...
-                                                </option>
-                                                <option value="1">17 - 23</option>
-                                                <option value="2">46 - 55 </option>
-                                                <option value="3">24 - 26 </option>
-                                                <option value="4">36 - 45 </option>
-                                                <option value="5">27 - 35 </option>
+                                                </option> 
+                                                <option value="1">27 - 35</option>
+                                                <option value="2">17 - 23</option>
+                                                <option value="3">36 - 45 </option>
+                                                <option value="4">24 - 26 </option>
+                                                <option value="5">46 - 55 </option>
 
                                             </select>
                                             <div class="invalid-feedback">Please provide a valid city.</div>
@@ -198,11 +198,11 @@
                                                 <option selected="" disabled="" value="">Pilih Umur
                                                     Kendaraan...
                                                 </option>
-                                                <option value="1">1 Tahun</option>
-                                                <option value="2">2 - 3 Tahun</option>
-                                                <option value="3">4 - 5 Tahun </option>
-                                                <option value="4">6 Tahun </option>
-                                                <option value="5">7 Tahun </option>
+                                                <option value="5">10 Tahun</option>
+                                                <option value="4">7 - 8 Tahun</option>
+                                                <option value="3">5 - 6 Tahun </option>
+                                                <option value="2">3 - 4 Tahun </option>
+                                                <option value="1">1 - 2 Tahun </option>
 
                                             </select>
                                             <div class="invalid-feedback">Please provide a valid city.</div>

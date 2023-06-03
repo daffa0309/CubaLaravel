@@ -43,12 +43,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($users as $data)
-                                        <tr>
-                                            <td>{{ $data->name }}</td>
-                                            <td>{{ $data->name }}</td>
-                                        </tr>
-                                    @endforeach
+
                                 </tbody>
                             </table>
                         </div>
@@ -80,12 +75,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($users as $data)
-                                        <tr>
-                                            <td>{{ $data->name }}</td>
-                                            <td>{{ $data->name }}</td>
-                                        </tr>
-                                    @endforeach
+
                                 </tbody>
                             </table>
                         </div>
@@ -120,16 +110,17 @@
                                     </tr>
                                 </thead>
                                 <tbody style="center">
-                                    @foreach ($users as $data)
+                                    @foreach ($matriks as $data)
                                         <tr>
-                                            <td>&nbsp; {{ $data->name }}</td>
-                                            <td>&nbsp; {{ $data->C1 }}</td>
-                                            <td>&nbsp;{{ $data->C2 }}</td>
-                                            <td>&nbsp;{{ $data->C3 }}</td>
-                                            <td>&nbsp;{{ $data->C4 }}</td>
-                                            <td>&nbsp;{{ $data->C5 }}</td>
-                                            <td>&nbsp;{{ $data->C6 }}</td>
-                                            <td>&nbsp;{{ $data->C7 }}</td>
+                                            {{-- <td>&nbsp; {{ $data['name'] }}</td> --}}
+
+                                            <td>&nbsp; {{ $data['C1'] }}</td>
+                                            <td>&nbsp;{{ $data['C2'] }}</td>
+                                            <td>&nbsp;{{ $data['C3'] }}</td>
+                                            <td>&nbsp;{{ $data['C4'] }}</td>
+                                            <td>&nbsp;{{ $data['C5'] }}</td>
+                                            <td>&nbsp;{{ $data['C6'] }}</td>
+                                            <td>&nbsp;{{ $data['C7'] }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

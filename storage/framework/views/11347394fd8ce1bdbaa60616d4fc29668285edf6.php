@@ -43,12 +43,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <tr>
-                                            <td><?php echo e($data->name); ?></td>
-                                            <td><?php echo e($data->name); ?></td>
-                                        </tr>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
                                 </tbody>
                             </table>
                         </div>
@@ -80,12 +75,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <tr>
-                                            <td><?php echo e($data->name); ?></td>
-                                            <td><?php echo e($data->name); ?></td>
-                                        </tr>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
                                 </tbody>
                             </table>
                         </div>
@@ -120,16 +110,17 @@
                                     </tr>
                                 </thead>
                                 <tbody style="center">
-                                    <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php $__currentLoopData = $matriks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <tr>
-                                            <td>&nbsp; <?php echo e($data->name); ?></td>
-                                            <td>&nbsp; <?php echo e($data->C1); ?></td>
-                                            <td>&nbsp;<?php echo e($data->C2); ?></td>
-                                            <td>&nbsp;<?php echo e($data->C3); ?></td>
-                                            <td>&nbsp;<?php echo e($data->C4); ?></td>
-                                            <td>&nbsp;<?php echo e($data->C5); ?></td>
-                                            <td>&nbsp;<?php echo e($data->C6); ?></td>
-                                            <td>&nbsp;<?php echo e($data->C7); ?></td>
+                                            
+
+                                            <td>&nbsp; <?php echo e($data['C1']); ?></td>
+                                            <td>&nbsp;<?php echo e($data['C2']); ?></td>
+                                            <td>&nbsp;<?php echo e($data['C3']); ?></td>
+                                            <td>&nbsp;<?php echo e($data['C4']); ?></td>
+                                            <td>&nbsp;<?php echo e($data['C5']); ?></td>
+                                            <td>&nbsp;<?php echo e($data['C6']); ?></td>
+                                            <td>&nbsp;<?php echo e($data['C7']); ?></td>
                                         </tr>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>

@@ -198,11 +198,11 @@
                                                 <option selected="" disabled="" value="">Pilih Umur
                                                     Kendaraan...
                                                 </option>
-                                                <option value="1">1 Tahun</option>
-                                                <option value="2">2 - 3 Tahun</option>
-                                                <option value="3">4 - 5 Tahun </option>
-                                                <option value="4">6 Tahun </option>
-                                                <option value="5">7 Tahun </option>
+                                                <option value="1">10 Tahun</option>
+                                                <option value="2">7 - 8 Tahun</option>
+                                                <option value="3">5 - 6 Tahun </option>
+                                                <option value="4">3 - 4 Tahun </option>
+                                                <option value="5">1 - 2 Tahun </option>
 
                                             </select>
                                             <div class="invalid-feedback">Please provide a valid city.</div>
@@ -262,11 +262,11 @@
                                                 id="tanggungan">
                                                 <option selected="" disabled="" value="">Pilih Tanggungan...
                                                 </option>
-                                                <option value="1">Tidak Ada</option>
-                                                <option value="2">1 Tanggungan</option>
+                                                <option value="5">Tidak Ada</option>
+                                                <option value="4">1 Tanggungan</option>
                                                 <option value="3">2 Tanggungan</option>
-                                                <option value="4">3 - 5 Tanggungan</option>
-                                                <option value="5">Lebih dari 5 Tanggungan</option>
+                                                <option value="2">3 - 5 Tanggungan</option>
+                                                <option value="1">Lebih dari 5 Tanggungan</option>
                                             </select>
                                         </div>
                                     </div>
