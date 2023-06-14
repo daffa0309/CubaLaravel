@@ -48,7 +48,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/data-kreditur', [App\Http\Controllers\UserController::class, 'getData'])->name('datatable-basic-init');
     Route::POST('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
     Route::post('/insert/data-kreditur', [App\Http\Controllers\DataKreditur::class, 'insert']);
-    Route::get('{id}/data-kreditur', [App\Http\Controllers\DataKreditur::class, 'getData']);
+    Route::get('{id}/update-kreditur', [App\Http\Controllers\DataKreditur::class, 'updateData']);
+
 
 
 });

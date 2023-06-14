@@ -22,6 +22,7 @@ class UserController extends Controller
             ->leftjoin('data_kendaraans', 'data_krediturs.idKreditur', "=", 'data_kendaraans.idKreditur')
 
             ->get();
+        $lengthUsers = count($users);
         $data = DB::table('data_penilaians')->select('C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7')->get();
         $maxc1 = DB::table('data_penilaians')->max('C1');
         $maxc2 = DB::table('data_penilaians')->max('C2');
@@ -37,6 +38,7 @@ class UserController extends Controller
         $minc5 = DB::table('data_penilaians')->min('C5');
         $minc6 = DB::table('data_penilaians')->min('C6');
         $minc7 = DB::table('data_penilaians')->min('C7');
+        if($lengthUsers > 0){
         // Mengambil Data Normalisasi
         foreach ($users as $row) {
             $matriks[] = [
@@ -52,7 +54,6 @@ class UserController extends Controller
                 'visible' =>($row->visible)
             ];
         }
-
         //Perbandingan SI dan PI
 
         $length = count($matriks);
@@ -69,6 +70,7 @@ class UserController extends Controller
 
             ];
         }
+
         $arraysumSI = [];
         for ($i = 0; $i < $length; $i++) {
             $sumSI = 0;
@@ -191,8 +193,11 @@ class UserController extends Controller
 
             ];
         }
-        return view('tables.datatable-basic-init', compact('matriks', 'sipi', 'arraysumSI', 'arraysumPI', 'arraysumPISI', 'finalRank','users'));
+        return view('tables.datatable-basic-init', compact('matriks', 'sipi', 'arraysumSI', 'arraysumPI', 'arraysumPISI', 'finalRank','users','lengthUsers'));
 
+    }else{
+        return view('tables.datatable-basic-init', compact('lengthUsers'));
+    }
         // return view('tables.datatable-basic-init', ['users' => $users,'matrix' => $matriks]);
     }
     function signUp(Request $request)

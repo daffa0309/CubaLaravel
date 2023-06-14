@@ -158,9 +158,9 @@
                                                 <option selected="" disabled="" value="">Pilih Umur...
                                                 </option> 
                                                 <option value="1">27 - 35</option>
-                                                <option value="2">17 - 23</option>
-                                                <option value="3">36 - 45 </option>
-                                                <option value="4">24 - 26 </option>
+                                                <option value="2">36 - 45</option>
+                                                <option value="3">24 - 26 </option>
+                                                <option value="4">17 - 23 </option>
                                                 <option value="5">46 - 55 </option>
 
                                             </select>
@@ -324,9 +324,6 @@
 @endsection
 
 @section('script')
-<script>
-    swal("Good job!", "You clicked the button!", "success");
-</script>
     <script>
         $(function() {
             var $sections = $('.form-section');

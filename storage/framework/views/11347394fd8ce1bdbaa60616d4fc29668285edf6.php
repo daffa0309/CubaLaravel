@@ -19,7 +19,7 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
-    <?php if(Auth::user()->level == 'admin'): ?>
+    <?php if(Auth::user()->level == 'admin' && $lengthUsers > 0): ?>
         <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             
             <div class="modal fade" tabindex="-1" id="getData<?php echo e($value->idKreditur); ?>" role="dialog" aria-hidden="true"
@@ -438,15 +438,15 @@
                                                 <?php if($final['visible'] == 0): ?>
                                                     <td>Menunggu Untuk DiReview </td>
                                                 <?php elseif($final['visible'] == 1): ?>
-                                                    <td>Data telah disimpan </td>
+                                                    <td>Data telah diterima </td>
                                                 <?php endif; ?>
                                                 <td>&nbsp; &nbsp; <a href="#" class="btn btn-primary btn-sm"
                                                         data-toggle="modal"
                                                         data-target="#getData<?php echo e($final['idKreditur']); ?>">
-                                                        Buka Modal
+                                                        Lihat Data
                                                     </a>
-                                                    <a class="btn btn-danger" data-confirm-delete="true">Tolak
-                                                        </a>
+                                                    <a href="#" class="btn btn-primary edit-btn" data-id="<?php echo e($final['idKreditur']); ?>">Edit</a>
+
                                                 </td>
                                             </tr>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -459,114 +459,57 @@
             </div>
         </div>
     <?php else: ?>
-        <div class="container-fluid">
-            <div class="row">
-                <!-- Zero Configuration  Starts-->
-                <div class="col-sm-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5>Matriks Table</h5>
-                            <div style="margin-left: 1080px">
-                                <a class="btn btn-primary" href="<?php echo e(route('input-data')); ?>" type="button">Tambah
-                                    Data</a>
-                            </div>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Zero Configuration  Starts-->
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Final Ranking</h5>
+                        <div style="margin-left: 1080px">
+                            <a class="btn btn-primary" href="<?php echo e(route('input-data')); ?>" type="button">Tambah
+                                Data</a>
                         </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="display" id="basic-1">
-                                    <thead>
-                                        <tr>
-                                            <th>Nama</th>
-                                            <th>Status Tempat Tinggal</th>
-                                            <th>Penghasilan</th>
-                                            <th>Pekerjaan</th>
-                                            <th>Nama Pemilik Kendaraan</th>
-                                            <th>Umur Kendaraan</th>
-                                            <th>Umur</th>
-                                            <th>Jumlah Tanggungan</th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php $__currentLoopData = $matriks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <tr>
-                                                <td>&nbsp; <?php echo e($data['name']); ?>
-
-
-                                                <td>&nbsp; <?php echo e($data['C1']); ?></td>
-                                                <td>&nbsp;<?php echo e($data['C2']); ?></td>
-                                                <td>&nbsp;<?php echo e($data['C3']); ?></td>
-                                                <td>&nbsp;<?php echo e($data['C4']); ?></td>
-                                                <td>&nbsp;<?php echo e($data['C5']); ?></td>
-                                                <td>&nbsp;<?php echo e($data['C6']); ?></td>
-                                                <td>&nbsp;<?php echo e($data['C7']); ?></td>
-                                            </tr>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    </tbody>
-                                </table>
-                            </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="display" id="basic-2">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Skor</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                  
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <!-- Zero Configuration  Starts-->
-                <div class="col-sm-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5>Final Ranking</h5>
-                            <div style="margin-left: 1080px">
-                                <a class="btn btn-primary" href="<?php echo e(route('input-data')); ?>" type="button">Tambah
-                                    Data</a>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="display" id="basic-2">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Skor</th>
-                                            <th>Status</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php $__currentLoopData = $finalRank; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $final): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <tr
-                                                style="<?php if($final['finalRank'] >= 2): ?> background-color: lightgreen; <?php else: ?> background-color: lightyellow; <?php endif; ?>">
-                                                <td>&nbsp; <?php echo e($final['name']); ?></td>
-
-                                                <td>&nbsp; <?php echo e($final['finalRank']); ?></td>
-                                                <?php if($final['visible'] == 0): ?>
-                                                    <td>Menunggu Untuk DiReview </td>
-                                                <?php elseif($final['visible'] == 1): ?>
-                                                    <td>Data telah disimpan </td>
-                                                <?php endif; ?>
-                                                <td>&nbsp; <button type="button" class="btn btn-primary btn-sm"
-                                                        data-toggle="modal" data-target="#myModal">
-                                                        Buka Modal
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-
-
         </div>
+    </div>
     <?php endif; ?>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('script'); ?>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.edit-btn').on('click', function(e) {
+            e.preventDefault();
+            var dataId = $(this).data('id');
+            if (confirm('Apakah Anda yakin ingin memperbarui data ini?')) {
+                // Lakukan tindakan redirect ke halaman edit dengan menggunakan dataId
+                window.location.href =  dataId + '/update-kreditur';
+            }
+        });
+    });
+</script>
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
     </script>

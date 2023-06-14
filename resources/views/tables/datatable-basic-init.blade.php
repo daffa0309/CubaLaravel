@@ -19,7 +19,7 @@
 @endsection
 
 @section('content')
-    @if (Auth::user()->level == 'admin')
+    @if (Auth::user()->level == 'admin' && $lengthUsers > 0)
         @foreach ($users as $data => $value)
             {{-- Data Modal --}}
             <div class="modal fade" tabindex="-1" id="getData{{ $value->idKreditur }}" role="dialog" aria-hidden="true"
@@ -438,15 +438,15 @@
                                                 @if ($final['visible'] == 0)
                                                     <td>Menunggu Untuk DiReview </td>
                                                 @elseif($final['visible'] == 1)
-                                                    <td>Data telah disimpan </td>
+                                                    <td>Data telah diterima </td>
                                                 @endif
                                                 <td>&nbsp; &nbsp; <a href="#" class="btn btn-primary btn-sm"
                                                         data-toggle="modal"
                                                         data-target="#getData{{ $final['idKreditur'] }}">
-                                                        Buka Modal
+                                                        Lihat Data
                                                     </a>
-                                                    <a class="btn btn-danger" data-confirm-delete="true">Tolak
-                                                        </a>
+                                                    <a href="#" class="btn btn-primary edit-btn" data-id="{{ $final['idKreditur'] }}">Edit</a>
+
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -459,113 +459,57 @@
             </div>
         </div>
     @else
-        <div class="container-fluid">
-            <div class="row">
-                <!-- Zero Configuration  Starts-->
-                <div class="col-sm-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5>Matriks Table</h5>
-                            <div style="margin-left: 1080px">
-                                <a class="btn btn-primary" href="{{ route('input-data') }}" type="button">Tambah
-                                    Data</a>
-                            </div>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Zero Configuration  Starts-->
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Final Ranking</h5>
+                        <div style="margin-left: 1080px">
+                            <a class="btn btn-primary" href="{{ route('input-data') }}" type="button">Tambah
+                                Data</a>
                         </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="display" id="basic-1">
-                                    <thead>
-                                        <tr>
-                                            <th>Nama</th>
-                                            <th>Status Tempat Tinggal</th>
-                                            <th>Penghasilan</th>
-                                            <th>Pekerjaan</th>
-                                            <th>Nama Pemilik Kendaraan</th>
-                                            <th>Umur Kendaraan</th>
-                                            <th>Umur</th>
-                                            <th>Jumlah Tanggungan</th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($matriks as $data)
-                                            <tr>
-                                                <td>&nbsp; {{ $data['name'] }}
-
-                                                <td>&nbsp; {{ $data['C1'] }}</td>
-                                                <td>&nbsp;{{ $data['C2'] }}</td>
-                                                <td>&nbsp;{{ $data['C3'] }}</td>
-                                                <td>&nbsp;{{ $data['C4'] }}</td>
-                                                <td>&nbsp;{{ $data['C5'] }}</td>
-                                                <td>&nbsp;{{ $data['C6'] }}</td>
-                                                <td>&nbsp;{{ $data['C7'] }}</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="display" id="basic-2">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Skor</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                  
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <!-- Zero Configuration  Starts-->
-                <div class="col-sm-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5>Final Ranking</h5>
-                            <div style="margin-left: 1080px">
-                                <a class="btn btn-primary" href="{{ route('input-data') }}" type="button">Tambah
-                                    Data</a>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="display" id="basic-2">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Skor</th>
-                                            <th>Status</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($finalRank as $final)
-                                            <tr
-                                                style="@if ($final['finalRank'] >= 2) background-color: lightgreen; @else background-color: lightyellow; @endif">
-                                                <td>&nbsp; {{ $final['name'] }}</td>
-
-                                                <td>&nbsp; {{ $final['finalRank'] }}</td>
-                                                @if ($final['visible'] == 0)
-                                                    <td>Menunggu Untuk DiReview </td>
-                                                @elseif($final['visible'] == 1)
-                                                    <td>Data telah disimpan </td>
-                                                @endif
-                                                <td>&nbsp; <button type="button" class="btn btn-primary btn-sm"
-                                                        data-toggle="modal" data-target="#myModal">
-                                                        Buka Modal
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-
-
         </div>
+    </div>
     @endif
 @endsection
 
 @section('script')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.edit-btn').on('click', function(e) {
+            e.preventDefault();
+            var dataId = $(this).data('id');
+            if (confirm('Apakah Anda yakin ingin memperbarui data ini?')) {
+                // Lakukan tindakan redirect ke halaman edit dengan menggunakan dataId
+                window.location.href =  dataId + '/update-kreditur';
+            }
+        });
+    });
+</script>
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
     </script>

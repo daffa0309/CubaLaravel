@@ -12,9 +12,7 @@ class DataKreditur extends Controller
 {
     public function insert(Request $request)
     {
-        $title = 'Pastikan data Anda!';
-        $text = "Apakah ada yakin dengan data yang akan diinput?";
-        confirmDelete($title, $text);
+     
         $ktp = "";
         $bpkb = "";
         $namaKreditur = $request->input('namaKreditur');
@@ -63,9 +61,15 @@ class DataKreditur extends Controller
 
         return redirect()->back();
     }
-    public function getData($id)
+   
+    public function updateData($id)
     {
         $data = DataKrediturs::where('idKreditur',$id)->first();
-        return view('tables.datatable-basic-init',compact('data'));
+        $data->visible = 1;
+        $data->timestamps = false;
+        $data->save();
+        alert()->success('Success','Data Berhasil Diupdate !');
+        return redirect()->back();
+
     }
 }

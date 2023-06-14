@@ -158,9 +158,9 @@
                                                 <option selected="" disabled="" value="">Pilih Umur...
                                                 </option> 
                                                 <option value="1">27 - 35</option>
-                                                <option value="2">17 - 23</option>
-                                                <option value="3">36 - 45 </option>
-                                                <option value="4">24 - 26 </option>
+                                                <option value="2">36 - 45</option>
+                                                <option value="3">24 - 26 </option>
+                                                <option value="4">17 - 23 </option>
                                                 <option value="5">46 - 55 </option>
 
                                             </select>
@@ -314,7 +314,7 @@
                         <div class="form-navigation mt-3">
                             <button class="previous btn btn-primary" type="button">Previous</button>
                             <button class="next btn btn-primary " type="button">Next</button>
-                            <button class="btn btn-success" data-confirm-delete="true" type="submit">Submit</button>
+                            <button class="btn btn-success"  type="submit">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -324,9 +324,6 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('script'); ?>
-<script>
-    swal("Good job!", "You clicked the button!", "success");
-</script>
     <script>
         $(function() {
             var $sections = $('.form-section');
