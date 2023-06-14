@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use RealRashid\SweetAlert\Facades\Alert;
+
 class LoginController extends Controller
 {
     /**
@@ -41,13 +43,14 @@ class LoginController extends Controller
                 DB::beginTransaction();
                 DB::commit();
                 if(Auth::user()->level != ''){
-                    Session::flash('message', "Berhasil Login");
+                    
+                    toast('Berhasil Login','success');
 
                     return redirect('index');
                 }
             }else{
-                $message = "Email atau Password Salah !";
-                return redirect('authentication/login')->with('message',$message);
+                toast('Error Toast','error');
+                return redirect('authentication/login');
             }
 
     }

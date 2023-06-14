@@ -8,9 +8,9 @@
 @endsection
 
 @section('content')
-@if (Session::has('message'))
-   <div class="alert alert-info">{{ Session::get('message') }}</div>
-@endif
+    @if (Session::has('message'))
+        <div class="alert alert-info">{{ Session::get('message') }}</div>
+    @endif
 
     <div class="container-fluid p-0">
         <div class="row m-0">
@@ -29,9 +29,9 @@
                                 <p>Enter your Email & password to login</p>
                                 <div class="form-group">
                                     <label class="col-form-label">Email</label>
-                                    <input class="form-control" name="email"
-                                      placeholder="Input email"  type="email" required="" >
-                                 
+                                    <input class="form-control" name="email" placeholder="Input email" type="email"
+                                        required="">
+
                                 </div>
                                 <div class="form-group">
                                     <label class="col-form-label">Password</label>
@@ -46,9 +46,9 @@
                                     <a class="link" href="{{ route('forget-password') }}">Forgot password?</a> --}}
                                     <button class="btn btn-primary btn-block" type="submit">Sign in</button>
                                 </div>
-                              
+
                                 <p class="mt-4 mb-0">Don't have account?<a class="ms-2"
-                                        href="{{ route('sign-up') }}">Create Account</a></p> 
+                                        href="{{ route('sign-up') }}">Create Account</a></p>
                             </form>
                         </div>
                     </div>
@@ -56,7 +56,16 @@
             </div>
         </div>
     </div>
-@endsection
+    @if (Session::has('message'))
+        <script>
+            swal("Sukses Login!", "{!! Session::get('message') !!}", "success", {
+                button: "OK"
+            })
+        </script>
+        @endif
+    @endsection
 
-@section('script')
-@endsection
+    @section('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.12/sweetalert2.min.js"
+        integrity="sha512-JbRQ4jMeFl9Iem8w6WYJDcWQYNCEHP/LpOA11LaqnbJgDV6Y8oNB9Fx5Ekc5O37SwhgnNJdmnasdwiEdvMjW2Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>@endsection

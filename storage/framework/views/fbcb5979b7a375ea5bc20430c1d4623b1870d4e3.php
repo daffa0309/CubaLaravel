@@ -16,6 +16,8 @@
     <?php echo $__env->make('layouts.simple.css', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <?php echo $__env->yieldContent('style'); ?>
   </head>
+  <script src="<?php echo e(asset('assets/js/bootstrap/bootstrap.bundle.min.js')); ?>"></script>
+
   <body <?php if(Route::current()->getName() == 'index'): ?> onload="startTime()" <?php endif; ?>>
     <?php if(Route::current()->getName() == 'index'): ?> 
       <div class="loader-wrapper">
@@ -77,5 +79,7 @@
             $(".sidebar-submenu" ).css( "display", "block" );
       }
     </script>
+    <?php echo $__env->make('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
   </body>
 </html><?php /**PATH C:\Users\daffa\CubaLaravel\resources\views/layouts/simple/master.blade.php ENDPATH**/ ?>

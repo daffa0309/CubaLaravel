@@ -25,6 +25,9 @@ class CreateDataKreditursTable extends Migration
             $table->string('bpkbImage');
             $table->string('pendidikanterakhir');
             $table->string('alasan');
+            $table->integer('visible');
+            $table->integer('idLogin');
+
 
         });
     }

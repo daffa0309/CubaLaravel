@@ -42,11 +42,13 @@ Route::prefix('bonus-ui')->group(function () {
 Route::view('sign-up', 'authentication.sign-up')->name('sign-up');
 
 Route::middleware(['auth'])->group(function () {
+
     Route::view('index', 'dashboard.index')->name('index');
     Route::view('dashboard-02', 'dashboard.dashboard-02')->name('dashboard-02');
     Route::get('/data-kreditur', [App\Http\Controllers\UserController::class, 'getData'])->name('datatable-basic-init');
     Route::POST('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
     Route::post('/insert/data-kreditur', [App\Http\Controllers\DataKreditur::class, 'insert']);
+    Route::get('{id}/data-kreditur', [App\Http\Controllers\DataKreditur::class, 'getData']);
 
 
 });
@@ -101,7 +103,7 @@ Route::prefix('builders')->group(function () {
 });
 Route::prefix('forms')->group(function () {
     Route::view('form-validation', 'forms.form-validation')->name('form-validation');
-    Route::view('base-input', 'forms.base-input')->name('base-input');
+    Route::view('input-data', 'forms.input-data')->name('input-data');
     Route::view('radio-checkbox-control', 'forms.radio-checkbox-control')->name('radio-checkbox-control');
     Route::view('input-group', 'forms.input-group')->name('input-group');
     Route::view('megaoptions', 'forms.megaoptions')->name('megaoptions');

@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DataKreditur as DataKrediturs;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class DataKreditur extends Controller
 {
     public function insert(Request $request)
     {
+        $title = 'Pastikan data Anda!';
+        $text = "Apakah ada yakin dengan data yang akan diinput?";
+        confirmDelete($title, $text);
         $ktp = "";
         $bpkb = "";
         $namaKreditur = $request->input('namaKreditur');
@@ -19,6 +25,7 @@ class DataKreditur extends Controller
         $tempatLahir = $request->input('tempatLahir');
         $alasan = $request->input('alasan');
         $pendidikanTerakhir = $request->input('pendidikanTerakhir');
+        $idLogin = Auth::user()->id;
         if ($request->hasFile('ktp')) {
             $destination_path = 'public/images/ktp';
             $image = $request->file('ktp');
@@ -33,7 +40,7 @@ class DataKreditur extends Controller
             $path = $request->file('bpkb')->storeAs($destination_path, $image_name);
             $bpkb = $image_name;
         }
-        $data = array('name' => $namaKreditur, "nik" => $nik, "jeniskelamin" => $jenisKelamin, "telepon" => $nomorTelp, "tanggalLahir" => $tanggalLahir, "tempatLahir" => $tempatLahir,  "alasan" => $alasan, "pendidikanTerakhir" => $pendidikanTerakhir, "ktpImage" => $ktp, "bpkbImage" => $bpkb);
+        $data = array('name' => $namaKreditur, "nik" => $nik, "jeniskelamin" => $jenisKelamin, "telepon" => $nomorTelp, "tanggalLahir" => $tanggalLahir, "tempatLahir" => $tempatLahir,  "alasan" => $alasan, "pendidikanTerakhir" => $pendidikanTerakhir, "ktpImage" => $ktp, "bpkbImage" => $bpkb, "idLogin" => $idLogin);
         $id = DB::table('data_krediturs')->insertGetId($data);
 
         //Data Kendaraan
@@ -48,10 +55,17 @@ class DataKreditur extends Controller
         $pekerjaan = $request->input('pekerjaan');
         $penghasilan = $request->input('penghasilan');
         $tanggungan = $request->input('tanggungan');
-        $namaPemilikKendaraan = $request->input('namaPemilikKendaraan');
+        $kondisiKendaraan = $request->input('kondisiKendaraan');
         $statusTempatTinggal = $request->input('statusTempatTinggal');
-        $dataPenilaian = array('C1' => $statusTempatTinggal, "C2" => $penghasilan, "C3" => $pekerjaan, "C4" => $namaPemilikKendaraan, "C5" => $umurKendaraan, "C6" => $umurKreditur, "C7" => $tanggungan, "idKreditur"=> $id);
+        $dataPenilaian = array('C1' => $statusTempatTinggal, "C2" => $penghasilan, "C3" => $pekerjaan, "C4" => $kondisiKendaraan, "C5" => $umurKendaraan, "C6" => $umurKreditur, "C7" => $tanggungan, "idKreditur"=> $id);
         DB::table('data_penilaians')->insert($dataPenilaian);
-        return redirect()->route('index');
+        alert()->success('Success','Data Berhasil Disimpan !');
+
+        return redirect()->back();
+    }
+    public function getData($id)
+    {
+        $data = DataKrediturs::where('idKreditur',$id)->first();
+        return view('tables.datatable-basic-init',compact('data'));
     }
 }

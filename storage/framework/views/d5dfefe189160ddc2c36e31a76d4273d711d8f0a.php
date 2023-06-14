@@ -1,22 +1,22 @@
-@extends('layouts.simple.master')
-@section('title', 'Base Inputs')
 
-@section('css')
-@endsection
+<?php $__env->startSection('title', 'Base Inputs'); ?>
 
-@section('style')
-@endsection
+<?php $__env->startSection('css'); ?>
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb-title')
+<?php $__env->startSection('style'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('breadcrumb-title'); ?>
     <h3>Base Inputs</h3>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb-items')
+<?php $__env->startSection('breadcrumb-items'); ?>
     <li class="breadcrumb-item">Form Controls</li>
     <li class="breadcrumb-item active">Base Inputs</li>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <style>
         .form-section {
             display: none;
@@ -30,6 +30,10 @@
             color: red;
         }
     </style>
+
+         <script>
+            swal("Good job!", "You clicked the button!", "success");
+    </script>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -38,7 +42,7 @@
                         <h5>Basic form control</h5>
                     </div>
                     <form action="/insert/data-kreditur"method="post" enctype="multipart/form-data"  class="theme-forest">
-                        @csrf
+                        <?php echo csrf_field(); ?>
 
                         <div class="card-body">
                             <div class="form-section">
@@ -274,16 +278,16 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="mb-3">
-                                            <label for="namaPemilikKendaraan">Nama Pemilik Kendaraan</label>
-                                            <select required class="form-select digits" name="namaPemilikKendaraan"
-                                                id="namaPemilikKendaraan">
-                                                <option selected="" disabled="" value="">Pilih Nama Pemilik Kendaraan...
+                                            <label for="kondisiKendaraan">Kondisi Kendaraan</label>
+                                            <select required class="form-select digits" name="kondisiKendaraan"
+                                                id="kondisiKendaraan">
+                                                <option selected="" disabled="" value="">Pilih Kondisi Kendaraan...
                                                 </option>
-                                                <option value="1">Milik Tetangga</option>
-                                                <option value="2">Milik Perusahaan</option>
-                                                <option value="3">Milik Saudara</option>
-                                                <option value="4">Milik Keluarga</option>
-                                                <option value="5">Milik Sendiri</option>
+                                                <option value="1">Adanya Kerusakan yang serius</option>
+                                                <option value="2">Perlu Beberapa Perbaikan</option>
+                                                <option value="3">Kondisi Kendaraan wajar, memerlukan perawatan Rutin</option>
+                                                <option value="4">Kondisi Kendaraan terawat, tidak perlu perbaikan signifikan</option>
+                                                <option value="5">Kendaraan dalam kondisi sangat baik, tampak seperti baru</option>
                                             </select>
                                         </div>
                                     </div>
@@ -310,16 +314,19 @@
                         <div class="form-navigation mt-3">
                             <button class="previous btn btn-primary" type="button">Previous</button>
                             <button class="next btn btn-primary " type="button">Next</button>
-                            <button class="btn btn-success" type="submit">Submit</button>
+                            <button class="btn btn-success" data-confirm-delete="true" type="submit">Submit</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('script')
+<?php $__env->startSection('script'); ?>
+<script>
+    swal("Good job!", "You clicked the button!", "success");
+</script>
     <script>
         $(function() {
             var $sections = $('.form-section');
@@ -354,11 +361,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
         integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="{{ asset('assets/js/form-validation-custom.js') }}"></script>
+    <script src="<?php echo e(asset('assets/js/form-validation-custom.js')); ?>"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
         integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js"
         integrity="sha512-eyHL1atYNycXNXZMDndxrDhNAegH2BDWt1TmkXJPoGf1WLlNYt08CSjkqF5lnCRmdm3IrkHid8s2jOUY4NIZVQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-@endsection
+   
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.simple.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\daffa\CubaLaravel\resources\views/forms/input-data.blade.php ENDPATH**/ ?>

@@ -2,11 +2,7 @@ $(document).ready(function() {
     $('product-list').DataTable();
     // Basic table example 
     $('#basic-1').DataTable();
-    $('#basic-2').DataTable({
-        "paging":   true,
-        "ordering": false,
-        "info":     false
-    });
+    $('#basic-2').DataTable();
     $('#basic-3').DataTable({
         "order": [[ 3, "desc" ]]
     });

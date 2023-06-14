@@ -14,8 +14,13 @@ class UserController extends Controller
 {
     function getData()
     {
+        $title = 'Tolak Data!';
+        $text = "Apakah ada yakin untuk menolak data?";
+        confirmDelete($title, $text);
         $users =  DB::table('data_krediturs')
             ->leftjoin('data_penilaians', 'data_krediturs.idKreditur', "=", 'data_penilaians.idKreditur')
+            ->leftjoin('data_kendaraans', 'data_krediturs.idKreditur', "=", 'data_kendaraans.idKreditur')
+
             ->get();
         $data = DB::table('data_penilaians')->select('C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7')->get();
         $maxc1 = DB::table('data_penilaians')->max('C1');
@@ -35,16 +40,19 @@ class UserController extends Controller
         // Mengambil Data Normalisasi
         foreach ($users as $row) {
             $matriks[] = [
-             'name' => ($row->name),
-                'C1' => ($row->C1 - $minc1 == 0 ? 0 : ($row->C1 - $minc1) / ($maxc1 - $minc1)),
-                'C2' => ($row->C2 - $minc2 == 0 ? 0 : ($row->C2 - $minc2) / ($maxc2 - $minc2)),
-                'C3' => ($row->C3 - $minc3 == 0 ? 0 : ($row->C3 - $minc3) / ($maxc3 - $minc3)),
-                'C4' => ($row->C4 - $minc4 == 0 ? 0 : ($row->C4 - $minc4) / ($maxc4 - $minc4)),
-                'C5' => ($maxc5   - $row->C5  == 0 ? 0 : ($maxc5   - $row->C5) / ($maxc5 - $minc5)),
-                'C6' => ($maxc6   - $row->C6  == 0 ? 0 : ($maxc6   - $row->C6) / ($maxc6 - $minc6)),
-                'C7' => ($maxc7   - $row->C7  == 0 ? 0 : ($maxc7   - $row->C7) / ($maxc7 - $minc7)),
+                'idKreditur' => ($row->idKreditur),
+                'name' => ($row->name),
+                'C1' => ($row->C1 - $minc1 !=0  ?  ($row->C1 - $minc1) / ($maxc1 - $minc1) : 0),
+                'C2' => ($row->C2 - $minc2 !=0  ?  ($row->C2 - $minc2) / ($maxc2 - $minc2) : 0),
+                'C3' => ($row->C3 - $minc3 !=0  ?  ($row->C3 - $minc3) / ($maxc3 - $minc3) : 0),
+                'C4' => ($row->C4 - $minc4 !=0  ?  ($row->C4 - $minc4) / ($maxc4 - $minc4) : 0),
+                'C5' => ($maxc5   - $row->C5  !=0  ? ($maxc5   - $row->C5) / ($maxc5 - $minc5) : 0),
+                'C6' => ($maxc6   - $row->C6  !=0  ? ($maxc6   - $row->C6) / ($maxc6 - $minc6) : 0),
+                'C7' => ($maxc7   - $row->C7  !=0  ? ($maxc7   - $row->C7) / ($maxc7 - $minc7) : 0),
+                'visible' =>($row->visible)
             ];
         }
+
         //Perbandingan SI dan PI
 
         $length = count($matriks);
@@ -81,11 +89,10 @@ class UserController extends Controller
 
         for ($i = 0; $i < $length; $i++) {
             $namaHasilSi[] = [
-             'name' => ($matriks[$i]['name']),
+                'name' => ($matriks[$i]['name']),
                 'hasilSi' => ($arraysumSI[$i]),
             ];
         }
-        dd($arraysumSI);
 
         $arraysumPI = [];
 
@@ -106,10 +113,10 @@ class UserController extends Controller
             array_push($arraysumPISI, $sumPISI);
         }
         $jumlahPISI = 0;
-        foreach($arraysumPISI as $numbers){
+        foreach ($arraysumPISI as $numbers) {
             $jumlahPISI += $numbers;
         }
-       
+
 
         $arraykaPISI = [];
 
@@ -132,7 +139,7 @@ class UserController extends Controller
         for ($i = 0; $i < $length; $i++) {
             $kbSIPI = 0;
             for ($x = 1; $x < 8; $x++) {
-                $kbSIPI = ($arraysumSI[$i] / $minSUMSI) + ($arraysumPI[$i] / $minSUMPI);
+                $kbSIPI = $arraysumSI[$i] && $minSUMSI && $arraysumPI[$i] && $minSUMPI != 0 ? ($arraysumSI[$i]/ $minSUMSI) + ($arraysumPI[$i] / $minSUMPI) : 0 ;
             }
             array_push($arraykbPISI, $kbSIPI);
         }
@@ -143,7 +150,7 @@ class UserController extends Controller
         for ($i = 0; $i < $length; $i++) {
             $kcSIPI = 0;
             for ($x = 1; $x < 8; $x++) {
-                $kcSIPI = ((0.5* $arraysumSI[$i])+(0.5 * $arraysumPI[$i])) / ((0.5 * $maxSUMSI) + (0.5 * $maxSUMPI));
+                $kcSIPI = ((0.5 * $arraysumSI[$i]) + (0.5 * $arraysumPI[$i])) / ((0.5 * $maxSUMSI) + (0.5 * $maxSUMPI));
             }
             array_push($arraykcPISI, $kcSIPI);
         }
@@ -175,7 +182,16 @@ class UserController extends Controller
             }
             array_push($finalRanking, $kSIPI);
         }
-            return view('tables.datatable-basic-init', compact('matriks', 'sipi','arraysumSI','arraysumPI','arraysumPISI'));
+        for ($i = 0; $i < $length; $i++) {
+            $finalRank[] = [
+                'idKreditur' => ($matriks[$i]['idKreditur']),
+                'name' => ($matriks[$i]['name']),
+                'finalRank' => (($finalRanking[$i])),
+                'visible' => ($matriks[$i]['visible']),
+
+            ];
+        }
+        return view('tables.datatable-basic-init', compact('matriks', 'sipi', 'arraysumSI', 'arraysumPI', 'arraysumPISI', 'finalRank','users'));
 
         // return view('tables.datatable-basic-init', ['users' => $users,'matrix' => $matriks]);
     }

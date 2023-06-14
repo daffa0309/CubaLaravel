@@ -16,6 +16,8 @@
     @include('layouts.simple.css')
     @yield('style')
   </head>
+  <script src="{{ asset('assets/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
+
   <body @if(Route::current()->getName() == 'index') onload="startTime()" @endif>
     @if(Route::current()->getName() == 'index') 
       <div class="loader-wrapper">
@@ -77,5 +79,7 @@
             $(".sidebar-submenu" ).css( "display", "block" );
       }
     </script>
+    @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
+
   </body>
 </html>

@@ -1,22 +1,22 @@
+@extends('layouts.simple.master')
+@section('title', 'Base Inputs')
 
-<?php $__env->startSection('title', 'Base Inputs'); ?>
+@section('css')
+@endsection
 
-<?php $__env->startSection('css'); ?>
-<?php $__env->stopSection(); ?>
+@section('style')
+@endsection
 
-<?php $__env->startSection('style'); ?>
-<?php $__env->stopSection(); ?>
-
-<?php $__env->startSection('breadcrumb-title'); ?>
+@section('breadcrumb-title')
     <h3>Base Inputs</h3>
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection('breadcrumb-items'); ?>
+@section('breadcrumb-items')
     <li class="breadcrumb-item">Form Controls</li>
     <li class="breadcrumb-item active">Base Inputs</li>
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection('content'); ?>
+@section('content')
     <style>
         .form-section {
             display: none;
@@ -42,7 +42,7 @@
                         <h5>Basic form control</h5>
                     </div>
                     <form action="/insert/data-kreditur"method="post" enctype="multipart/form-data"  class="theme-forest">
-                        <?php echo csrf_field(); ?>
+                        @csrf
 
                         <div class="card-body">
                             <div class="form-section">
@@ -314,16 +314,16 @@
                         <div class="form-navigation mt-3">
                             <button class="previous btn btn-primary" type="button">Previous</button>
                             <button class="next btn btn-primary " type="button">Next</button>
-                            <button class="btn btn-success" type="submit">Submit</button>
+                            <button class="btn btn-success"  type="submit">Submit</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection('script'); ?>
+@section('script')
 <script>
     swal("Good job!", "You clicked the button!", "success");
 </script>
@@ -361,7 +361,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
         integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="<?php echo e(asset('assets/js/form-validation-custom.js')); ?>"></script>
+    <script src="{{ asset('assets/js/form-validation-custom.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
         integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -369,6 +369,4 @@
         integrity="sha512-eyHL1atYNycXNXZMDndxrDhNAegH2BDWt1TmkXJPoGf1WLlNYt08CSjkqF5lnCRmdm3IrkHid8s2jOUY4NIZVQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
    
-<?php $__env->stopSection(); ?>
-
-<?php echo $__env->make('layouts.simple.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\daffa\CubaLaravel\resources\views/forms/base-input.blade.php ENDPATH**/ ?>
+@endsection
