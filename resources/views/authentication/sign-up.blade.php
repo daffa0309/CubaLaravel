@@ -9,6 +9,11 @@
 
 
 @section('content')
+@if (session()->has('success'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">{{ session('success') }}
+<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
     <div class="container-fluid p-0">
         <div class="row m-0">
             <div class="col-12 p-0">
@@ -20,7 +25,7 @@
                                     class="img-fluid for-dark" src="{{ asset('assets/images/logo/logo_dark.png') }}"
                                     alt="looginpage"></a></div>
                         <div class="login-main">
-                            <form action="/authentication/signup"method="post" novalidate="" class="theme-form">
+                            <form action="/authentication/signup"method="post"  class="theme-form">
                                 @csrf
 
                                 <h4>Create your account</h4>
@@ -29,39 +34,57 @@
                                     <label class="col-form-label pt-0">Your Name</label>
                                     <div class="row g-2">
                                         <div class="col-6">
-                                            <input class="form-control" name="firstName" type="text" required=""
+                                            <input class="form-control @error('firstName') is-invalid @enderror" value="{{ old('firstName') }}" name="firstName" type="text" required=""
                                                 placeholder="First name">
-                                            <div class="invalid-feedback">Please provide a valid city.</div>
-
+                                                @error('firstName')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
                                         <div class="col-6">
-                                            <input class="form-control" name="lastName" type="text" required=""
+                                            <input class="form-control @error('lastName') is-invalid @enderror" value="{{ old('lastName') }}" name="lastName" type="text" required=""
                                                 placeholder="Last name">
-                                            <div class="invalid-feedback">Please provide a valid city.</div>
-
+                                                @error('lastName')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-form-label">Email Address</label>
-                                    <input class="form-control" type="email" name="email" required=""
-                                        placeholder="Test@gmail.com">
-
+                                    <label class="col-form-label">Email</label>
+                                    <input class="form-control @error('email') is-invalid @enderror" name="email"
+                                        placeholder="Input email" type="email" value="{{ old('email') }}" required="">
+                                    @error('email')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label class="col-form-label">Password</label>
-                                    <input class="form-control" type="password" name="password" required=""
+                                    <input class="form-control @error('password') is-invalid @enderror" type="password"  name="password" required=""
                                         placeholder="*********">
                                     <div class="show-hide"><span class="show"></span></div>
-
+                                    @error('password')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
 
                                 </div>
                                 <div class="form-group">
                                     <label class="col-form-label">Confirm Password</label>
-                                    <input class="form-control" name="password_confirmation" type="password" required=""
+                                    <input class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" type="password" required=""
                                         placeholder="*********">
                                     <div class="show-hide"><span class="show"></span></div>
-
+                                    @error('password_confirmation')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
 
                                 </div>
                                 <div class="form-group mb-0">

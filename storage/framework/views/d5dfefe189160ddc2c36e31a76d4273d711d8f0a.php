@@ -31,8 +31,8 @@
         }
     </style>
 
-         <script>
-            swal("Good job!", "You clicked the button!", "success");
+    <script>
+        swal("Good job!", "You clicked the button!", "success");
     </script>
     <div class="container-fluid">
         <div class="row">
@@ -41,33 +41,35 @@
                     <div class="card-header">
                         <h5>Basic form control</h5>
                     </div>
-                    <form action="/insert/data-kreditur"method="post" enctype="multipart/form-data"  class="theme-forest">
+                    <form action="/insert/data-kreditur"method="post" enctype="multipart/form-data" class="theme-forest">
                         <?php echo csrf_field(); ?>
 
                         <div class="card-body">
                             <div class="form-section">
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="mb-3">
-                                            <label for="namaKreditur">Nama Kreditur</label>
-                                            <input class="form-control" required name="namaKreditur" id="namaKreditur"
-                                                type="text" placeholder="Masukkan Nama">
-                                            <div class="invalid-feedback">Please provide a valid city.</div>
+                                <fieldset>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-6">
+                                                <label for="namaKreditur">Nama Kreditur</label>
+                                                <input class="form-control" required name="namaKreditur" id="namaKreditur"
+                                                    type="text" placeholder="Masukkan Nama">
+                                                <div class="invalid-feedback">Please provide a valid city.</div>
 
+                                            </div>
+                                        </div>
+
+                                        <div class="col">
+                                            <div class="mb-6">
+                                                <label for="nik">NIK Kreditur</label>
+                                                <input class="form-control" name="nik" id="nik" type="number"
+                                                    required placeholder="421563">
+                                                <div class="invalid-feedback">Please provide a valid city.</div>
+
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="mb-3">
-                                            <label for="nik">NIK Kreditur</label>
-                                            <input class="form-control" name="nik" id="nik" type="number"
-                                                required placeholder="421563">
-                                            <div class="invalid-feedback">Please provide a valid city.</div>
+                                </fieldset>
 
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="row">
                                     <div class="col">
                                         <div class="mb-3">
@@ -156,7 +158,7 @@
                                             <select required class="form-select digits" name="umurKreditur"
                                                 id="umurKreditur">
                                                 <option selected="" disabled="" value="">Pilih Umur...
-                                                </option> 
+                                                </option>
                                                 <option value="1">27 - 35</option>
                                                 <option value="2">36 - 45</option>
                                                 <option value="3">24 - 26 </option>
@@ -188,8 +190,9 @@
                                     <div class="col">
                                         <div class="mb-3">
                                             <label for="modelKendaraan">Model Kendaraan</label>
-                                            <input class="form-control" required name="modelKendaraan" id="modelKendaraan"
-                                                type="text" placeholder="Masukkan Model Kendadraan Anda">
+                                            <input class="form-control" required name="modelKendaraan"
+                                                id="modelKendaraan" type="text"
+                                                placeholder="Masukkan Model Kendadraan Anda">
                                         </div>
                                     </div>
                                 </div>
@@ -224,12 +227,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row"> 
+                                <div class="row">
                                     <div class="col">
                                         <div class="mb-3">
                                             <label for="pekerjaan">Pekerjaan</label>
-                                            <select required class="form-select digits" name="pekerjaan"
-                                                id="pekerjaan">
+                                            <select required class="form-select digits" name="pekerjaan" id="pekerjaan">
                                                 <option selected="" disabled="" value="">Pilih Pekerjaan...
                                                 </option>
                                                 <option value="1">Pensiunan</option>
@@ -281,13 +283,17 @@
                                             <label for="kondisiKendaraan">Kondisi Kendaraan</label>
                                             <select required class="form-select digits" name="kondisiKendaraan"
                                                 id="kondisiKendaraan">
-                                                <option selected="" disabled="" value="">Pilih Kondisi Kendaraan...
+                                                <option selected="" disabled="" value="">Pilih Kondisi
+                                                    Kendaraan...
                                                 </option>
                                                 <option value="1">Adanya Kerusakan yang serius</option>
                                                 <option value="2">Perlu Beberapa Perbaikan</option>
-                                                <option value="3">Kondisi Kendaraan wajar, memerlukan perawatan Rutin</option>
-                                                <option value="4">Kondisi Kendaraan terawat, tidak perlu perbaikan signifikan</option>
-                                                <option value="5">Kendaraan dalam kondisi sangat baik, tampak seperti baru</option>
+                                                <option value="3">Kondisi Kendaraan wajar, memerlukan perawatan Rutin
+                                                </option>
+                                                <option value="4">Kondisi Kendaraan terawat, tidak perlu perbaikan
+                                                    signifikan</option>
+                                                <option value="5">Kendaraan dalam kondisi sangat baik, tampak seperti
+                                                    baru</option>
                                             </select>
                                         </div>
                                     </div>
@@ -298,7 +304,8 @@
                                             <label for="statusTempatTinggal">Status Tempat Tinggal</label>
                                             <select required class="form-select digits" name="statusTempatTinggal"
                                                 id="statusTempatTinggal">
-                                                <option selected="" disabled="" value="">Pilih Status Tempat Tinggal...
+                                                <option selected="" disabled="" value="">Pilih Status Tempat
+                                                    Tinggal...
                                                 </option>
                                                 <option value="1">Kost</option>
                                                 <option value="2">Kontrak</option>
@@ -314,7 +321,7 @@
                         <div class="form-navigation mt-3">
                             <button class="previous btn btn-primary" type="button">Previous</button>
                             <button class="next btn btn-primary " type="button">Next</button>
-                            <button class="btn btn-success"  type="submit">Submit</button>
+                            <button class="btn btn-success" type="submit">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -365,7 +372,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js"
         integrity="sha512-eyHL1atYNycXNXZMDndxrDhNAegH2BDWt1TmkXJPoGf1WLlNYt08CSjkqF5lnCRmdm3IrkHid8s2jOUY4NIZVQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-   
+
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.simple.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\daffa\CubaLaravel\resources\views/forms/input-data.blade.php ENDPATH**/ ?>

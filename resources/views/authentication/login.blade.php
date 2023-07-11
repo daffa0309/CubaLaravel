@@ -8,10 +8,16 @@
 @endsection
 
 @section('content')
-    @if (Session::has('message'))
-        <div class="alert alert-info">{{ Session::get('message') }}</div>
+    @if (session()->has('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">{{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     @endif
-
+    @if (session()->has('loginError'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">{{ session('loginError') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <div class="container-fluid p-0">
         <div class="row m-0">
             <div class="col-12 p-0">
@@ -22,28 +28,33 @@
                                     class="img-fluid for-dark" src="{{ asset('assets/images/logo/logo_dark.png') }}"
                                     alt="looginpage"></a></div>
                         <div class="login-main">
-                            <form action="/authentication/login" novalidate="" method="post" class="theme-form">
+                            <form action="/authentication/login" method="post" class="theme-form">
                                 @csrf
 
                                 <h4>Sign in to account</h4>
                                 <p>Enter your Email & password to login</p>
                                 <div class="form-group">
                                     <label class="col-form-label">Email</label>
-                                    <input class="form-control" name="email" placeholder="Input email" type="email"
-                                        required="">
-
+                                    <input class="form-control @error('email') is-invalid @enderror" name="email"
+                                        placeholder="Input email" type="email" value="{{ old('email') }}" required="">
+                                    @error('email')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label class="col-form-label">Password</label>
                                     <input class="form-control" type="password" name="password" required=""
                                         placeholder="*********">
+
                                 </div>
                                 <div class="form-group mb-0">
                                     {{-- <div class="checkbox p-0">
                                         <input id="checkbox1" type="checkbox">
                                         <label class="text-muted" for="checkbox1">Remember password</label>
-                                    </div>
-                                    <a class="link" href="{{ route('forget-password') }}">Forgot password?</a> --}}
+                                    </div>--}}
+                                    <a class="link" href="{{ route('forget-password') }}">Forgot password?</a> 
                                     <button class="btn btn-primary btn-block" type="submit">Sign in</button>
                                 </div>
 
@@ -62,10 +73,13 @@
                 button: "OK"
             })
         </script>
-        @endif
-    @endsection
+    @endif
+@endsection
 
-    @section('script')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.12/sweetalert2.min.js"
+@section('script')
+    {{-- <script src="{{asset('assets/js/form-validation-custom.js')}}"></script> --}}
+
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.12/sweetalert2.min.js"
         integrity="sha512-JbRQ4jMeFl9Iem8w6WYJDcWQYNCEHP/LpOA11LaqnbJgDV6Y8oNB9Fx5Ekc5O37SwhgnNJdmnasdwiEdvMjW2Q=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>@endsection
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+@endsection

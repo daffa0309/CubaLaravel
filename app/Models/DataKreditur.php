@@ -27,7 +27,10 @@ class DataKreditur extends Model
         'pendidikanterakhir',
         'alasan',
         'visible',
-        "idLogin"
+        "idLogin",
+        'tanggal',
+        'nomor_urut'
+
     ];
     protected $primaryKey = 'idKreditur';
 

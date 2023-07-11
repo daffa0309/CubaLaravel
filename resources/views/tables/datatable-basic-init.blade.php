@@ -20,8 +20,9 @@
 
 @section('content')
     @if (Auth::user()->level == 'admin' && $lengthUsers > 0)
-        @foreach ($users as $data => $value)
             {{-- Data Modal --}}
+
+        @foreach ($users as $data => $value)
             <div class="modal fade" tabindex="-1" id="getData{{ $value->idKreditur }}" role="dialog" aria-hidden="true"
                 aria-labelledby="myModalLabel">
                 <div class="modal-dialog  lg"role="document">
@@ -398,16 +399,14 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                            <button type="button" class="btn btn-primary">Simpan</button>
                         </div>
                     </div>
                 </div>
             </div>
         @endforeach
-
+        
         <div class="container-fluid">
             <div class="row">
-                <!-- Zero Configuration  Starts-->
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
@@ -458,6 +457,40 @@
                 </div>
             </div>
         </div>
+    @elseif($lengthUsers > 0)
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Zero Configuration  Starts-->
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Final Ranking</h5>
+                        @if($lengthData = 0)
+                        <div style="margin-left: 1080px">
+                            <a class="btn btn-primary" href="{{ route('input-data') }}" type="button">Tambah
+                                Data</a>
+                        </div>
+                        @endif
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="display" id="basic-2">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                  
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     @else
     <div class="container-fluid">
         <div class="row">
@@ -466,10 +499,12 @@
                 <div class="card">
                     <div class="card-header">
                         <h5>Final Ranking</h5>
+                        @if($lengthData = 0)
                         <div style="margin-left: 1080px">
                             <a class="btn btn-primary" href="{{ route('input-data') }}" type="button">Tambah
                                 Data</a>
                         </div>
+                        @endif
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -502,7 +537,7 @@
         $('.edit-btn').on('click', function(e) {
             e.preventDefault();
             var dataId = $(this).data('id');
-            if (confirm('Apakah Anda yakin ingin memperbarui data ini?')) {
+            if (confirm('Apakah Anda yakin ingin menerima data ini?')) {
                 // Lakukan tindakan redirect ke halaman edit dengan menggunakan dataId
                 window.location.href =  dataId + '/update-kreditur';
             }

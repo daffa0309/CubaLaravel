@@ -21,23 +21,39 @@
                <div>
                   <div><a class="logo" href="{{ route('index') }}"><img class="img-fluid for-light" src="{{asset('assets/images/logo/login.png')}}" alt="looginpage"><img class="img-fluid for-dark" src="{{asset('assets/images/logo/logo_dark.png')}}" alt="looginpage"></a></div>
                   <div class="login-main">
-                     <form class="theme-form">
+                     <form class="theme-form" action="{{route('password.update')}}" method="POST">
+                        @csrf
+                  
+                    @if (session()->has('status'))
+                        <div class="alert alert-success">
+                            {{ session()->get('status') }}
+                        </div>
+                    @endif
                         <h4>Create Your Password</h4>
                         <div class="form-group">
+                           <input class="form-control" type="hidden" name="email"
+                           value="{{ request()->email }}"   required="">
+                           <input class="form-control" type="hidden" name="token"
+                           value="{{ request()->token }}" required="">
                            <label class="col-form-label">New Password</label>
-                           <input class="form-control" type="password" name="login[password]" required="" placeholder="*********">
-                           <div class="show-hide"><span class="show"></span></div>
-                        </div>
+                           <input class="form-control @error('password') is-invalid @enderror" type="password"  name="password" required="" placeholder="*********">
+                           @error('password')
+                           <div class="invalid-feedback">
+                               {{ $message }}
+                           </div>
+                       @enderror
+                          
                         <div class="form-group">
                            <label class="col-form-label">Retype Password</label>
-                           <input class="form-control" type="password" name="login[password]" required="" placeholder="*********">
+                           <input class="form-control @error('password_confirmation') is-invalid @enderror" type="password" name="password_confirmation" required="" placeholder="*********">
+                           @error('password_confirmation')
+                           <div class="invalid-feedback">
+                               {{ $message }}
+                           </div>
+                       @enderror
                         </div>
                         <div class="form-group mb-0">
-                           <div class="checkbox p-0">
-                              <input id="checkbox1" type="checkbox">
-                              <label class="text-muted" for="checkbox1">Remember password</label>
-                           </div>
-                           <button class="btn btn-primary btn-block" type="submit">Done                          </button>
+                           <button class="btn btn-primary btn-block" type="submit">Update Password                          </button>
                         </div>
                         <p class="mt-4 mb-0">Don't have account?<a class="ms-2" href="{{ route('sign-up') }}">Create Account</a></p>
                      </form>

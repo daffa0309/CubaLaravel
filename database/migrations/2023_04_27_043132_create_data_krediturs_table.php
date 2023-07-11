@@ -27,6 +27,9 @@ class CreateDataKreditursTable extends Migration
             $table->string('alasan');
             $table->integer('visible')->default(0);
             $table->integer('idLogin');
+            $table->timestamps();
+            $table->date('tanggal');
+            $table->integer('nomor_urut')->nullable();
 
 
         });

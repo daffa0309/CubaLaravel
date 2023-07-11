@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DataKreditur as DataKrediturs;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -66,7 +67,25 @@ class DataKreditur extends Controller
     {
         $data = DataKrediturs::where('idKreditur',$id)->first();
         $data->visible = 1;
-        $data->timestamps = false;
+        $nextDate='';
+        $queueNumber="0";
+        if (Carbon::now()->isWeekday()) {
+            // Cek apakah sudah mencapai batas maksimal antrian per hari
+            if (DataKrediturs::whereDate('tanggal', Carbon::now())->count() >= 15 && Carbon::now()->format('H:i')>= '16:00') {
+                // Jika sudah mencapai batas maksimal, tambahkan 1 hari ke tanggal
+                $nextDate = Carbon::tomorrow();
+            } else {
+                // Jika masih belum mencapai batas maksimal, gunakan tanggal hari ini
+                $nextDate = Carbon::now();
+            }
+            
+            // Generate nomor antrian baru
+            $queueNumber = DataKrediturs::whereDate('tanggal', $nextDate)->max('nomor_urut') + 1;
+     
+        } else {
+        }
+        $data->tanggal = $nextDate;
+        $data->nomor_urut = $queueNumber;
         $data->save();
         alert()->success('Success','Data Berhasil Diupdate !');
         return redirect()->back();
