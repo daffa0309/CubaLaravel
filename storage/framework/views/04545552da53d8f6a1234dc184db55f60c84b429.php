@@ -58,8 +58,7 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                           <div class="show-hide"><span class="show"></span></div>
-                        </div>
+                          
                         <div class="form-group">
                            <label class="col-form-label">Retype Password</label>
                            <input class="form-control <?php $__errorArgs = ['password_confirmation'];

@@ -51,10 +51,7 @@ class UserController extends Controller
             
             // Generate nomor antrian baru
             $queueNumber = DataKreditur::whereDate('tanggal', $nextDate)->max('nomor_urut') + 1;
-        dd($queueNumber);
-            $this->info('Antrian berhasil dibuat untuk tanggal ' . $nextDate . ' dengan nomor ' . $queueNumber);
         } else {
-            $this->info('Hari ini bukan hari kerja. Tidak ada nomor antrian yang dibuat.');
         }
         if ($lengthUsers > 0 && Auth::user()->level == 'admin') {
             alert()->success('Success','Data Kamu sudah disetujui, Silahkan Datang Pada Tanggal'. $nextDate);

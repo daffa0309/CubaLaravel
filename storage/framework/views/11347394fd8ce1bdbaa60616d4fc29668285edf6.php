@@ -537,7 +537,7 @@
         $('.edit-btn').on('click', function(e) {
             e.preventDefault();
             var dataId = $(this).data('id');
-            if (confirm('Apakah Anda yakin ingin memperbarui data ini?')) {
+            if (confirm('Apakah Anda yakin ingin menerima data ini?')) {
                 // Lakukan tindakan redirect ke halaman edit dengan menggunakan dataId
                 window.location.href =  dataId + '/update-kreditur';
             }

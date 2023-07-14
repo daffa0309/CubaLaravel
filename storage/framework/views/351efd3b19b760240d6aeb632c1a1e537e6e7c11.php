@@ -33,7 +33,7 @@
 
                                         </div>
                                     <?php endif; ?>
-                                    <h4>Reset Your Password</h4>
+                                    <h4>Forget Password</h4>
                                     <div class="form-group">
                                         <label class="col-form-label">Enter Your Email </label>
                                         <div class="row">
