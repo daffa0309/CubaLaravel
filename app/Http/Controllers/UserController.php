@@ -17,7 +17,7 @@ class UserController extends Controller
 {
     function getData()
     {
-       
+
         $users =  DB::table('data_krediturs')
             ->leftjoin('data_penilaians', 'data_krediturs.idKreditur', "=", 'data_penilaians.idKreditur')
             ->leftjoin('data_kendaraans', 'data_krediturs.idKreditur', "=", 'data_kendaraans.idKreditur')
@@ -38,23 +38,23 @@ class UserController extends Controller
         $minc5 = DB::table('data_penilaians')->min('C5');
         $minc6 = DB::table('data_penilaians')->min('C6');
         $minc7 = DB::table('data_penilaians')->min('C7');
-        $nextDate="";
+        $nextDate = "";
         if (Carbon::now()->isWeekday()) {
             // Cek apakah sudah mencapai batas maksimal antrian per hari
-            if (DataKreditur::whereDate('tanggal', Carbon::now())->count() >= 15 && Carbon::now()->format('H:i')>= '16:00') {
+            if (DataKreditur::whereDate('tanggal', Carbon::now())->count() >= 15 && Carbon::now()->format('H:i') >= '16:00') {
                 // Jika sudah mencapai batas maksimal, tambahkan 1 hari ke tanggal
                 $nextDate = Carbon::tomorrow();
             } else {
                 // Jika masih belum mencapai batas maksimal, gunakan tanggal hari ini
                 $nextDate = Carbon::now();
             }
-            
+
             // Generate nomor antrian baru
             $queueNumber = DataKreditur::whereDate('tanggal', $nextDate)->max('nomor_urut') + 1;
         } else {
         }
         if ($lengthUsers > 0 && Auth::user()->level == 'admin') {
-            alert()->success('Success','Data Kamu sudah disetujui, Silahkan Datang Pada Tanggal'. $nextDate);
+            alert()->success('Success', 'Data Kamu sudah disetujui, Silahkan Datang Pada Tanggal' . $nextDate);
 
             $level =  DB::table('data_krediturs')
                 ->leftjoin('users', 'data_krediturs.idLogin', "=", 'users.id')
@@ -216,14 +216,13 @@ class UserController extends Controller
                 ];
             }
             return view('tables.datatable-basic-init', compact('matriks', 'sipi', 'arraysumSI', 'arraysumPI', 'arraysumPISI', 'finalRank', 'users', 'lengthUsers', 'lengthData'));
-        } 
-        elseif ($lengthUsers > 0) {
+        } elseif ($lengthUsers > 0) {
 
             $dataUser =  DB::table('data_krediturs')
                 ->leftjoin('users', 'data_krediturs.idLogin', "=", 'users.id')
 
                 ->get();
-            return view('tables.datatable-basic-init', compact('lengthUsers','dataUser'));
+            return view('tables.datatable-basic-init', compact('lengthUsers', 'dataUser'));
         } else {
             return view('tables.datatable-basic-init', compact('lengthUsers'));
         }
@@ -249,8 +248,22 @@ class UserController extends Controller
             $user->level = 'user';
             $user->remember_token = Str::random(60);
             $user->save();
-            $request->session()->flash('success','Daftar Akun berhasil! Silahkan Login');
+            $request->session()->flash('success', 'Daftar Akun berhasil! Silahkan Login');
             return redirect('authentication/login')->with('status', "Sign up success");
         }
+    }
+    public function editProfile(Request $request)
+    {
+        $request->validate([
+            'firstName' => ['string', 'min:3', 'max:191', 'required'],
+            'lastName' => ['string', 'string', 'min:3', 'max:191', 'required'],
+            'email' => ['email', 'string', 'min:3', 'max:191', 'unique:users,email,' . auth()->id()],
+        ]);
+        auth()->user()->update([
+            'FirstName' => $request->firstName,
+            'LastName' => $request->lastName,
+            'email' => $request->email,
+        ]);
+        return back()->with('message', 'Profil Berhasil Diperbaharui');
     }
 }

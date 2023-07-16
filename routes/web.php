@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PasswordController;
 use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Route;
@@ -10,7 +11,7 @@ use Illuminate\Support\Str;
 
 Route::get('/', function () {
     return redirect()->route('index');
-})->name('/')->middleware('auth');
+})->name('/');
 // ->middleware('auth:api');
 
 //post Login
@@ -18,47 +19,11 @@ Route::post('/authentication/login', [App\Http\Controllers\LoginController::clas
 Route::post('/authentication/signup', [App\Http\Controllers\UserController::class, 'signUp']);
 
 //Forget Password
-Route::post('/authentication/forget-password', function(Request $request){
-    $request->validate(['email'=> 'required|email:dns']);
-
-    $status = Password::sendResetLink(
-        $request->only('email')
-    );
- 
-    return $status === Password::RESET_LINK_SENT
-                ? back()->with(['status' => __($status)])
-                : back()->withErrors(['email' => __($status)]);
-})->middleware('guest')->name('password.email');
+Route::post('/authentication/forget-password', [App\Http\Controllers\PasswordController::class, 'resetPassword'])->middleware('guest')->name('password.email');
 
 //reset Password
 
-Route::get('/reset-password/{token}', function (string $token) {
-    return view('authentication.reset-password', ['token' => $token]);
-})->middleware('guest')->name('password.reset');
-Route::post('/reset-password', function (Request $request) {
-    $request->validate([
-        'token' => 'required',
-        'email' => 'required|email:dns',
-        'password' => 'required|min:8|confirmed',
-    ]);
- 
-    $status = Password::reset(
-        $request->only('email', 'password', 'password_confirmation', 'token'),
-        function (User $user, string $password) {
-            $user->forceFill([
-                'password' => Hash::make($password)
-            ])->setRememberToken(Str::random(60));
- 
-            $user->save();
- 
-            event(new PasswordReset($user));
-        }
-    );
- 
-    return $status === Password::PASSWORD_RESET
-                ? redirect()->route('login')->with('status', __($status))
-                : back()->withErrors(['email' => [__($status)]]);
-})->middleware('guest')->name('password.update');
+Route::get('/reset-password/{token}', [App\Http\Controllers\PasswordController::class, 'resetPassword'])->middleware('guest')->name('password.update');
 
 Route::prefix('bonus-ui')->group(function () {
     Route::view('scrollable', 'bonus-ui.scrollable')->name('scrollable');
@@ -87,16 +52,20 @@ Route::prefix('bonus-ui')->group(function () {
 Route::view('sign-up', 'authentication.sign-up')->name('sign-up');
 
 Route::middleware(['auth'])->group(function () {
+    Route::view('edit-profile', 'apps.edit-profile')->name('edit-profile');
+    Route::put('edit-profile/update',  [App\Http\Controllers\UserController::class, 'editProfile'])->name('update-profile');
+    Route::get('/data-kriteria', [App\Http\Controllers\DataKriteria::class, 'getData'])->name('data-kriteria');
+    Route::post('/insert/data-kriteria', [App\Http\Controllers\DataKriteria::class, 'insert'])->name('insert-data-kriteria');
+
+    Route::get('/data-nilai-kriteria', [App\Http\Controllers\NilaiKriteriaController::class, 'getData'])->name('data-nilai-kriteria');
+    Route::post('/insert/data-nilai-kriteria', [App\Http\Controllers\NilaiKriteriaController::class, 'insert'])->name('insert-nilai-kriteria');
 
     Route::view('index', 'dashboard.index')->name('index');
     Route::view('dashboard-02', 'dashboard.dashboard-02')->name('dashboard-02');
-    Route::get('/data-kreditur', [App\Http\Controllers\UserController::class, 'getData'])->name('datatable-basic-init');
+    Route::get('/data-kreditur', [App\Http\Controllers\DataKreditur::class, 'getData'])->name('datatable-basic-init');
     Route::POST('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
     Route::post('/insert/data-kreditur', [App\Http\Controllers\DataKreditur::class, 'insert']);
     Route::get('{id}/update-kreditur', [App\Http\Controllers\DataKreditur::class, 'updateData']);
-
-
-
 });
 //Language Change
 
@@ -111,7 +80,6 @@ Route::middleware(['auth'])->group(function () {
 
 Route::prefix('users')->group(function () {
     Route::view('user-profile', 'apps.user-profile')->name('user-profile');
-    Route::view('edit-profile', 'apps.edit-profile')->name('edit-profile');
     Route::view('user-cards', 'apps.user-cards')->name('user-cards');
 });
 
@@ -162,7 +130,6 @@ Route::prefix('forms')->group(function () {
     Route::view('switch', 'forms.switch')->name('switch');
     Route::view('typeahead', 'forms.typeahead')->name('typeahead');
     Route::view('clipboard', 'forms.clipboard')->name('clipboard');
-    Route::view('default-form', 'forms.default-form')->name('default-form');
     Route::view('form-wizard', 'forms.form-wizard')->name('form-wizard');
     Route::view('form-wizard-two', 'forms.form-wizard-two')->name('form-wizard-two');
     Route::view('form-wizard-three', 'forms.form-wizard-three')->name('form-wizard-three');

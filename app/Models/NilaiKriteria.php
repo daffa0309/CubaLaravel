@@ -6,11 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class DataKriteria extends Model
+class NilaiKriteria extends Model
 {
-    public $timestamps = false;
-
-
     use HasFactory, Notifiable;
 
     /**
@@ -19,14 +16,11 @@ class DataKriteria extends Model
      * @var array
      */
     protected $fillable = [
-        'nama',
-        'sifat',
-        'bobot',
-        'kode'
+        'keterangan',
+        'idKriteria',
+        'nilai'
     ];
-    protected $primaryKey = 'idKriteria';
-
-
+    protected $primaryKey = 'id_nilaikriteria';
 
     /**
      * The attributes that should be hidden for arrays.

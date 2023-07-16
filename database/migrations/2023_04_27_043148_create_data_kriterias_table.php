@@ -16,7 +16,10 @@ class CreateDataKriteriasTable extends Migration
         Schema::create('data_kriterias', function (Blueprint $table) {
             $table->id('idKriteria');
             $table->string('nama');
-            $table->string('bobot');
+            $table->string('sifat');
+            $table->string('kode');
+
+            $table->float('bobot')->nullable(); // nullable untuk ketika data belum
         });
     }
 
