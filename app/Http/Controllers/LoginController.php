@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -35,32 +36,30 @@ class LoginController extends Controller
         auth()->logout();
         return redirect()->route('login');
     }
+    function signUp(Request $request)
+    {
+        $rules = [
+            'firstName' => ['required', 'string', 'max:25'],
+            'lastName' => ['required', 'string', 'max:25'],
 
-
-    // public function auth(Request $request)
-    // {
-    //     $this->validate($request, [
-    //         'username' => 'required|max:200',
-    //         'password' => 'required|max:100',
-    //     ]);
-
-    //     if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
-    //         # code...
-    //         DB::beginTransaction();
-
-    //         DB::commit();
-    //         if (Auth::user()->role_id == 1) {
-    //             return redirect('/');
-    //         }
-    //     }
-    //     # code...
-    //     return redirect()->route('login')->with('error', 'Periksa kembali username atau password anda!');
-    // }
-
-    // public function logout()
-    // {
-    //     auth()->logout();
-
-    //     return redirect()->route('login');
-    // }
+            'email' => ['required', 'string', 'email:dns', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
+        ];
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return redirect('sign-up')->withInput()->withErrors($validator);
+        } else {
+            $data = $request->all();
+            $user = new User;
+            $user->FirstName = $data['firstName'];
+            $user->LastName = $data['lastName'];
+            $user->email = $data['email'];
+            $user->password = Hash::make($data['password']);
+            $user->level = 'user';
+            $user->remember_token = Str::random(60);
+            $user->save();
+            $request->session()->flash('success', 'Daftar Akun berhasil! Silahkan Login');
+            return redirect('authentication/login')->with('status', "Sign up success");
+        }
+    }
 }

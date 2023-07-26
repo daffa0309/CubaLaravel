@@ -457,7 +457,7 @@
                 </div>
             </div>
         </div>
-    @elseif($lengthData > 0)
+    @elseif($userKreditur > 0)
     <div class="container-fluid">
         <div class="row">
             <!-- Zero Configuration  Starts-->
