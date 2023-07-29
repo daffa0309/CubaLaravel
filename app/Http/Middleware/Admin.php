@@ -17,10 +17,19 @@ class Admin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!auth()->check() || !$request->user()->isAdmin()) {
-
-            return $next($request);
+        //jika akun yang login sesuai dengan role 
+        //maka silahkan akses
+        //jika tidak sesuai akan diarahkan ke home
+    
+        $roles = array_slice(func_get_args(), 2);
+    
+        foreach ($roles as $role) { 
+            $user = Auth::user()->level;
+            if( $user == $role){
+                return $next($request);
+            }
         }
-        return redirect("/");
+    
+        return redirect('/');
     }
 }

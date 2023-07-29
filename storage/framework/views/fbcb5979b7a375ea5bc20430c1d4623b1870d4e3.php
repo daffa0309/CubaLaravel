@@ -79,7 +79,6 @@
             $(".sidebar-submenu" ).css( "display", "block" );
       }
     </script>
-    <?php echo $__env->make('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-
+    <?php echo $__env->make('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@11"], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
   </body>
 </html><?php /**PATH C:\Users\daffa\CubaLaravel\resources\views/layouts/simple/master.blade.php ENDPATH**/ ?>

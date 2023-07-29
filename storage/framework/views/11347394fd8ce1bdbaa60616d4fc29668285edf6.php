@@ -457,7 +457,7 @@
                 </div>
             </div>
         </div>
-    <?php elseif($lengthUsers > 0): ?>
+    <?php elseif($userKreditur > 0): ?>
     <div class="container-fluid">
         <div class="row">
             <!-- Zero Configuration  Starts-->
@@ -465,12 +465,10 @@
                 <div class="card">
                     <div class="card-header">
                         <h5>Final Ranking</h5>
-                        <?php if($lengthData = 0): ?>
                         <div style="margin-left: 1080px">
                             <a class="btn btn-primary" href="<?php echo e(route('input-data')); ?>" type="button">Tambah
                                 Data</a>
                         </div>
-                        <?php endif; ?>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -478,11 +476,27 @@
                                 <thead>
                                     <tr>
                                         <th>Name</th>
+                                        <th>Tanggal Datang</th>
+                                        <th>Nomor Urut</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                  
+                                    <?php $__currentLoopData = $dataUser; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <tr>
+                                                <td>&nbsp; <?php echo e($data->name); ?></td>
+                                                <td>&nbsp; <?php echo e($data->tanggal); ?></td>
+                                                <td>&nbsp; <?php echo e($data->nomor_urut); ?></td>
+                                                <?php if($data->visible == 0): ?>
+                                                <td>Menunggu Untuk DiReview </td>
+                                            <?php elseif($data->visible == 1): ?>
+                                                <td>Data telah diterima </td>
+                                                <?php elseif($data->visible == 2): ?>
+                                                <td>Data telah ditolak </td>
+                                            <?php endif; ?>
+                                               
+                                            </tr>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>
                             </table>
                         </div>
@@ -499,12 +513,10 @@
                 <div class="card">
                     <div class="card-header">
                         <h5>Final Ranking</h5>
-                        <?php if($lengthData = 0): ?>
                         <div style="margin-left: 1080px">
                             <a class="btn btn-primary" href="<?php echo e(route('input-data')); ?>" type="button">Tambah
                                 Data</a>
                         </div>
-                        <?php endif; ?>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -514,7 +526,6 @@
                                         <th>Name</th>
                                         <th>Skor</th>
                                         <th>Status</th>
-                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>

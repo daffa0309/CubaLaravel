@@ -1,27 +1,27 @@
-@extends('layouts.simple.master')
-@section('title', 'Basic DataTables')
 
-@section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/datatables.css') }}">
+<?php $__env->startSection('title', 'Basic DataTables'); ?>
 
-@endsection
+<?php $__env->startSection('css'); ?>
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('assets/css/vendors/datatables.css')); ?>">
 
-@section('style')
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb-title')
+<?php $__env->startSection('style'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('breadcrumb-title'); ?>
     <h3>Data Akun</h3>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb-items')
+<?php $__env->startSection('breadcrumb-items'); ?>
     <li class="breadcrumb-item">Data Akun</li>
     <li class="breadcrumb-item active">Data Akun</li>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
-    {{-- Edit Data Modal --}}
-    @foreach ($users as $data => $value)
-        <div class="modal fade" tabindex="-1" id="getData{{ $value->id }}" role="dialog" aria-hidden="true"
+<?php $__env->startSection('content'); ?>
+    
+    <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <div class="modal fade" tabindex="-1" id="getData<?php echo e($value->id); ?>" role="dialog" aria-hidden="true"
             aria-labelledby="myModalLabel">
             <div class="modal-dialog  lg"role="document">
                 <div class="modal-content">
@@ -33,22 +33,22 @@
                     </div>
                     <div class="modal-body">
                         <div class="card-body">
-                            <form class="card" method="POST" action="{{ route('update-akun', ['id' => $value->id]) }}">
-                                @method('put')
-                                @csrf
+                            <form class="card" method="POST" action="<?php echo e(route('update-akun', ['id' => $value->id])); ?>">
+                                <?php echo method_field('put'); ?>
+                                <?php echo csrf_field(); ?>
                                 <div class="form-section">
                                     <div class="row">
                                         <div class="col">
                                             <div class="mb-6">
                                                 <label for="firstName">First Name</label>
-                                                <input class="form-control" value="{{ $value->FirstName }}" name="firstName"
+                                                <input class="form-control" value="<?php echo e($value->FirstName); ?>" name="firstName"
                                                     id="firstName" type="text" placeholder="Masukkan Nama">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="mb-6">
                                                 <label for="lastName">Last Name</label>
-                                                <input class="form-control" value="{{ $value->LastName }}" name="lastName"
+                                                <input class="form-control" value="<?php echo e($value->LastName); ?>" name="lastName"
                                                     id="lastName" type="text" required placeholder="Last Name">
                                             </div>
                                         </div>
@@ -57,7 +57,7 @@
                                         <div class="col">
                                             <div class="mb-12">
                                                 <label for="email">Email</label>
-                                                <input class="form-control" value="{{ $value->email }}" name="email"
+                                                <input class="form-control" value="<?php echo e($value->email); ?>" name="email"
                                                     id="email" type="email" required placeholder="Email">
                                             </div>
                                         </div>
@@ -68,9 +68,9 @@
                                                 <label for="level">Level</label>
                                                 <select required class="form-select digits" name="level" id="level">
                                                     <option selected="" disabled="" value="">Choose...</option>
-                                                    <option {{ $value->level == 'admin' ? 'selected' : '' }} value="admin">
+                                                    <option <?php echo e($value->level == 'admin' ? 'selected' : ''); ?> value="admin">
                                                         Admin</option>
-                                                    <option {{ $value->level == 'user' ? 'selected' : '' }} value="user">
+                                                    <option <?php echo e($value->level == 'user' ? 'selected' : ''); ?> value="user">
                                                         User
                                                     </option>
                                                 </select>
@@ -91,9 +91,9 @@
                 </div>
             </div>
         </div>
-    @endforeach
-    {{--  --}}
-    {{-- Add Data Modal --}}
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    
+    
     <div class="modal fade" tabindex="-1" id="addDataModal" role="dialog" aria-hidden="true" aria-labelledby="addModal">
         <div class="modal-dialog  lg" role="document">
             <div class="modal-content">
@@ -105,7 +105,7 @@
                 </div>
                 <div class="modal-body">
                     <form action="/authentication/signup"method="post" class="theme-form">
-                        @csrf
+                        <?php echo csrf_field(); ?>
                         <div class="card-body">
                             <div class="form-section">
                                 <div class="row">
@@ -180,7 +180,7 @@
             </div>
         </div>
     </div>
-    {{--  --}}
+    
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -206,28 +206,28 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($users as $data)
+                                    <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <tr>
-                                            <td>&nbsp; {{ $data->FirstName }}</td>
-                                            <td>&nbsp; {{ $data->LastName }}</td>
-                                            <td>&nbsp; {{ $data->email }}</td>
-                                            <td>&nbsp; {{ $data->level }}</td>
+                                            <td>&nbsp; <?php echo e($data->FirstName); ?></td>
+                                            <td>&nbsp; <?php echo e($data->LastName); ?></td>
+                                            <td>&nbsp; <?php echo e($data->email); ?></td>
+                                            <td>&nbsp; <?php echo e($data->level); ?></td>
 
-                                            @if ($data->id == auth()->user()->id)
+                                            <?php if($data->id == auth()->user()->id): ?>
                                                 <td>
                                                 </td>
-                                            @else
+                                            <?php else: ?>
                                                 <td>&nbsp; &nbsp; <a href="#" class="btn btn-warning btn"
-                                                        data-toggle="modal" data-target="#getData{{ $data->id }}">
+                                                        data-toggle="modal" data-target="#getData<?php echo e($data->id); ?>">
                                                         Edit Akun
                                                     </a>
                                                     <a href="#" class="btn btn-danger edit-btn"
-                                                        data-id="{{ $data->id }}">Delete Akun</a>
+                                                        data-id="<?php echo e($data->id); ?>">Delete Akun</a>
 
                                                 </td>
-                                            @endif
+                                            <?php endif; ?>
                                         </tr>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>
                             </table>
                         </div>
@@ -237,9 +237,9 @@
         </div>
     </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('script')
+<?php $__env->startSection('script'); ?>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -263,8 +263,10 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
-    <script src="{{ asset('assets/js/datatable/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/js/datatable/datatables/datatable.custom.js') }}"></script>
+    <script src="<?php echo e(asset('assets/js/datatable/datatables/jquery.dataTables.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/js/datatable/datatables/datatable.custom.js')); ?>"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.simple.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\daffa\CubaLaravel\resources\views/tables/master-account.blade.php ENDPATH**/ ?>

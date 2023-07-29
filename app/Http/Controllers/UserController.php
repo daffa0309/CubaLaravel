@@ -33,6 +33,22 @@ class UserController extends Controller
         ]);
         return back()->with('message', 'Profil Berhasil Diperbaharui');
     }
+    public function updateAkun(Request $request, $id)
+    {
+        $request->validate([
+            'firstName' => ['string', 'min:3', 'max:191', 'required'],
+            'lastName' => ['string', 'string', 'min:3', 'max:191', 'required'],
+            'email' => ['email', 'string', 'min:3', 'max:191', 'unique:users,email,' . $id],
+        ]);
+        $account = User::findOrFail($id);
+
+        $account->update([
+            'FirstName' => $request->firstName,
+            'LastName' => $request->lastName,
+            'email' => $request->email,
+        ]);
+        return back()->with('message', 'Data Akun Berhasil Diperbaharui');
+    }
     public function authenticate(Request $request)
     {
 
@@ -56,21 +72,23 @@ class UserController extends Controller
         $rules = [
             'firstName' => ['required', 'string', 'max:25'],
             'lastName' => ['required', 'string', 'max:25'],
-
             'email' => ['required', 'string', 'email:dns', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
         ];
+      
+
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-            return redirect('sign-up')->withInput()->withErrors($validator);
+            return redirect()->back()->withInput()->withErrors($validator);
         } else {
-            $data = $request->all();
             $user = new User;
+            $data = $request->all();
+            $isLevel = $data['level']  ?? null;
             $user->FirstName = $data['firstName'];
             $user->LastName = $data['lastName'];
             $user->email = $data['email'];
             $user->password = Hash::make($data['password']);
-            $user->level = 'user';
+            $user->level = $isLevel == null ? 'user' : $isLevel;
             $user->remember_token = Str::random(60);
             $user->save();
             $request->session()->flash('success', 'Daftar Akun berhasil! Silahkan Login');
