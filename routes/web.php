@@ -19,11 +19,47 @@ Route::post('/authentication/login', [App\Http\Controllers\UserController::class
 Route::post('/authentication/signup', [App\Http\Controllers\UserController::class, 'signUp']);
 
 //Forget Password
-Route::post('/authentication/forget-password', [App\Http\Controllers\UserController::class, 'resetPassword'])->middleware('guest')->name('password.email');
+Route::post('/authentication/forget-password', function (Request $request) {
+    $request->validate(['email' => 'required|email:dns']);
+
+    $status = Password::sendResetLink(
+        $request->only('email')
+    );
+
+    return $status === Password::RESET_LINK_SENT
+        ? back()->with(['status' => __($status)])
+        : back()->withErrors(['email' => __($status)]);
+})->middleware('guest')->name('password.email');
 
 //reset Password
 
-Route::get('/reset-password/{token}', [App\Http\Controllers\UserController::class, 'resetPassword'])->middleware('guest')->name('password.update');
+Route::get('/reset-password/{token}', function (string $token) {
+    return view('authentication.reset-password', ['token' => $token]);
+})->middleware('guest')->name('password.reset');
+Route::post('/reset-password', function (Request $request) {
+    $request->validate([
+        'token' => 'required',
+        'email' => 'required|email:dns',
+        'password' => 'required|min:8|confirmed',
+    ]);
+
+    $status = Password::reset(
+        $request->only('email', 'password', 'password_confirmation', 'token'),
+        function (User $user, string $password) {
+            $user->forceFill([
+                'password' => Hash::make($password)
+            ])->setRememberToken(Str::random(60));
+
+            $user->save();
+
+            event(new PasswordReset($user));
+        }
+    );
+
+    return $status === Password::PASSWORD_RESET
+        ? redirect()->route('login')->with('status', __($status))
+        : back()->withErrors(['email' => [__($status)]]);
+})->middleware('guest')->name('password.update');
 Route::view('sign-up', 'authentication.sign-up')->name('sign-up');
 
 Route::middleware(['auth'])->group(function () {
@@ -40,9 +76,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::POST('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
     Route::post('/insert/data-kreditur', [App\Http\Controllers\DataKreditur::class, 'insert']);
-    Route::get('{id}/update-kreditur', [App\Http\Controllers\DataKreditur::class, 'updateData']);
+    Route::put('/update-kreditur/{id}/{visible}', [App\Http\Controllers\DataKreditur::class, 'updateData']);
     Route::put('/update-account/{id}', [App\Http\Controllers\UserController::class, 'updateAkun'])->name('update-akun');
-
 });
 //Language Change
 

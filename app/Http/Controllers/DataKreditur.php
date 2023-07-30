@@ -22,12 +22,13 @@ class DataKreditur extends Controller
     }
     function getData()
     {
-       
+
         $idUser = Auth::user()->id;
         $level =  DB::table('data_krediturs')
             ->leftjoin('users', 'data_krediturs.idLogin', "=", 'users.id')
             ->where('users.id', $idUser)
             ->get();
+
         $userKreditur = count($level);
         $users =  DB::table('data_krediturs')
             ->leftjoin('data_penilaians', 'data_krediturs.idKreditur', "=", 'data_penilaians.idKreditur')
@@ -53,7 +54,6 @@ class DataKreditur extends Controller
 
             $level =  DB::table('data_krediturs')
                 ->leftjoin('users', 'data_krediturs.idLogin', "=", 'users.id')
-
                 ->get();
             $lengthData = count($level);
             // Mengambil Data Normalisasi
@@ -142,7 +142,7 @@ class DataKreditur extends Controller
             for ($i = 0; $i < $length; $i++) {
                 $kaSIPI = 0;
                 for ($x = 1; $x < 8; $x++) {
-                    $kaSIPI = $arraysumPISI[$i] / $jumlahPISI;
+                    $kaSIPI = $arraysumPISI[$i] == 0 ? 0 : $arraysumPISI[$i] / $jumlahPISI;
                 }
                 array_push($arraykaPISI, $kaSIPI);
             }
@@ -169,7 +169,7 @@ class DataKreditur extends Controller
             for ($i = 0; $i < $length; $i++) {
                 $kcSIPI = 0;
                 for ($x = 1; $x < 8; $x++) {
-                    $kcSIPI = ((0.5 * $arraysumSI[$i]) + (0.5 * $arraysumPI[$i])) / ((0.5 * $maxSUMSI) + (0.5 * $maxSUMPI));
+                    $kcSIPI = $arraysumSI[$i] && $arraysumPI[$i] != 0 ?  ((0.5 * $arraysumSI[$i]) + (0.5 * $arraysumPI[$i])) / ((0.5 * $maxSUMSI) + (0.5 * $maxSUMPI)) : 0;
                 }
                 array_push($arraykcPISI, $kcSIPI);
             }
@@ -211,13 +211,9 @@ class DataKreditur extends Controller
                 ];
             }
             return view('tables.data-kreditur', compact('matriks', 'sipi', 'arraysumSI', 'arraysumPI', 'arraysumPISI', 'finalRank', 'users', 'lengthUsers', 'lengthData'));
-        } elseif ($userKreditur > 0) {
+        } elseif ($userKreditur > 0 && Auth::user()->level != 'admin') {
             $route = Route::current();
- 
-$name = $route->getName();
-$actionName = $route->getActionName();
-        $lengthData = count($level);
-        $nextDate = $level[0]->tanggal;
+            $nextDate = $level[0]->tanggal;
             alert()->success('Success', 'Data Kamu sudah disetujui, Silahkan Datang Pada Tanggal' . $nextDate);
 
             $dataUser =  DB::table('data_krediturs')
@@ -226,7 +222,7 @@ $actionName = $route->getActionName();
                 ->get();
             return view('tables.data-kreditur', compact('userKreditur', 'dataUser',  'users', 'lengthUsers'));
         } else {
-            return view('tables.data-kreditur', compact('lengthData'));
+            return view('tables.data-kreditur', compact('userKreditur', "lengthUsers"));
         }
         // return view('tables.data-kreditur', ['users' => $users,'matrix' => $matriks]);
     }
@@ -284,10 +280,10 @@ $actionName = $route->getActionName();
     }
 
 
-    public function terimaData($id)
+    public function updateData($id, $visible)
     {
         $data = DataKrediturs::where('idKreditur', $id)->first();
-        $data->visible = 1;
+        $data->visible = $visible;
         $nextDate = '';
         $queueNumber = "0";
         if (Carbon::now()->isWeekday()) {
@@ -303,12 +299,13 @@ $actionName = $route->getActionName();
             // Generate nomor antrian baru
             $queueNumber = DataKrediturs::whereDate('tanggal', $nextDate)->max('nomor_urut') + 1;
         } else {
+            $nextDate = Carbon::tomorrow();
+            $queueNumber = DataKrediturs::whereDate('tanggal', $nextDate)->max('nomor_urut') + 1;
         }
         $data->tanggal = $nextDate;
         $data->nomor_urut = $queueNumber;
         $data->save();
         alert()->success('Success', 'Data Berhasil Diupdate !');
-        return redirect()->back();
     }
     public function tolakData($id)
     {

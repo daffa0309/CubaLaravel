@@ -151,7 +151,26 @@
                                 </div>
                             </div>
                             <div class="form-section">
-                                
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="umurKreditur">Umur Kreditur</label>
+                                            <select required class="form-select digits" name="umurKreditur"
+                                                id="umurKreditur">
+                                                <option selected="" disabled="" value="">Pilih Umur...
+                                                </option>
+                                                <option value="1">27 - 35</option>
+                                                <option value="2">36 - 45</option>
+                                                <option value="3">24 - 26 </option>
+                                                <option value="4">17 - 23 </option>
+                                                <option value="5">46 - 55 </option>
+
+                                            </select>
+                                            <div class="invalid-feedback">Please provide a valid city.</div>
+
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col">
                                         <div class="mb-3">
@@ -177,7 +196,27 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="umurKendaraan">Umur Kendaraan</label>
+                                            <select required class="form-select digits" name="umurKendaraan"
+                                                id="umurKendaraan">
+                                                <option selected="" disabled="" value="">Pilih Umur
+                                                    Kendaraan...
+                                                </option>
+                                                <option value="5">10 Tahun</option>
+                                                <option value="4">7 - 8 Tahun</option>
+                                                <option value="3">5 - 6 Tahun </option>
+                                                <option value="2">3 - 4 Tahun </option>
+                                                <option value="1">1 - 2 Tahun </option>
+
+                                            </select>
+                                            <div class="invalid-feedback">Please provide a valid city.</div>
+
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col">
                                         <div class="mb-3 row">
@@ -188,16 +227,95 @@
                                         </div>
                                     </div>
                                 </div>
-                                
-                            </div>
-                            <div class="form-section">
-                                <?php $__currentLoopData = $datas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <label for="select_<?php echo e($data->kode); ?>"><?php echo e($data->nama); ?></label>
-                                    <select required class="form-select" name="select_<?php echo e($data->kode); ?>">
-                                        <option selected="" disabled="" value="">Choose...</option>
-                                        <option value="<?php echo e($data->nilai); ?>"><?php echo e($data->keterangan); ?></option>
-                                    </select>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="pekerjaan">Pekerjaan</label>
+                                            <select required class="form-select digits" name="pekerjaan" id="pekerjaan">
+                                                <option selected="" disabled="" value="">Pilih Pekerjaan...
+                                                </option>
+                                                <option value="1">Pensiunan</option>
+                                                <option value="2">Profesional</option>
+                                                <option value="3">Wiraswasta</option>
+                                                <option value="4">Karyawan Swasta</option>
+                                                <option value="5">PNS</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="penghasilan">Penghasilan</label>
+                                            <select required class="form-select digits" name="penghasilan"
+                                                id="penghasilan">
+                                                <option selected="" disabled="" value="">Pilih Penghasilan...
+                                                </option>
+                                                <option value="1">2.500.000 - 3.499.000</option>
+                                                <option value="2">3.500.000 - 5.499.000</option>
+                                                <option value="3">5.500.000 - 7.999.000</option>
+                                                <option value="4">8.000.000 - 14.999.000</option>
+                                                <option value="5">15.000.000 - 50.000.000</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="tanggungan">Tanggungan</label>
+                                            <select required class="form-select digits" name="tanggungan"
+                                                id="tanggungan">
+                                                <option selected="" disabled="" value="">Pilih Tanggungan...
+                                                </option>
+                                                <option value="1">Tidak Ada</option>
+                                                <option value="2">1 Tanggungan</option>
+                                                <option value="3">2 Tanggungan</option>
+                                                <option value="4">3 - 5 Tanggungan</option>
+                                                <option value="5">Lebih dari 5 Tanggungan</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="kondisiKendaraan">Kondisi Kendaraan</label>
+                                            <select required class="form-select digits" name="kondisiKendaraan"
+                                                id="kondisiKendaraan">
+                                                <option selected="" disabled="" value="">Pilih Kondisi
+                                                    Kendaraan...
+                                                </option>
+                                                <option value="1">Adanya Kerusakan yang serius</option>
+                                                <option value="2">Perlu Beberapa Perbaikan</option>
+                                                <option value="3">Kondisi Kendaraan wajar, memerlukan perawatan Rutin
+                                                </option>
+                                                <option value="4">Kondisi Kendaraan terawat, tidak perlu perbaikan
+                                                    signifikan</option>
+                                                <option value="5">Kendaraan dalam kondisi sangat baik, tampak seperti
+                                                    baru</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="statusTempatTinggal">Status Tempat Tinggal</label>
+                                            <select required class="form-select digits" name="statusTempatTinggal"
+                                                id="statusTempatTinggal">
+                                                <option selected="" disabled="" value="">Pilih Status Tempat
+                                                    Tinggal...
+                                                </option>
+                                                <option value="1">Kost</option>
+                                                <option value="2">Kontrak</option>
+                                                <option value="3">Milik Keluarga</option>
+                                                <option value="4">Milik Orang Tua</option>
+                                                <option value="5">Milik Sendiri</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-navigation mt-3">

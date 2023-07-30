@@ -75,7 +75,7 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email:dns', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
         ];
-      
+
 
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
@@ -123,7 +123,6 @@ class UserController extends Controller
     public function forgetPassword(Request $request)
     {
         $request->validate(['email' => 'required|email:dns']);
-
         $status = Password::sendResetLink(
             $request->only('email')
         );
@@ -143,15 +142,13 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return back()->with('alertPass', 'Password Baru harus lebih dari 8 karakter!');
-        }elseif(!Hash::check($currentPassword, auth()->user()->password)){
+        } elseif (!Hash::check($currentPassword, auth()->user()->password)) {
             return back()->with('alertPass', 'Password Salah!');
-
-        }else{
+        } else {
 
             auth()->user()->update(['password' => Hash::make($newPassword)]);
             return back()->with('messagePassword', 'Password Diperbaharui');
         }
-
     }
     public function getUsers(Request $request)
     {

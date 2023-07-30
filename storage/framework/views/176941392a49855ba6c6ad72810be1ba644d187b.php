@@ -1,30 +1,30 @@
-@extends('layouts.simple.master')
-@section('title', 'Basic DataTables')
 
-@section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/datatables.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/sweetalert2.css') }}">
+<?php $__env->startSection('title', 'Basic DataTables'); ?>
 
-@endsection
+<?php $__env->startSection('css'); ?>
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('assets/css/vendors/datatables.css')); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('assets/css/vendors/sweetalert2.css')); ?>">
 
-@section('style')
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb-title')
+<?php $__env->startSection('style'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('breadcrumb-title'); ?>
     <h3>Data Kreditur</h3>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb-items')
+<?php $__env->startSection('breadcrumb-items'); ?>
     <li class="breadcrumb-item">Data Tables</li>
     <li class="breadcrumb-item active">Data Kreditur</li>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
-    @if ($lengthUsers > 0 && Auth::user()->level == 'admin')
-        {{-- Data Modal --}}
+<?php $__env->startSection('content'); ?>
+    <?php if($lengthUsers > 0 && Auth::user()->level == 'admin'): ?>
+        
 
-        @foreach ($users as $data => $value)
-            <div class="modal fade" tabindex="-1" id="getData{{ $value->idKreditur }}" role="dialog" aria-hidden="true"
+        <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <div class="modal fade" tabindex="-1" id="getData<?php echo e($value->idKreditur); ?>" role="dialog" aria-hidden="true"
                 aria-labelledby="myModalLabel">
                 <div class="modal-dialog  lg"role="document">
                     <div class="modal-content">
@@ -41,7 +41,7 @@
                                         <div class="col">
                                             <div class="mb-6">
                                                 <label for="namaKreditur">Nama Kreditur</label>
-                                                <input class="form-control" disabled value="{{ $value->name }}"
+                                                <input class="form-control" disabled value="<?php echo e($value->name); ?>"
                                                     name="namaKreditur" id="namaKreditur" type="text"
                                                     placeholder="Masukkan Nama">
                                                 <div class="invalid-feedback">Please provide a valid city.</div>
@@ -51,7 +51,7 @@
                                         <div class="col">
                                             <div class="mb-6">
                                                 <label for="nik">NIK Kreditur</label>
-                                                <input class="form-control" disabled value="{{ $value->nik }}"
+                                                <input class="form-control" disabled value="<?php echo e($value->nik); ?>"
                                                     name="nik" id="nik" type="number" required
                                                     placeholder="421563">
                                                 <div class="invalid-feedback">Please provide a valid city.</div>
@@ -68,7 +68,7 @@
                                                 <label class="col-sm-3 col-form-label">Foto KTP</label>
                                                 <div class="media-img"><img
                                                         style='height: 100%; width: 100%; object-fit: contain'
-                                                        src="{{ asset('storage/images/ktp/' . $value->ktpImage) }}"
+                                                        src="<?php echo e(asset('storage/images/ktp/' . $value->ktpImage)); ?>"
                                                         alt=""></div>
 
                                             </div>
@@ -78,7 +78,7 @@
                                         <div class="col">
                                             <div class="mb-6">
                                                 <label for="jenisKelamin">Jenis Kelamin</label>
-                                                <input class="form-control" disabled value="{{ $value->jeniskelamin }}"
+                                                <input class="form-control" disabled value="<?php echo e($value->jeniskelamin); ?>"
                                                     name="nik" id="nik" type="text" required
                                                     placeholder="421563">
                                             </div>
@@ -86,7 +86,7 @@
                                         <div class="col">
                                             <div class="mb-6">
                                                 <label for="nomorTelp">Nomor Telp Kreditur</label>
-                                                <input class="form-control" required disabled value="{{ $value->telepon }}"
+                                                <input class="form-control" required disabled value="<?php echo e($value->telepon); ?>"
                                                     name="nomorTelp" id="nomorTelp" type="text" placeholder="0821">
                                             </div>
                                         </div>
@@ -96,7 +96,7 @@
                                             <div class="mb-6">
                                                 <label for="tempatLahir">Tempat Lahir</label>
                                                 <input class="form-control" required disabled
-                                                    value="{{ $value->tempatLahir }}" name="tempatLahir" id="tempatLahir"
+                                                    value="<?php echo e($value->tempatLahir); ?>" name="tempatLahir" id="tempatLahir"
                                                     type="text">
                                             </div>
                                         </div>
@@ -104,7 +104,7 @@
                                             <div class="mb-6">
                                                 <label for="tanggalLahir">Tanggal Lahir</label>
                                                 <input class="form-control" required disabled
-                                                    value="{{ $value->tanggalLahir }}" name="tanggalLahir" id="tanggalLahir"
+                                                    value="<?php echo e($value->tanggalLahir); ?>" name="tanggalLahir" id="tanggalLahir"
                                                     type="date">
                                             </div>
                                         </div>
@@ -114,7 +114,7 @@
                                             <div class="mb-6">
                                                 <label for="pendidikanTerakhir">Pendidikan Terakhir</label>
                                                 <input class="form-control" required disabled
-                                                    value="{{ $value->pendidikanterakhir }}" name="pendidikanterakhir"
+                                                    value="<?php echo e($value->pendidikanterakhir); ?>" name="pendidikanterakhir"
                                                     id="pendidikanterakhir" type="text">
                                             </div>
                                         </div>
@@ -122,7 +122,7 @@
                                             <div class="mb-6">
                                                 <label for="alasan">Alasan</label>
                                                 <input class="form-control" required disabled
-                                                    value="{{ $value->alasan }}" name="alasan" id="alasan"
+                                                    value="<?php echo e($value->alasan); ?>" name="alasan" id="alasan"
                                                     type="text">
                                             </div>
                                         </div>
@@ -133,37 +133,37 @@
                                                 <label for="umurKreditur">Umur Kreditur</label>
                                                 <select required class="form-select digits" disabled name="umurKreditur"
                                                     id="umurKreditur">
-                                                    @switch($value->C6)
-                                                        @case('5')
+                                                    <?php switch($value->C6):
+                                                        case ('5'): ?>
                                                             <!-- Kode untuk opsi 5 -->
                                                             <option value="5">46 - 55 </option>
-                                                        @break
+                                                        <?php break; ?>
 
-                                                        @case('4')
+                                                        <?php case ('4'): ?>
                                                             <!-- Kode untuk opsi 4 -->
                                                             <option value="4">24 - 26 </option>
-                                                        @break
+                                                        <?php break; ?>
 
-                                                        @case('3')
+                                                        <?php case ('3'): ?>
                                                             <!-- Kode untuk opsi 3 -->
                                                             <option value="3">36 - 45 </option>
-                                                        @break
+                                                        <?php break; ?>
 
-                                                        @case('2')
+                                                        <?php case ('2'): ?>
                                                             <!-- Kode untuk opsi 2 -->
                                                             <option value="2">17 - 23</option>
-                                                        @break
+                                                        <?php break; ?>
 
-                                                        @case('1')
+                                                        <?php case ('1'): ?>
                                                             <!-- Kode untuk opsi 1 -->
                                                             <option value="1">27 - 35</option>
-                                                        @break
+                                                        <?php break; ?>
 
-                                                        @default
+                                                        <?php default: ?>
                                                             <!-- Kode default jika tidak ada opsi yang cocok -->
                                                             <option selected="" disabled="" value="">Pilih Umur...
                                                             </option>
-                                                    @endswitch
+                                                    <?php endswitch; ?>
 
 
                                                 </select>
@@ -175,7 +175,7 @@
                                             <div class="mb-6">
                                                 <label for="nomorTelp">Tipe Kendaraan</label>
                                                 <input class="form-control" required disabled
-                                                    value="{{ $value->tipeKendaraan }}" name="modelKendaraan"
+                                                    value="<?php echo e($value->tipeKendaraan); ?>" name="modelKendaraan"
                                                     id="modelKendaraan" type="text"
                                                     placeholder="Masukkan Model Kendadraan Anda">
                                             </div>
@@ -186,7 +186,7 @@
                                             <div class="mb-6">
                                                 <label for="modelKendaraan">Model Kendaraan</label>
                                                 <input class="form-control" required disabled
-                                                    value="{{ $value->modelKendaraan }}" name="modelKendaraan"
+                                                    value="<?php echo e($value->modelKendaraan); ?>" name="modelKendaraan"
                                                     id="modelKendaraan" type="text"
                                                     placeholder="Masukkan Model Kendadraan Anda">
                                             </div>
@@ -196,38 +196,38 @@
                                                 <label for="umurKendaraan">Umur Kendaraan</label>
                                                 <select required class="form-select digits" disabled name="umurKendaraan"
                                                     id="umurKendaraan">
-                                                    @switch($value->C5)
-                                                        @case('5')
+                                                    <?php switch($value->C5):
+                                                        case ('5'): ?>
                                                             <!-- Kode untuk opsi 5 -->
                                                             <option value="5">10 Tahun</option>
-                                                        @break
+                                                        <?php break; ?>
 
-                                                        @case('4')
+                                                        <?php case ('4'): ?>
                                                             <!-- Kode untuk opsi 4 -->
                                                             <option value="4">7 - 8 Tahun</option>
-                                                        @break
+                                                        <?php break; ?>
 
-                                                        @case('3')
+                                                        <?php case ('3'): ?>
                                                             <!-- Kode untuk opsi 3 -->
                                                             <option value="3">5 - 6 Tahun </option>
-                                                        @break
+                                                        <?php break; ?>
 
-                                                        @case('2')
+                                                        <?php case ('2'): ?>
                                                             <!-- Kode untuk opsi 2 -->
                                                             <option value="2">3 - 4 Tahun </option>
-                                                        @break
+                                                        <?php break; ?>
 
-                                                        @case('1')
+                                                        <?php case ('1'): ?>
                                                             <!-- Kode untuk opsi 1 -->
                                                             <option value="1">1 - 2 Tahun </option>
-                                                        @break
+                                                        <?php break; ?>
 
-                                                        @default
+                                                        <?php default: ?>
                                                             <!-- Kode default jika tidak ada opsi yang cocok -->
                                                             <option selected="" disabled="" value="">Pilih Umur
                                                                 Kendaraan...
                                                             </option>
-                                                    @endswitch
+                                                    <?php endswitch; ?>
 
 
                                                 </select>
@@ -243,7 +243,7 @@
                                                 <label class="col-sm-3 col-form-label">Foto BPKB</label>
                                                 <div class="media-img"><img
                                                         style='height: 100%; width: 100%; object-fit: contain'
-                                                        src="{{ asset('storage/images/bpkb/' . $value->bpkbImage) }}"
+                                                        src="<?php echo e(asset('storage/images/bpkb/' . $value->bpkbImage)); ?>"
                                                         alt=""></div>
 
                                             </div>
@@ -255,38 +255,38 @@
                                                 <label for="pekerjaan">Pekerjaan</label>
                                                 <select required class="form-select digits" disabled name="pekerjaan"
                                                     id="pekerjaan">
-                                                    @switch($value->C3)
-                                                        @case('5')
+                                                    <?php switch($value->C3):
+                                                        case ('5'): ?>
                                                             <!-- Kode untuk opsi 5 -->
                                                             <option value="5">PNS</option>
-                                                        @break
+                                                        <?php break; ?>
 
-                                                        @case('4')
+                                                        <?php case ('4'): ?>
                                                             <!-- Kode untuk opsi 4 -->
                                                             <option value="4">Karyawan Swasta</option>
-                                                        @break
+                                                        <?php break; ?>
 
-                                                        @case('3')
+                                                        <?php case ('3'): ?>
                                                             <!-- Kode untuk opsi 3 -->
                                                             <option value="3">Wiraswasta</option>
-                                                        @break
+                                                        <?php break; ?>
 
-                                                        @case('2')
+                                                        <?php case ('2'): ?>
                                                             <!-- Kode untuk opsi 2 -->
                                                             <option value="2">Profesional</option>
-                                                        @break
+                                                        <?php break; ?>
 
-                                                        @case('1')
+                                                        <?php case ('1'): ?>
                                                             <!-- Kode untuk opsi 1 -->
                                                             <option value="1">Pensiunan</option>
-                                                        @break
+                                                        <?php break; ?>
 
-                                                        @default
+                                                        <?php default: ?>
                                                             <!-- Kode default jika tidak ada opsi yang cocok -->
                                                             <option selected="" disabled="" value="">Pilih
                                                                 Pekerjaan...
                                                             </option>
-                                                    @endswitch
+                                                    <?php endswitch; ?>
 
                                                 </select>
                                             </div>
@@ -295,39 +295,39 @@
                                             <div class="mb-6">
                                                 <label for="penghasilan">Penghasilan</label>
                                                 <select required class="form-select digits" disabled
-                                                    value="{{ $value->name }}" name="penghasilan" id="penghasilan">
-                                                    @switch($value->C2)
-                                                        @case('5')
+                                                    value="<?php echo e($value->name); ?>" name="penghasilan" id="penghasilan">
+                                                    <?php switch($value->C2):
+                                                        case ('5'): ?>
                                                             <!-- Kode untuk opsi 5 -->
                                                             <option value="5">15.000.000 - 50.000.000</option>
-                                                        @break
+                                                        <?php break; ?>
 
-                                                        @case('4')
+                                                        <?php case ('4'): ?>
                                                             <!-- Kode untuk opsi 4 -->
                                                             <option value="4">8.000.000 - 14.999.000</option>
-                                                        @break
+                                                        <?php break; ?>
 
-                                                        @case('3')
+                                                        <?php case ('3'): ?>
                                                             <!-- Kode untuk opsi 3 -->
                                                             <option value="3">5.500.000 - 7.999.000</option>
-                                                        @break
+                                                        <?php break; ?>
 
-                                                        @case('2')
+                                                        <?php case ('2'): ?>
                                                             <!-- Kode untuk opsi 2 -->
                                                             <option value="2">3.500.000 - 5.499.000</option>
-                                                        @break
+                                                        <?php break; ?>
 
-                                                        @case('1')
+                                                        <?php case ('1'): ?>
                                                             <!-- Kode untuk opsi 1 -->
                                                             <option value="1">2.500.000 - 3.499.000</option>
-                                                        @break
+                                                        <?php break; ?>
 
-                                                        @default
+                                                        <?php default: ?>
                                                             <!-- Kode default jika tidak ada opsi yang cocok -->
                                                             <option selected="" disabled="" value="">Pilih
                                                                 Penghasilan...
                                                             </option>
-                                                    @endswitch
+                                                    <?php endswitch; ?>
 
                                                 </select>
                                             </div>
@@ -339,7 +339,7 @@
                                             <div class="mb-6">
                                                 <label for="tanggungan">Tanggungan</label>
                                                 <select required class="form-select digits" disabled
-                                                    value="{{ $value->name }}" name="tanggungan" id="tanggungan">
+                                                    value="<?php echo e($value->name); ?>" name="tanggungan" id="tanggungan">
                                                     <option selected="" disabled="" value="">Pilih
                                                         Tanggungan...
                                                     </option>
@@ -355,7 +355,7 @@
                                             <div class="mb-6">
                                                 <label for="kondisiKendaraan">Kondisi Kendaraan</label>
                                                 <select required class="form-select digits" disabled
-                                                    value="{{ $value->name }}" name="kondisiKendaraan"
+                                                    value="<?php echo e($value->name); ?>" name="kondisiKendaraan"
                                                     id="kondisiKendaraan">
                                                     <option selected="" disabled="" value="">Pilih Kondisi
                                                         Kendaraan...
@@ -380,7 +380,7 @@
                                             <div class="mb-6">
                                                 <label for="statusTempatTinggal">Status Tempat Tinggal</label>
                                                 <select required class="form-select digits" disabled
-                                                    value="{{ $value->name }}" name="statusTempatTinggal"
+                                                    value="<?php echo e($value->name); ?>" name="statusTempatTinggal"
                                                     id="statusTempatTinggal">
                                                     <option selected="" disabled="" value="">Pilih Status
                                                         Tempat
@@ -404,7 +404,7 @@
                     </div>
                 </div>
             </div>
-        @endforeach
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
         <div class="container-fluid">
             <div class="row">
@@ -413,7 +413,7 @@
                         <div class="card-header">
                             <h5>Final Ranking</h5>
                             <div style="margin-left: 1080px">
-                                <a class="btn btn-primary" href="{{ route('input-data') }}" type="button">Tambah
+                                <a class="btn btn-primary" href="<?php echo e(route('input-data')); ?>" type="button">Tambah
                                     Data</a>
                             </div>
                         </div>
@@ -429,34 +429,34 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($finalRank as $final)
+                                        <?php $__currentLoopData = $finalRank; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $final): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <tr
-                                                style="@if ($final['finalRank'] >= 1.9) background-color: lightgreen; @else background-color: lightyellow; @endif">
-                                                <td>&nbsp; {{ $final['name'] }}</td>
+                                                style="<?php if($final['finalRank'] >= 1.9): ?> background-color: lightgreen; <?php else: ?> background-color: lightyellow; <?php endif; ?>">
+                                                <td>&nbsp; <?php echo e($final['name']); ?></td>
 
-                                                <td>&nbsp; {{ $final['finalRank'] }}</td>
-                                                @if ($final['visible'] == 0)
+                                                <td>&nbsp; <?php echo e($final['finalRank']); ?></td>
+                                                <?php if($final['visible'] == 0): ?>
                                                     <td>Menunggu Untuk DiReview </td>
-                                                @elseif($final['visible'] == 1)
+                                                <?php elseif($final['visible'] == 1): ?>
                                                     <td>Data telah diterima </td>
-                                                @elseif($final['visible'] == 2)
+                                                <?php elseif($final['visible'] == 2): ?>
                                                     <td>Data telah ditolak </td>
-                                                @endif
+                                                <?php endif; ?>
                                                 <td>&nbsp; &nbsp; <a href="#" class="btn btn-primary btn-sm"
                                                         data-toggle="modal"
-                                                        data-target="#getData{{ $final['idKreditur'] }}">
+                                                        data-target="#getData<?php echo e($final['idKreditur']); ?>">
                                                         Lihat Data
                                                     </a>
-                                                    <button data-item-id="{{ $final['idKreditur'] }}"
+                                                    <button data-item-id="<?php echo e($final['idKreditur']); ?>"
                                                         class="btn btn-success btn" type="button"
                                                         id="updateButton">Terima Data</button>
-                                                    <button data-item-id="{{ $final['idKreditur'] }}"
+                                                    <button data-item-id="<?php echo e($final['idKreditur']); ?>"
                                                         class="btn btn-danger btn" type="button" id="tolakButton">Tolak
                                                         Data</button>
 
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -465,7 +465,7 @@
                 </div>
             </div>
         </div>
-    @elseif($userKreditur > 0 && Auth::user()->level != 'admin')
+    <?php elseif($userKreditur > 0 && Auth::user()->level != 'admin'): ?>
         <div class="container-fluid">
             <div class="row">
                 <!-- Zero Configuration  Starts-->
@@ -474,7 +474,7 @@
                         <div class="card-header">
                             <h5>Final Ranking</h5>
                             <div style="margin-left: 1080px">
-                                <a class="btn btn-primary" href="{{ route('input-data') }}" type="button">Tambah
+                                <a class="btn btn-primary" href="<?php echo e(route('input-data')); ?>" type="button">Tambah
                                     Data</a>
                             </div>
                         </div>
@@ -490,21 +490,21 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($dataUser as $data)
+                                        <?php $__currentLoopData = $dataUser; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <tr>
-                                                <td>&nbsp; {{ $data->name }}</td>
-                                                <td>&nbsp; {{ $data->tanggal }}</td>
-                                                <td>&nbsp; {{ $data->nomor_urut }}</td>
-                                                @if ($data->visible == 0)
+                                                <td>&nbsp; <?php echo e($data->name); ?></td>
+                                                <td>&nbsp; <?php echo e($data->tanggal); ?></td>
+                                                <td>&nbsp; <?php echo e($data->nomor_urut); ?></td>
+                                                <?php if($data->visible == 0): ?>
                                                     <td>Menunggu Untuk DiReview </td>
-                                                @elseif($data->visible == 1)
+                                                <?php elseif($data->visible == 1): ?>
                                                     <td>Data telah diterima </td>
-                                                @elseif($data->visible == 2)
+                                                <?php elseif($data->visible == 2): ?>
                                                     <td>Data telah ditolak </td>
-                                                @endif
+                                                <?php endif; ?>
 
                                             </tr>
-                                        @endforeach
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -513,7 +513,7 @@
                 </div>
             </div>
         </div>
-    @else
+    <?php else: ?>
         <div class="container-fluid">
             <div class="row">
                 <!-- Zero Configuration  Starts-->
@@ -522,7 +522,7 @@
                         <div class="card-header">
                             <h5>Final Ranking</h5>
                             <div style="margin-left: 1080px">
-                                <a class="btn btn-primary" href="{{ route('input-data') }}" type="button">Tambah
+                                <a class="btn btn-primary" href="<?php echo e(route('input-data')); ?>" type="button">Tambah
                                     Data</a>
                             </div>
                         </div>
@@ -546,10 +546,10 @@
                 </div>
             </div>
         </div>
-    @endif
-@endsection
+    <?php endif; ?>
+<?php $__env->stopSection(); ?>
 
-@section('script')
+<?php $__env->startSection('script'); ?>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
@@ -583,7 +583,7 @@
                         url: '/update-kreditur' + "/" + id + "/" + visible,
                         method: 'PUT',
                         data: {
-                            _token: "{{ csrf_token() }}",
+                            _token: "<?php echo e(csrf_token()); ?>",
 
                         },
                         success: function(response) {
@@ -630,7 +630,7 @@
                         url: '/update-kreditur' + "/" + id + "/" + visible,
                         method: 'PUT',
                         data: {
-                            _token: "{{ csrf_token() }}",
+                            _token: "<?php echo e(csrf_token()); ?>",
 
                         },
                         success: function(response) {
@@ -660,9 +660,11 @@
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script src="{{ asset('assets/js/datatable/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="<?php echo e(asset('assets/js/datatable/datatables/jquery.dataTables.min.js')); ?>"></script>
 
 
-    <script src="{{ asset('assets/js/datatable/datatables/datatable.custom.js') }}"></script>
+    <script src="<?php echo e(asset('assets/js/datatable/datatables/datatable.custom.js')); ?>"></script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.simple.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\df\Documents\CubaLaravel\resources\views/tables/data-kreditur.blade.php ENDPATH**/ ?>
