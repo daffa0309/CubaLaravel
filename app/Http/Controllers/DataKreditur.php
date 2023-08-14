@@ -34,6 +34,49 @@ class DataKreditur extends Controller
             ->leftjoin('data_penilaians', 'data_krediturs.idKreditur', "=", 'data_penilaians.idKreditur')
             ->leftjoin('data_kendaraans', 'data_krediturs.idKreditur', "=", 'data_kendaraans.idKreditur')
             ->get();
+        $testData =  DB::table('data_krediturs')
+            ->leftjoin('data_perhitungan', 'data_krediturs.idKreditur', "=", 'data_perhitungan.idKreditur')
+            ->leftjoin('nilai_kriterias', 'data_perhitungan.idNilaiKriteria', "=", 'nilai_kriterias.id_nilaikriteria')
+            ->leftjoin('data_kriterias', 'nilai_kriterias.id_kriteria', "=", 'data_kriterias.idKriteria')
+            ->select('data_krediturs.*', 'nilai_kriterias.nilai', 'data_kriterias.sifat', 'data_kriterias.bobot')
+            ->get();
+        // $testData2 =  DB::table('data_perhitungan')
+        // ->leftjoin('nilai_kriterias', 'data_perhitungan.idNilaiKriteria', "=", 'nilai_kriterias.id_nilaikriteria')
+
+        // ->get();
+        $transactions = DB::table('nilai_kriterias')
+            ->select('id_kriteria', DB::raw('MIN(nilai) as min_nilai'), DB::raw('MAX(nilai) as max_nilai'))
+            ->groupBy('id_kriteria')
+            ->get();
+
+
+        $usersWithOrdersAndPayments = DB::table('nilai_kriterias')
+            ->select('nilai_kriterias.*', 'data_perhitungan.*', 'data_kriterias.*', 'transaction.*', 'data_krediturs.*')
+            ->join(DB::raw('(SELECT * FROM data_perhitungan) as data_perhitungan'), 'nilai_kriterias.id_nilaikriteria', '=', 'data_perhitungan.idNilaiKriteria')
+            ->join(DB::raw('(SELECT * FROM data_kriterias) as data_kriterias'), 'nilai_kriterias.id_kriteria', '=', 'data_kriterias.idKriteria')
+            ->join(DB::raw('(SELECT id_kriteria, MIN(nilai) as min_nilai ,MAX(nilai) as max_nilai FROM nilai_kriterias INNER JOIN data_perhitungan ON nilai_kriterias.id_nilaikriteria = data_perhitungan.idNilaiKriteria GROUP BY id_kriteria) as transaction '), 'nilai_kriterias.id_kriteria', '=', 'transaction.id_kriteria')
+            ->join('data_krediturs', 'data_krediturs.idKreditur', '=', 'data_perhitungan.idKreditur')
+
+            ->get();
+        // dd($usersWithOrdersAndPayments);
+        // dd($usersWithOrdersAndPayments);
+        //Sub query
+        // $usersWithTotalOrders = DB::table('nilai_kriterias')
+        //     ->joinSub(function ($query) {
+        //         $query->from('nilai_kriterias')
+        //         ->select('id_kriteria', DB::raw('MIN(nilai) as min_nilai'), DB::raw('MAX(nilai) as max_nilai'))
+
+        //         ->groupBy('id_kriteria');
+        //     }, 'transaction', function ($join) {
+        //         $join->on('nilai_kriterias.id_kriteria', '=', 'transaction.id_kriteria');
+        //     })
+        //     ->join('data_perhitungan', 'data_perhitungan.idNilaiKriteria', '=', 'nilai_kriterias.id_nilaikriteria')
+        //     ->join('data_kriterias', 'data_kriterias.idKriteria', '=', 'nilai_kriterias.id_kriteria')
+        //     ->join('data_krediturs', 'data_krediturs.idKreditur', '=', 'data_perhitungan.idKreditur')
+
+        //     ->select('nilai_kriterias.*', 'transaction.*', "data_perhitungan.*", 'data_kriterias.*', 'data_krediturs.*')
+        //     ->get();
+        // dd($usersWithTotalOrders);
         $lengthUsers = count($users);
         $data = DB::table('data_penilaians')->select('C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7')->get();
         $maxc1 = DB::table('data_penilaians')->max('C1');
@@ -56,81 +99,172 @@ class DataKreditur extends Controller
                 ->leftjoin('users', 'data_krediturs.idLogin', "=", 'users.id')
                 ->get();
             $lengthData = count($level);
+            $dataKredit = [];
+            foreach ($usersWithOrdersAndPayments as $dataCoba) {
+                if (!array_key_exists($dataCoba->idKreditur, $dataKredit)) {
+                    $dataKredit[$dataCoba->idKreditur] = [];
+                }
+                $dataKredit[$dataCoba->idKreditur]['idKreditur'] = $dataCoba->idKreditur;
+                $dataKredit[$dataCoba->idKreditur]['visible'] = $dataCoba->visible;
+
+                $dataKredit[$dataCoba->idKreditur]['Nama Kreditur'] = $dataCoba->name;
+                $dataKredit[$dataCoba->idKreditur]['Bobot' . $dataCoba->id_kriteria] = $dataCoba->bobot;
+                $dataKredit[$dataCoba->idKreditur]['idKriteria'] = $dataCoba->id_kriteria;
+
+                if ($dataCoba->sifat == 'Benefit') {
+                    $dataKredit[$dataCoba->idKreditur]['C' . $dataCoba->id_kriteria] = $dataCoba->nilai - $dataCoba->min_nilai != 0 ? ($dataCoba->nilai - $dataCoba->min_nilai) / ($dataCoba->max_nilai - $dataCoba->min_nilai) : 0;
+                } else if ($dataCoba->sifat == 'Cost') {
+                    $dataKredit[$dataCoba->idKreditur]['C' . $dataCoba->id_kriteria] = $dataCoba->max_nilai - $dataCoba->nilai != 0 ? ($dataCoba->max_nilai - $dataCoba->nilai) / ($dataCoba->max_nilai - $dataCoba->min_nilai) : 0;
+                }
+            }
+            $filtering = $dataKredit[1];
+            $resultArray = [];
+            $filteredKeys = [];
+            // dd($dataKredit);
+            foreach ($filtering as $key => $value) {
+                if (strpos($key, 'C') === 0) { // Memeriksa apakah kunci dimulai dengan huruf "C"
+                    $filteredKeys[] = str_replace('C', '', $key); // Menghilangkan huruf "C"
+                }
+            }
+
+            // dd($filteredKeys);
+            foreach ($filtering as $key => $value) {
+                if (strpos($key, 'C') === 0) { // Memeriksa apakah kunci dimulai dengan huruf "C"
+                    $resultArray[] = $key; // Menghilangkan huruf "C"
+                }
+            }
+
+            // dd($resultArray);
+
+
             // Mengambil Data Normalisasi
             foreach ($users as $row) {
                 $matriks[] = [
                     'idKreditur' => ($row->idKreditur),
                     'name' => ($row->name),
-                    'C1' => ($row->C1 - $minc1 != 0  ?  ($row->C1 - $minc1) / ($maxc1 - $minc1) : 0),
-                    'C2' => ($row->C2 - $minc2 != 0  ?  ($row->C2 - $minc2) / ($maxc2 - $minc2) : 0),
-                    'C3' => ($row->C3 - $minc3 != 0  ?  ($row->C3 - $minc3) / ($maxc3 - $minc3) : 0),
-                    'C4' => ($row->C4 - $minc4 != 0  ?  ($row->C4 - $minc4) / ($maxc4 - $minc4) : 0),
-                    'C5' => ($maxc5   - $row->C5  != 0  ? ($maxc5   - $row->C5) / ($maxc5 - $minc5) : 0),
-                    'C6' => ($maxc6   - $row->C6  != 0  ? ($maxc6   - $row->C6) / ($maxc6 - $minc6) : 0),
-                    'C7' => ($maxc7   - $row->C7  != 0  ? ($maxc7   - $row->C7) / ($maxc7 - $minc7) : 0),
                     'visible' => ($row->visible)
                 ];
             }
+
             //Perbandingan SI dan PI
+            $length = count($dataKredit);
+            $lengthTest = count($matriks);
 
-            $length = count($matriks);
-            for ($i = 0; $i < $length; $i++) {
-                $sipi[] = [
-                    // 'name' => ($matriks[$i]['name']),
-                    'C1' => (0.1 * $matriks[$i]['C1'] == 0.0 ? 0 : 0.1 * $matriks[$i]['C1']),
-                    'C2' => (0.2 * $matriks[$i]['C2'] == 0.0 ? 0 : 0.2 * $matriks[$i]['C2']),
-                    'C3' => (0.1 * $matriks[$i]['C3'] == 0.0 ? 0 : 0.1 * $matriks[$i]['C3']),
-                    'C4' => (0.2 * $matriks[$i]['C4'] == 0.0 ? 0 : 0.2 * $matriks[$i]['C4']),
-                    'C5' => (0.2 * $matriks[$i]['C5'] == 0.0 ? 0 : 0.2 * $matriks[$i]['C5']),
-                    'C6' => (0.1 * $matriks[$i]['C6'] == 0.0 ? 0 : 0.1 * $matriks[$i]['C6']),
-                    'C7' => (0.1 * $matriks[$i]['C7'] == 0.0 ? 0 : 0.1 * $matriks[$i]['C7']),
-
-                ];
-            }
-
-            $arraysumSI = [];
-            for ($i = 0; $i < $length; $i++) {
-                $sumSI = 0;
-                for ($x = 1; $x < 8; $x++) {
-                    $sumSI = $sumSI + $sipi[$i]['C' . $x];
+            $sipi = [];
+            foreach ($dataKredit as $dataKreditur) {
+                $sipi[$dataKreditur['idKreditur']] = [];
+                foreach ($filteredKeys as $key) {
+                    $sipi[$dataKreditur['idKreditur']]['sipi_C' . $key] = $dataKreditur['Bobot' . $key] * $dataKreditur['C' . $key] == 0.0 ? 0 : $dataKreditur['Bobot' . $key] * $dataKreditur['C' . $key];
                 }
-                array_push($arraysumSI, $sumSI);
-                $sipipangkat[] = [
-                    'C1' => (pow($matriks[$i]['C1'], 0.1) == 1.0 ? 1 : pow($matriks[$i]['C1'], 0.1)),
-                    'C2' => (pow($matriks[$i]['C2'], 0.2) == 1.0 ? 1 : pow($matriks[$i]['C2'], 0.2)),
-                    'C3' => (pow($matriks[$i]['C3'], 0.1) == 1.0 ? 1 : pow($matriks[$i]['C3'], 0.1)),
-                    'C4' => (pow($matriks[$i]['C4'], 0.2) == 1.0 ? 1 : pow($matriks[$i]['C4'], 0.2)),
-                    'C5' => (pow($matriks[$i]['C5'], 0.2) == 1.0 ? 1 : pow($matriks[$i]['C5'], 0.2)),
-                    'C6' => (pow($matriks[$i]['C6'], 0.1) == 1.0 ? 1 : pow($matriks[$i]['C6'], 0.1)),
-                    'C7' => (pow($matriks[$i]['C7'], 0.1) == 1.0 ? 1 : pow($matriks[$i]['C7'], 0.1)),
-                ];
+            }
+            // dd($sipiTest);  
+       
+            $arraysumSI = [];
+
+            foreach ($sipi as $innerArray) {
+                $sum = 0;
+                foreach ($innerArray as $value) {
+                    $sum += $value;
+                }
+                $arraysumSI[] = $sum;
             }
 
+            $sipipangkat = [];
+            foreach ($dataKredit as $dataKreditur) {
+                $sipipangkat[$dataKreditur['idKreditur']] = [];
+                foreach ($filteredKeys as $key) {
+                    $sipipangkat[$dataKreditur['idKreditur']]['sipiPangkat_C' . $key] = (pow($dataKreditur['C' . $key], $dataKreditur['Bobot' . $key] ) == 1.0 ? 1 : pow($dataKreditur['C' . $key], $dataKreditur['Bobot' . $key]));
+                }
+            }
+
+
+            // for ($i = 0; $i < $length; $i++) {
+            //     $sipi[] = [
+            //         // 'name' => ($matriks[$i]['name']),
+            //         'C1' => (0.1 * $matriks[$i]['C1'] == 0.0 ? 0 : 0.1 * $matriks[$i]['C1']),
+            //         'C2' => (0.2 * $matriks[$i]['C2'] == 0.0 ? 0 : 0.2 * $matriks[$i]['C2']),
+            //         'C3' => (0.1 * $matriks[$i]['C3'] == 0.0 ? 0 : 0.1 * $matriks[$i]['C3']),
+            //         'C4' => (0.2 * $matriks[$i]['C4'] == 0.0 ? 0 : 0.2 * $matriks[$i]['C4']),
+            //         'C5' => (0.2 * $matriks[$i]['C5'] == 0.0 ? 0 : 0.2 * $matriks[$i]['C5']),
+            //         'C6' => (0.1 * $matriks[$i]['C6'] == 0.0 ? 0 : 0.1 * $matriks[$i]['C6']),
+            //         'C7' => (0.1 * $matriks[$i]['C7'] == 0.0 ? 0 : 0.1 * $matriks[$i]['C7']),
+
+            //     ];
+            // }
+
+
+            // $arraysumSI = [];
+            // for ($i = 0; $i < $length; $i++) {
+            //     $sumSI = 0;
+            //     for ($x = 1; $x < 8; $x++) {
+            //         $sumSI = $sumSI + $sipi[$i]['C' . $x];
+            //     }
+            //     array_push($arraysumSI, $sumSI);
+            //     $sipipangkat[] = [
+            //         'C1' => (pow($matriks[$i]['C1'], 0.1) == 1.0 ? 1 : pow($matriks[$i]['C1'], 0.1)),
+            //         'C2' => (pow($matriks[$i]['C2'], 0.2) == 1.0 ? 1 : pow($matriks[$i]['C2'], 0.2)),
+            //         'C3' => (pow($matriks[$i]['C3'], 0.1) == 1.0 ? 1 : pow($matriks[$i]['C3'], 0.1)),
+            //         'C4' => (pow($matriks[$i]['C4'], 0.2) == 1.0 ? 1 : pow($matriks[$i]['C4'], 0.2)),
+            //         'C5' => (pow($matriks[$i]['C5'], 0.2) == 1.0 ? 1 : pow($matriks[$i]['C5'], 0.2)),
+            //         'C6' => (pow($matriks[$i]['C6'], 0.1) == 1.0 ? 1 : pow($matriks[$i]['C6'], 0.1)),
+            //         'C7' => (pow($matriks[$i]['C7'], 0.1) == 1.0 ? 1 : pow($matriks[$i]['C7'], 0.1)),
+            //     ];
+            // }
+
             for ($i = 0; $i < $length; $i++) {
-                $namaHasilSi[] = [
+                $namaHasilSiTest[] = [
                     'name' => ($matriks[$i]['name']),
                     'hasilSi' => ($arraysumSI[$i]),
                 ];
             }
 
+            // for ($i = 0; $i < $length; $i++) {
+            //     $namaHasilSi[] = [
+            //         'name' => ($matriks[$i]['name']),
+            //         'hasilSi' => ($arraysumSI[$i]),
+            //     ];
+            // }
+
+            //Get data arraySumPI
             $arraysumPI = [];
 
-            for ($i = 0; $i < $length; $i++) {
+            foreach ($sipipangkat as $sipiPangkat) {
                 $sumPI = 0;
-                for ($x = 1; $x < 8; $x++) {
-                    // $name =($matriks[$i]['name']);
-                    $sumPI = $sumPI + $sipipangkat[$i]['C' . $x];
+                foreach ($sipiPangkat as $value) {
+                    $sumPI = $sumPI + $value;
                 }
-                array_push($arraysumPI, $sumPI);
+                $arraysumPI[] = $sumPI;
             }
+
+            // $arraysumPI = [];
+
+            // for ($i = 0; $i < $lengthTest; $i++) {
+            //     $sumPI = 0;
+            //     for ($x = 1; $x < 8; $x++) {
+            //         // $name =($matriks[$i]['name']);
+            //         $sumPI = $sumPI + $sipipangkat[$i]['C' . $x];
+            //     }
+            //     array_push($arraysumPI, $sumPI);
+            // }
+
+            //Penjumlahan PISI
+            $jumlahKrit = count($filteredKeys);
             $arraysumPISI = [];
             for ($i = 0; $i < $length; $i++) {
-                $sumPISI = 0;
-                for ($x = 1; $x < 8; $x++) {
-                    $sumPISI = $arraysumPI[$i] + $arraysumSI[$i];
+                $sumPISITest = 0;
+                for ($x = 1; $x < $jumlahKrit; $x++) {
+                    $sumPISITest = $arraysumPI[$i] + $arraysumSI[$i];
                 }
-                array_push($arraysumPISI, $sumPISI);
-            }
+                array_push($arraysumPISI, $sumPISITest);
+            }  
+            // $arraysumPISI = [];
+            // for ($i = 0; $i < $length; $i++) {
+            //     $sumPISI = 0;
+            //     for ($x = 1; $x < 8; $x++) {
+            //         $sumPISI = $arraysumPI[$i] + $arraysumSI[$i];
+            //     }
+            //     array_push($arraysumPISI, $sumPISI);
+            // }
             $jumlahPISI = 0;
             foreach ($arraysumPISI as $numbers) {
                 $jumlahPISI += $numbers;
@@ -141,11 +275,14 @@ class DataKreditur extends Controller
 
             for ($i = 0; $i < $length; $i++) {
                 $kaSIPI = 0;
-                for ($x = 1; $x < 8; $x++) {
+                for ($x = 1; $x < $jumlahKrit; $x++) {
                     $kaSIPI = $arraysumPISI[$i] == 0 ? 0 : $arraysumPISI[$i] / $jumlahPISI;
                 }
                 array_push($arraykaPISI, $kaSIPI);
             }
+
+
+
             //Mencari Nilai Min dan Max Si dan Pi
             $minSUMSI = min($arraysumSI);
             $minSUMPI = min($arraysumPI);
@@ -157,7 +294,7 @@ class DataKreditur extends Controller
 
             for ($i = 0; $i < $length; $i++) {
                 $kbSIPI = 0;
-                for ($x = 1; $x < 8; $x++) {
+                for ($x = 1; $x < $jumlahKrit; $x++) {
                     $kbSIPI = $arraysumSI[$i] && $minSUMSI && $arraysumPI[$i] && $minSUMPI != 0 ? ($arraysumSI[$i] / $minSUMSI) + ($arraysumPI[$i] / $minSUMPI) : 0;
                 }
                 array_push($arraykbPISI, $kbSIPI);
@@ -168,7 +305,7 @@ class DataKreditur extends Controller
 
             for ($i = 0; $i < $length; $i++) {
                 $kcSIPI = 0;
-                for ($x = 1; $x < 8; $x++) {
+                for ($x = 1; $x < $jumlahKrit; $x++) {
                     $kcSIPI = $arraysumSI[$i] && $arraysumPI[$i] != 0 ?  ((0.5 * $arraysumSI[$i]) + (0.5 * $arraysumPI[$i])) / ((0.5 * $maxSUMSI) + (0.5 * $maxSUMPI)) : 0;
                 }
                 array_push($arraykcPISI, $kcSIPI);
@@ -177,7 +314,7 @@ class DataKreditur extends Controller
             $arrayKaKbKc = [];
             for ($i = 0; $i < $length; $i++) {
                 $perkalianKaKbKc = 0;
-                for ($x = 1; $x < 8; $x++) {
+                for ($x = 1; $x < $jumlahKrit; $x++) {
                     $perkalianKaKbKc = $arraykaPISI[$i] * $arraykbPISI[$i] * $arraykcPISI[$i];
                 }
                 array_push($arrayKaKbKc, $perkalianKaKbKc);
@@ -187,7 +324,7 @@ class DataKreditur extends Controller
             $arrayKaKbKcPlus = [];
             for ($i = 0; $i < $length; $i++) {
                 $penambahKaKbKc = 0;
-                for ($x = 1; $x < 8; $x++) {
+                for ($x = 1; $x < $jumlahKrit; $x++) {
                     $penambahKaKbKc = $arraykaPISI[$i] + $arraykbPISI[$i] + $arraykcPISI[$i];
                 }
                 array_push($arrayKaKbKcPlus, $penambahKaKbKc);
@@ -196,7 +333,7 @@ class DataKreditur extends Controller
             $finalRanking = [];
             for ($i = 0; $i < $length; $i++) {
                 $kSIPI = 0;
-                for ($x = 1; $x < 8; $x++) {
+                for ($x = 1; $x < $jumlahKrit; $x++) {
                     $kSIPI = ((pow($arrayKaKbKc[$i], 0.3))) + ((0.3) * ($arrayKaKbKcPlus[$i]));
                 }
                 array_push($finalRanking, $kSIPI);
@@ -210,6 +347,7 @@ class DataKreditur extends Controller
 
                 ];
             }
+
             return view('tables.data-kreditur', compact('matriks', 'sipi', 'arraysumSI', 'arraysumPI', 'arraysumPISI', 'finalRank', 'users', 'lengthUsers', 'lengthData'));
         } elseif ($userKreditur > 0 && Auth::user()->level != 'admin') {
             $route = Route::current();

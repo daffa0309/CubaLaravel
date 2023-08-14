@@ -294,8 +294,8 @@
                                         <div class="col">
                                             <div class="mb-6">
                                                 <label for="penghasilan">Penghasilan</label>
-                                                <select required class="form-select digits" disabled
-                                                    value="{{ $value->name }}" name="penghasilan" id="penghasilan">
+                                                <select required class="form-select digits" disabled name="penghasilan"
+                                                    id="penghasilan">
                                                     @switch($value->C2)
                                                         @case('5')
                                                             <!-- Kode untuk opsi 5 -->
@@ -338,16 +338,40 @@
                                         <div class="col">
                                             <div class="mb-6">
                                                 <label for="tanggungan">Tanggungan</label>
-                                                <select required class="form-select digits" disabled
-                                                    value="{{ $value->name }}" name="tanggungan" id="tanggungan">
-                                                    <option selected="" disabled="" value="">Pilih
-                                                        Tanggungan...
-                                                    </option>
-                                                    <option value="1">Tidak Ada</option>
-                                                    <option value="2">1 Tanggungan</option>
-                                                    <option value="3">2 Tanggungan</option>
-                                                    <option value="4">3 - 5 Tanggungan</option>
-                                                    <option value="5">Lebih dari 5 Tanggungan</option>
+                                                <select required class="form-select digits" disabled name="tanggungan"
+                                                    id="tanggungan">
+                                                    @switch($value->C7)
+                                                        @case('5')
+                                                            <!-- Kode untuk opsi 5 -->
+                                                            <option value="5">Lebih dari 5 Tanggungan</option>
+                                                        @break
+
+                                                        @case('4')
+                                                            <!-- Kode untuk opsi 4 -->
+                                                            <option value="4">3 - 5 Tanggungan</option>
+                                                        @break
+
+                                                        @case('3')
+                                                            <!-- Kode untuk opsi 3 -->
+                                                            <option value="3">2 Tanggungan</option>
+                                                        @break
+
+                                                        @case('2')
+                                                            <!-- Kode untuk opsi 2 -->
+                                                            <option value="2">1 Tanggungan</option>
+                                                        @break
+
+                                                        @case('1')
+                                                            <!-- Kode untuk opsi 1 -->
+                                                            <option value="1">Tidak Ada</option>
+                                                        @break
+
+                                                        @default
+                                                            <!-- Kode default jika tidak ada opsi yang cocok -->
+                                                            <option selected="" disabled="" value="">Pilih
+                                                                Penghasilan...
+                                                            </option>
+                                                    @endswitch
                                                 </select>
                                             </div>
                                         </div>
@@ -355,21 +379,47 @@
                                             <div class="mb-6">
                                                 <label for="kondisiKendaraan">Kondisi Kendaraan</label>
                                                 <select required class="form-select digits" disabled
-                                                    value="{{ $value->name }}" name="kondisiKendaraan"
-                                                    id="kondisiKendaraan">
-                                                    <option selected="" disabled="" value="">Pilih Kondisi
-                                                        Kendaraan...
-                                                    </option>
-                                                    <option value="1">Adanya Kerusakan yang serius</option>
-                                                    <option value="2">Perlu Beberapa Perbaikan</option>
-                                                    <option value="3">Kondisi Kendaraan wajar, memerlukan perawatan
-                                                        Rutin
-                                                    </option>
-                                                    <option value="4">Kondisi Kendaraan terawat, tidak perlu perbaikan
-                                                        signifikan</option>
-                                                    <option value="5">Kendaraan dalam kondisi sangat baik, tampak
-                                                        seperti
-                                                        baru</option>
+                                                    name="kondisiKendaraan" id="kondisiKendaraan">
+                                                    @switch($value->C4)
+                                                        @case('5')
+                                                            <!-- Kode untuk opsi 5 -->
+                                                            <option value="5">Kendaraan dalam kondisi sangat baik, tampak
+                                                                seperti
+                                                                baru</option>
+                                                        @break
+
+                                                        @case('4')
+                                                            <!-- Kode untuk opsi 4 -->
+                                                            <option value="4">Kondisi Kendaraan terawat, tidak perlu perbaikan
+                                                                signifikan</option>
+                                                        @break
+
+                                                        @case('3')
+                                                            <!-- Kode untuk opsi 3 -->
+                                                            <option value="3">Kondisi Kendaraan wajar, memerlukan perawatan
+                                                                Rutin
+                                                            </option>
+                                                        @break
+
+                                                        @case('2')
+                                                            <!-- Kode untuk opsi 2 -->
+                                                            <option value="2">Perlu Beberapa Perbaikan</option>
+                                                        @break
+
+                                                        @case('1')
+                                                            <!-- Kode untuk opsi 1 -->
+                                                            <option value="1">Adanya Kerusakan yang serius</option>
+                                                        @break
+
+                                                        @default
+                                                            <!-- Kode default jika tidak ada opsi yang cocok -->
+                                                            <option selected="" disabled="" value="">Pilih
+                                                                Kondisi Kendaraan...
+                                                            </option>
+                                                    @endswitch
+
+
+
                                                 </select>
                                             </div>
                                         </div>
@@ -380,17 +430,42 @@
                                             <div class="mb-6">
                                                 <label for="statusTempatTinggal">Status Tempat Tinggal</label>
                                                 <select required class="form-select digits" disabled
-                                                    value="{{ $value->name }}" name="statusTempatTinggal"
-                                                    id="statusTempatTinggal">
-                                                    <option selected="" disabled="" value="">Pilih Status
-                                                        Tempat
-                                                        Tinggal...
-                                                    </option>
-                                                    <option value="1">Kost</option>
-                                                    <option value="2">Kontrak</option>
-                                                    <option value="3">Milik Keluarga</option>
-                                                    <option value="4">Milik Orang Tua</option>
-                                                    <option value="5">Milik Sendiri</option>
+                                                    name="statusTempatTinggal" id="statusTempatTinggal">
+                                                    @switch($value->C1)
+                                                        @case('5')
+                                                            <!-- Kode untuk opsi 5 -->
+                                                            <option value="5">Milik Sendiri</option>
+                                                        @break
+
+                                                        @case('4')
+                                                            <!-- Kode untuk opsi 4 -->
+                                                            <option value="4">Milik Orang Tua</option>
+                                                        @break
+
+                                                        @case('3')
+                                                            <!-- Kode untuk opsi 3 -->
+                                                            <option value="3">Milik Keluarga</option>
+                                                        @break
+
+                                                        @case('2')
+                                                            <!-- Kode untuk opsi 2 -->
+                                                            <option value="2">Kontrak</option>
+                                                        @break
+
+                                                        @case('1')
+                                                            <!-- Kode untuk opsi 1 -->
+                                                            <option value="1">Kost</option>
+                                                        @break
+
+                                                        @default
+                                                            <!-- Kode default jika tidak ada opsi yang cocok -->
+                                                            <option selected="" disabled="" value="">Pilih Status
+                                                                Tempat
+                                                                Tinggal...
+                                                            </option>
+                                                    @endswitch
+
+
                                                 </select>
                                             </div>
                                         </div>
@@ -442,19 +517,31 @@
                                                 @elseif($final['visible'] == 2)
                                                     <td>Data telah ditolak </td>
                                                 @endif
-                                                <td>&nbsp; &nbsp; <a href="#" class="btn btn-primary btn-sm"
-                                                        data-toggle="modal"
-                                                        data-target="#getData{{ $final['idKreditur'] }}">
-                                                        Lihat Data
-                                                    </a>
-                                                    <button data-item-id="{{ $final['idKreditur'] }}"
-                                                        class="btn btn-success btn" type="button"
-                                                        id="updateButton">Terima Data</button>
-                                                    <button data-item-id="{{ $final['idKreditur'] }}"
-                                                        class="btn btn-danger btn" type="button" id="tolakButton">Tolak
-                                                        Data</button>
+                                                @if ($final['visible'] == 0)
+                                                    <td>&nbsp; &nbsp; <a href="#" class="btn btn-primary btn-sm"
+                                                            data-toggle="modal"
+                                                            data-target="#getData{{ $final['idKreditur'] }}">
+                                                            Lihat Data
+                                                        </a>
+                                                        <button data-item-id="{{ $final['idKreditur'] }}"
+                                                            class="updateButton btn btn-success btn" type="button"
+                                                            id="updateButton">Terima Data</button>
+                                                        <button data-item-id="{{ $final['idKreditur'] }}"
+                                                            class="tolakButton btn btn-danger btn" type="button"
+                                                            id="tolakButton">Tolak
+                                                            Data</button>
 
-                                                </td>
+                                                    </td>
+                                                @else
+                                                    <td>&nbsp; &nbsp; <a href="#" class="btn btn-primary btn-sm"
+                                                            data-toggle="modal"
+                                                            data-target="#getData{{ $final['idKreditur'] }}">
+                                                            Lihat Data
+                                                        </a>
+
+                                                    </td>
+                                                @endif
+
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -563,99 +650,107 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
     <script>
-        // Assuming you have loaded SweetAlert via npm or a CDN
+        document.addEventListener('DOMContentLoaded', function() {
+            const tolakButtons = document.querySelectorAll('.tolakButton');
 
-        document.getElementById('tolakButton').addEventListener('click', function() {
-
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, update it!'
-            }).then((result) => {
-                if (result.value == true) {
+            tolakButtons.forEach(button => {
+                button.addEventListener('click', function() {
                     var id = this.dataset.itemId;
                     var visible = 2;
-                    $.ajax({
+                    Swal.fire({
+                        title: 'Apakah adan yakin?',
+                        text: "Anda akan menolak data kreditur.",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, terima data!'
+                    }).then((result) => {
+                        if (result.value == true) {
+                            // If the user confirms, submit the form
+                            $.ajax({
 
-                        url: '/update-kreditur' + "/" + id + "/" + visible,
-                        method: 'PUT',
-                        data: {
-                            _token: "{{ csrf_token() }}",
+                                url: '/update-kreditur' + "/" + id + "/" + visible,
+                                method: 'PUT',
+                                data: {
+                                    _token: "{{ csrf_token() }}",
 
-                        },
-                        success: function(response) {
-                            // Handle the success response from the server
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Success',
-                                text: "Data Berhasil Ditolak"
-                            });
-                            location.reload();
+                                },
+                                success: function(response) {
+                                    // Handle the success response from the server
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Success',
+                                        text: "Data Berhasil Diterima"
+                                    });
+                                    location.reload();
 
-                        },
-                        error: function(error) {
-                            // Handle errors, if any
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                text: 'An error occurred while updating the item.'
+                                },
+                                error: function(error) {
+                                    // Handle errors, if any
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error',
+                                        text: 'An error occurred while updating the item.'
+                                    });
+                                }
                             });
                         }
                     });
-                }
+                });
             });
-
         });
     </script>
     <script>
-        document.getElementById('updateButton').addEventListener('click', function() {
-            var id = this.dataset.itemId;
-            var visible = 1;
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, update it!'
-            }).then((result) => {
-                if (result.value == true) {
-                    // If the user confirms, submit the form
-                    $.ajax({
+        document.addEventListener('DOMContentLoaded', function() {
+            const updateButtons = document.querySelectorAll('.updateButton');
 
-                        url: '/update-kreditur' + "/" + id + "/" + visible,
-                        method: 'PUT',
-                        data: {
-                            _token: "{{ csrf_token() }}",
+            updateButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    var id = this.dataset.itemId;
+                    var visible = 1;
+                    Swal.fire({
+                        title: 'Apakah adan yakin?',
+                        text: "Anda akan menerima data kreditur.",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, terima data!'
+                    }).then((result) => {
+                        if (result.value == true) {
+                            // If the user confirms, submit the form
+                            $.ajax({
 
-                        },
-                        success: function(response) {
-                            // Handle the success response from the server
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Success',
-                                text: "Data Berhasil Diterima"
-                            });
-                            location.reload();
+                                url: '/update-kreditur' + "/" + id + "/" + visible,
+                                method: 'PUT',
+                                data: {
+                                    _token: "{{ csrf_token() }}",
 
-                        },
-                        error: function(error) {
-                            // Handle errors, if any
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                text: 'An error occurred while updating the item.'
+                                },
+                                success: function(response) {
+                                    // Handle the success response from the server
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Success',
+                                        text: "Data Berhasil Diterima"
+                                    });
+                                    location.reload();
+
+                                },
+                                error: function(error) {
+                                    // Handle errors, if any
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error',
+                                        text: 'An error occurred while updating the item.'
+                                    });
+                                }
                             });
                         }
                     });
-                }
+                });
             });
-            // Swal.fire({
-
         });
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

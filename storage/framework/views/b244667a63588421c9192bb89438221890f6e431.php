@@ -20,8 +20,8 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
-    <?php if(Auth::user()->level == 'admin' && $lengthUsers > 0): ?>
-            
+    <?php if($lengthUsers > 0 && Auth::user()->level == 'admin'): ?>
+        
 
         <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <div class="modal fade" tabindex="-1" id="getData<?php echo e($value->idKreditur); ?>" role="dialog" aria-hidden="true"
@@ -294,8 +294,8 @@
                                         <div class="col">
                                             <div class="mb-6">
                                                 <label for="penghasilan">Penghasilan</label>
-                                                <select required class="form-select digits" disabled
-                                                    value="<?php echo e($value->name); ?>" name="penghasilan" id="penghasilan">
+                                                <select required class="form-select digits" disabled name="penghasilan"
+                                                    id="penghasilan">
                                                     <?php switch($value->C2):
                                                         case ('5'): ?>
                                                             <!-- Kode untuk opsi 5 -->
@@ -338,16 +338,40 @@
                                         <div class="col">
                                             <div class="mb-6">
                                                 <label for="tanggungan">Tanggungan</label>
-                                                <select required class="form-select digits" disabled
-                                                    value="<?php echo e($value->name); ?>" name="tanggungan" id="tanggungan">
-                                                    <option selected="" disabled="" value="">Pilih
-                                                        Tanggungan...
-                                                    </option>
-                                                    <option value="1">Tidak Ada</option>
-                                                    <option value="2">1 Tanggungan</option>
-                                                    <option value="3">2 Tanggungan</option>
-                                                    <option value="4">3 - 5 Tanggungan</option>
-                                                    <option value="5">Lebih dari 5 Tanggungan</option>
+                                                <select required class="form-select digits" disabled name="tanggungan"
+                                                    id="tanggungan">
+                                                    <?php switch($value->C7):
+                                                        case ('5'): ?>
+                                                            <!-- Kode untuk opsi 5 -->
+                                                            <option value="5">Lebih dari 5 Tanggungan</option>
+                                                        <?php break; ?>
+
+                                                        <?php case ('4'): ?>
+                                                            <!-- Kode untuk opsi 4 -->
+                                                            <option value="4">3 - 5 Tanggungan</option>
+                                                        <?php break; ?>
+
+                                                        <?php case ('3'): ?>
+                                                            <!-- Kode untuk opsi 3 -->
+                                                            <option value="3">2 Tanggungan</option>
+                                                        <?php break; ?>
+
+                                                        <?php case ('2'): ?>
+                                                            <!-- Kode untuk opsi 2 -->
+                                                            <option value="2">1 Tanggungan</option>
+                                                        <?php break; ?>
+
+                                                        <?php case ('1'): ?>
+                                                            <!-- Kode untuk opsi 1 -->
+                                                            <option value="1">Tidak Ada</option>
+                                                        <?php break; ?>
+
+                                                        <?php default: ?>
+                                                            <!-- Kode default jika tidak ada opsi yang cocok -->
+                                                            <option selected="" disabled="" value="">Pilih
+                                                                Penghasilan...
+                                                            </option>
+                                                    <?php endswitch; ?>
                                                 </select>
                                             </div>
                                         </div>
@@ -355,21 +379,47 @@
                                             <div class="mb-6">
                                                 <label for="kondisiKendaraan">Kondisi Kendaraan</label>
                                                 <select required class="form-select digits" disabled
-                                                    value="<?php echo e($value->name); ?>" name="kondisiKendaraan"
-                                                    id="kondisiKendaraan">
-                                                    <option selected="" disabled="" value="">Pilih Kondisi
-                                                        Kendaraan...
-                                                    </option>
-                                                    <option value="1">Adanya Kerusakan yang serius</option>
-                                                    <option value="2">Perlu Beberapa Perbaikan</option>
-                                                    <option value="3">Kondisi Kendaraan wajar, memerlukan perawatan
-                                                        Rutin
-                                                    </option>
-                                                    <option value="4">Kondisi Kendaraan terawat, tidak perlu perbaikan
-                                                        signifikan</option>
-                                                    <option value="5">Kendaraan dalam kondisi sangat baik, tampak
-                                                        seperti
-                                                        baru</option>
+                                                    name="kondisiKendaraan" id="kondisiKendaraan">
+                                                    <?php switch($value->C4):
+                                                        case ('5'): ?>
+                                                            <!-- Kode untuk opsi 5 -->
+                                                            <option value="5">Kendaraan dalam kondisi sangat baik, tampak
+                                                                seperti
+                                                                baru</option>
+                                                        <?php break; ?>
+
+                                                        <?php case ('4'): ?>
+                                                            <!-- Kode untuk opsi 4 -->
+                                                            <option value="4">Kondisi Kendaraan terawat, tidak perlu perbaikan
+                                                                signifikan</option>
+                                                        <?php break; ?>
+
+                                                        <?php case ('3'): ?>
+                                                            <!-- Kode untuk opsi 3 -->
+                                                            <option value="3">Kondisi Kendaraan wajar, memerlukan perawatan
+                                                                Rutin
+                                                            </option>
+                                                        <?php break; ?>
+
+                                                        <?php case ('2'): ?>
+                                                            <!-- Kode untuk opsi 2 -->
+                                                            <option value="2">Perlu Beberapa Perbaikan</option>
+                                                        <?php break; ?>
+
+                                                        <?php case ('1'): ?>
+                                                            <!-- Kode untuk opsi 1 -->
+                                                            <option value="1">Adanya Kerusakan yang serius</option>
+                                                        <?php break; ?>
+
+                                                        <?php default: ?>
+                                                            <!-- Kode default jika tidak ada opsi yang cocok -->
+                                                            <option selected="" disabled="" value="">Pilih
+                                                                Kondisi Kendaraan...
+                                                            </option>
+                                                    <?php endswitch; ?>
+
+
+
                                                 </select>
                                             </div>
                                         </div>
@@ -380,17 +430,42 @@
                                             <div class="mb-6">
                                                 <label for="statusTempatTinggal">Status Tempat Tinggal</label>
                                                 <select required class="form-select digits" disabled
-                                                    value="<?php echo e($value->name); ?>" name="statusTempatTinggal"
-                                                    id="statusTempatTinggal">
-                                                    <option selected="" disabled="" value="">Pilih Status
-                                                        Tempat
-                                                        Tinggal...
-                                                    </option>
-                                                    <option value="1">Kost</option>
-                                                    <option value="2">Kontrak</option>
-                                                    <option value="3">Milik Keluarga</option>
-                                                    <option value="4">Milik Orang Tua</option>
-                                                    <option value="5">Milik Sendiri</option>
+                                                    name="statusTempatTinggal" id="statusTempatTinggal">
+                                                    <?php switch($value->C1):
+                                                        case ('5'): ?>
+                                                            <!-- Kode untuk opsi 5 -->
+                                                            <option value="5">Milik Sendiri</option>
+                                                        <?php break; ?>
+
+                                                        <?php case ('4'): ?>
+                                                            <!-- Kode untuk opsi 4 -->
+                                                            <option value="4">Milik Orang Tua</option>
+                                                        <?php break; ?>
+
+                                                        <?php case ('3'): ?>
+                                                            <!-- Kode untuk opsi 3 -->
+                                                            <option value="3">Milik Keluarga</option>
+                                                        <?php break; ?>
+
+                                                        <?php case ('2'): ?>
+                                                            <!-- Kode untuk opsi 2 -->
+                                                            <option value="2">Kontrak</option>
+                                                        <?php break; ?>
+
+                                                        <?php case ('1'): ?>
+                                                            <!-- Kode untuk opsi 1 -->
+                                                            <option value="1">Kost</option>
+                                                        <?php break; ?>
+
+                                                        <?php default: ?>
+                                                            <!-- Kode default jika tidak ada opsi yang cocok -->
+                                                            <option selected="" disabled="" value="">Pilih Status
+                                                                Tempat
+                                                                Tinggal...
+                                                            </option>
+                                                    <?php endswitch; ?>
+
+
                                                 </select>
                                             </div>
                                         </div>
@@ -405,7 +480,7 @@
                 </div>
             </div>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        
+
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
@@ -439,15 +514,34 @@
                                                     <td>Menunggu Untuk DiReview </td>
                                                 <?php elseif($final['visible'] == 1): ?>
                                                     <td>Data telah diterima </td>
+                                                <?php elseif($final['visible'] == 2): ?>
+                                                    <td>Data telah ditolak </td>
                                                 <?php endif; ?>
-                                                <td>&nbsp; &nbsp; <a href="#" class="btn btn-primary btn-sm"
-                                                        data-toggle="modal"
-                                                        data-target="#getData<?php echo e($final['idKreditur']); ?>">
-                                                        Lihat Data
-                                                    </a>
-                                                    <button class="btn btn-success btn" type="button" id="updateButton">Terima Data</button>
+                                                <?php if($final['visible'] == 0): ?>
+                                                    <td>&nbsp; &nbsp; <a href="#" class="btn btn-primary btn-sm"
+                                                            data-toggle="modal"
+                                                            data-target="#getData<?php echo e($final['idKreditur']); ?>">
+                                                            Lihat Data
+                                                        </a>
+                                                        <button data-item-id="<?php echo e($final['idKreditur']); ?>"
+                                                            class="updateButton btn btn-success btn" type="button"
+                                                            id="updateButton">Terima Data</button>
+                                                        <button data-item-id="<?php echo e($final['idKreditur']); ?>"
+                                                            class="tolakButton btn btn-danger btn" type="button"
+                                                            id="tolakButton">Tolak
+                                                            Data</button>
 
-                                                </td>
+                                                    </td>
+                                                <?php else: ?>
+                                                    <td>&nbsp; &nbsp; <a href="#" class="btn btn-primary btn-sm"
+                                                            data-toggle="modal"
+                                                            data-target="#getData<?php echo e($final['idKreditur']); ?>">
+                                                            Lihat Data
+                                                        </a>
+
+                                                    </td>
+                                                <?php endif; ?>
+
                                             </tr>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </tbody>
@@ -458,127 +552,214 @@
                 </div>
             </div>
         </div>
-    <?php elseif($userKreditur > 0): ?>
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Zero Configuration  Starts-->
-            <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Final Ranking</h5>
-                        <div style="margin-left: 1080px">
-                            <a class="btn btn-primary" href="<?php echo e(route('input-data')); ?>" type="button">Tambah
-                                Data</a>
+    <?php elseif($userKreditur > 0 && Auth::user()->level != 'admin'): ?>
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Zero Configuration  Starts-->
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Final Ranking</h5>
+                            <div style="margin-left: 1080px">
+                                <a class="btn btn-primary" href="<?php echo e(route('input-data')); ?>" type="button">Tambah
+                                    Data</a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="display" id="basic-2">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Tanggal Datang</th>
-                                        <th>Nomor Urut</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php $__currentLoopData = $dataUser; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="display" id="basic-2">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Tanggal Datang</th>
+                                            <th>Nomor Urut</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php $__currentLoopData = $dataUser; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <tr>
                                                 <td>&nbsp; <?php echo e($data->name); ?></td>
                                                 <td>&nbsp; <?php echo e($data->tanggal); ?></td>
                                                 <td>&nbsp; <?php echo e($data->nomor_urut); ?></td>
                                                 <?php if($data->visible == 0): ?>
-                                                <td>Menunggu Untuk DiReview </td>
-                                            <?php elseif($data->visible == 1): ?>
-                                                <td>Data telah diterima </td>
+                                                    <td>Menunggu Untuk DiReview </td>
+                                                <?php elseif($data->visible == 1): ?>
+                                                    <td>Data telah diterima </td>
                                                 <?php elseif($data->visible == 2): ?>
-                                                <td>Data telah ditolak </td>
-                                            <?php endif; ?>
-                                               
+                                                    <td>Data telah ditolak </td>
+                                                <?php endif; ?>
+
                                             </tr>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     <?php else: ?>
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Zero Configuration  Starts-->
-            <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Final Ranking</h5>
-                        <div style="margin-left: 1080px">
-                            <a class="btn btn-primary" href="<?php echo e(route('input-data')); ?>" type="button">Tambah
-                                Data</a>
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Zero Configuration  Starts-->
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Final Ranking</h5>
+                            <div style="margin-left: 1080px">
+                                <a class="btn btn-primary" href="<?php echo e(route('input-data')); ?>" type="button">Tambah
+                                    Data</a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="display" id="basic-2">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Skor</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                  
-                                </tbody>
-                            </table>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="display" id="basic-2">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Skor</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     <?php endif; ?>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('script'); ?>
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-</script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-</script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tolakButtons = document.querySelectorAll('.tolakButton');
+
+            tolakButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    var id = this.dataset.itemId;
+                    var visible = 2;
+                    Swal.fire({
+                        title: 'Apakah adan yakin?',
+                        text: "Anda akan menolak data kreditur.",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, terima data!'
+                    }).then((result) => {
+                        if (result.value == true) {
+                            // If the user confirms, submit the form
+                            $.ajax({
+
+                                url: '/update-kreditur' + "/" + id + "/" + visible,
+                                method: 'PUT',
+                                data: {
+                                    _token: "<?php echo e(csrf_token()); ?>",
+
+                                },
+                                success: function(response) {
+                                    // Handle the success response from the server
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Success',
+                                        text: "Data Berhasil Diterima"
+                                    });
+                                    location.reload();
+
+                                },
+                                error: function(error) {
+                                    // Handle errors, if any
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error',
+                                        text: 'An error occurred while updating the item.'
+                                    });
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const updateButtons = document.querySelectorAll('.updateButton');
+
+            updateButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    var id = this.dataset.itemId;
+                    var visible = 1;
+                    Swal.fire({
+                        title: 'Apakah adan yakin?',
+                        text: "Anda akan menerima data kreditur.",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, terima data!'
+                    }).then((result) => {
+                        if (result.value == true) {
+                            // If the user confirms, submit the form
+                            $.ajax({
+
+                                url: '/update-kreditur' + "/" + id + "/" + visible,
+                                method: 'PUT',
+                                data: {
+                                    _token: "<?php echo e(csrf_token()); ?>",
+
+                                },
+                                success: function(response) {
+                                    // Handle the success response from the server
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Success',
+                                        text: "Data Berhasil Diterima"
+                                    });
+                                    location.reload();
+
+                                },
+                                error: function(error) {
+                                    // Handle errors, if any
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error',
+                                        text: 'An error occurred while updating the item.'
+                                    });
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="<?php echo e(asset('assets/js/datatable/datatables/jquery.dataTables.min.js')); ?>"></script>
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="<?php echo e(asset('assets/js/datatable/datatables/datatable.custom.js')); ?>"></script>
 
-<script src="<?php echo e(asset('assets/js/datatable/datatables/jquery.dataTables.min.js')); ?>"></script>
-
-<script>
-  document.getElementById('updateButton').addEventListener('click', function() {
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, update it!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // If the user confirms, submit the form
-            document.getElementById('updateForm').submit();
-        }
-    });
-});
-</script>
-<script src="<?php echo e(asset('assets/js/datatable/datatables/datatable.custom.js')); ?>"></script>
- 
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.simple.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\daffa\CubaLaravel\resources\views/tables/data-kreditur.blade.php ENDPATH**/ ?>

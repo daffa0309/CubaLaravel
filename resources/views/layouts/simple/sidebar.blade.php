@@ -57,6 +57,24 @@
                             </div>
                         </a>
                     </li>
+                    <li class="sidebar-list">
+                        <a
+                            class="sidebar-link sidebar-title"
+                            href="{{route('data-kriteria')}}"><i data-feather="user"></i><span
+                                class="lan-3">Manage Kriteria</span>
+                            <div class="according-menu">
+                            </div>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a
+                            class="sidebar-link sidebar-title"
+                            href="{{route('data-nilai-kriteria')}}"><i data-feather="user"></i><span
+                                class="lan-3">Manage Sub Kriteria</span>
+                            <div class="according-menu">
+                            </div>
+                        </a>
+                    </li>
                     @endif
                 </ul>
             </div>

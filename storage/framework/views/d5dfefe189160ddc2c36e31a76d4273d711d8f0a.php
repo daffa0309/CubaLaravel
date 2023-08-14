@@ -31,9 +31,6 @@
         }
     </style>
 
-    <script>
-        swal("Good job!", "You clicked the button!", "success");
-    </script>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
