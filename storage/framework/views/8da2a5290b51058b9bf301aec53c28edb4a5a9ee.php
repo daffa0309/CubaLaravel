@@ -50,7 +50,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="mb-6">
-                                                <label for="namaKreditur">Nama Kreditur</label>
+                                                <label for="namaKreditur">Nama Lengkap</label>
                                                 <input class="form-control" required name="namaKreditur" id="namaKreditur"
                                                     type="text" placeholder="Masukkan Nama">
                                                 <div class="invalid-feedback">Please provide a valid city.</div>
@@ -60,11 +60,54 @@
 
                                         <div class="col">
                                             <div class="mb-6">
-                                                <label for="nik">NIK Kreditur</label>
-                                                <input class="form-control" name="nik" id="nik" type="number"
-                                                    required placeholder="421563">
+                                                <label for="alamat">Alamat KTP</label>
+                                                <input class="form-control" name="alamat" id="alamat" type="text"
+                                                    required placeholder="Masukkan Alamat">
                                                 <div class="invalid-feedback">Please provide a valid city.</div>
 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="col-sm-3 col-form-label">Alamat Lengkap Saat Ini</label>
+                                            <input class="form-control" name="alamatLengkap" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <fieldset>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-4">
+                                                <label for="kecamatan">Kecamatan</label>
+                                                <select required class="form-select digits" name="kecamatan" id="kecamatan">
+                                                    <option selected="" disabled="" value="">Choose...</option>
+                                                    <option value="pria">Pria</option>
+                                                    <option value="wanita">Wanita</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col">
+                                            <div class="mb-4">
+                                                <label for="kabupaten">Kabupaten</label>
+                                                <select required class="form-select digits" name="kabupaten" id="kabupaten">
+                                                    <option selected="" disabled="" value="">Choose...</option>
+                                                    <option value="pria">Pria</option>
+                                                    <option value="wanita">Wanita</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="mb-4">
+                                                <label for="propinsi">Propinsi</label>
+                                                <select required class="form-select digits" name="propinsi" id="propinsi">
+                                                    <option selected="" disabled="" value="">Choose...</option>
+                                                    <option value="pria">Pria</option>
+                                                    <option value="wanita">Wanita</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
